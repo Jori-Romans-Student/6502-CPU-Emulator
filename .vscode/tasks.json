@@ -5,7 +5,7 @@
       "type": "shell",
       "label": "g++ build active file",
       "command": "/usr/bin/g++",
-      "args": ["-g", "${file}", "-o", "${fileDirname}/builds/${fileBasenameNoExtension}"],
+      "args": ["-g", "${file}", "-o", "${fileDirname}/.builds/${fileBasenameNoExtension}"],
       "options": {
         "cwd": "/usr/bin"
       },
