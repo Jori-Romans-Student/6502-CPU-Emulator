@@ -1,5 +1,5 @@
 #include "catch2/catch.hpp"
-#include "../src/hardware.cpp"
+#include "../../../../src/hardware.cpp"
 
 Mem mem;
 CPU cpu;
@@ -21,7 +21,7 @@ TEST_CASE( "LDA Immediate Instruction" ) {
         REQUIRE ( instruction == 0xA9 );
     }
 
-    SECTION( "should run small script correctly wtih zero value" ) {
+    SECTION( "should run script correctly wtih zero value" ) {
         
         // Immediate Byte to Load
 
