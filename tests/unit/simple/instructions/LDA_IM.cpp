@@ -7,8 +7,8 @@ CPU cpu;
 Byte instruction = CPU::INS_LDA_IM;
 
 void LoadProgram( Byte value ) {
-    mem[0xFFFC] = instruction; // Sets the instruction at the PC
-    mem[0xFFFD] = value; // Immediate next value, which should be loaded to A
+    mem[0x0000] = instruction; // Sets the instruction at the PC
+    mem[0x0001] = value; // Immediate next value, which should be loaded to A
 };
 
 TEST_CASE( "LDA Immediate Instruction" ) {
@@ -33,7 +33,7 @@ TEST_CASE( "LDA Immediate Instruction" ) {
 
         // Execute Program
 
-        cpu.Execute( mem, 2 ); 
+        cpu.Start( mem, 0x0000 ); 
 
         // Run Assertions on Non Affected Flags
 
@@ -69,7 +69,7 @@ TEST_CASE( "LDA Immediate Instruction" ) {
 
         // Execute Program
 
-        cpu.Execute( mem, 2 ); 
+        cpu.Start( mem, 0x0000 ); 
 
         // Run Assertions on Non Affected Flags
 
@@ -105,7 +105,7 @@ TEST_CASE( "LDA Immediate Instruction" ) {
 
         // Execute Program
 
-        cpu.Execute( mem, 2 ); 
+        cpu.Start( mem, 0x0000 );
 
         // Run Assertions on Non Affected Flags
 

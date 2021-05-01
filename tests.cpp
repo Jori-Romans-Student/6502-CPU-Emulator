@@ -3,7 +3,7 @@
 
 // Unit Tests for Loaders
 
-#include "tests/unit/simple/instructions/LDA_IM.cpp"
+// #include "tests/unit/simple/instructions/LDA_IM.cpp"
 
 // Extensive Tests for Loaders
 

@@ -46,47 +46,76 @@ struct CPU {
     Byte V : 1;
     Byte N : 1;
 
+    // Instructions;
+
+    static constexpr Byte INS_LDA_IM = 0xA9;
+    static constexpr Byte INS_LDA_ZP = 0xA5;
+
+    // Actions
+
+    Byte Read( Mem& memory, Word address ) {
+        Byte data = memory[address];
+        return data;
+    }
+
+    Byte Fetch( Mem& memory ) {
+        Byte data = Read(memory, PC);
+        PC++;
+        return data;
+    }
+
+    void Execute( Mem& memory, Byte instruction ) {
+        switch (instruction) {
+            case INS_LDA_IM: {
+
+                // Fetch value from PC that will contain actual value instead of pointer
+
+                Byte value = Fetch( memory );
+
+                // Load Accumulator
+
+                A = value;
+
+                // Set Flags
+
+                Z = (A == 0);
+                N = (A & 0b10000000) > 0;
+
+            } break;
+            default: {
+                
+            }
+        }
+    };
+
+    // Reset script at memory location ** TO BE REMOVED **
+
     void Reset(Mem& memory) {
         // Boot Up
 
-        PC = 0xFFFC;
+        PC = 0x0000;
         SP = 0x00;
         D = 0;
         A = X = Y = 0;
         C = Z = I = D = B = V = N = 0;
 
         memory.Initialize();
-    }
+    };
 
-    Byte Read(Mem& memory, u32& cycles) {
-        Byte data = memory[PC];
-        cycles--;
-        return data;
-    }
+    // Start a script at memory location ** TO BE REMOVED **
 
-    Byte Fetch(Mem& memory, u32& cycles) {
-        Byte data = Read(memory, cycles);
-        PC++;
-        return data;
-    }
+    void Start(Mem& memory, Word address) {
 
-    static constexpr Byte INS_LDA_IM = 0xA9;
-    static constexpr Byte INS_LDA_ZP = 0xA5;
+        // Set Program Counter to Address
 
-    void Execute(Mem& memory, u32 cycles) {
-        while ( cycles > 0 ) {
-            Byte instruction = Fetch( memory, cycles );
-            switch (instruction) {
-                case INS_LDA_IM: {
-                    Byte value = Fetch( memory, cycles );
-                    A = value;
-                    Z = (A == 0);
-                    N = (A & 0b10000000) > 0;
-                } break;
-                default: {
-                  
-                }
-            }
-        }
-    }
+        PC = address;
+        
+        // Fetch instruction from memory
+
+        Byte instruction = Fetch( memory );
+
+        // Execute instruciton
+
+        Execute( memory, instruction );
+    };
 };
