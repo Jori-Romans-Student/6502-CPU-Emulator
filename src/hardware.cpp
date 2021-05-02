@@ -82,6 +82,23 @@ struct CPU {
                 N = (A & 0b10000000) > 0;
 
             } break;
+            case INS_LDA_ZP: {
+
+                // Fetch ZP Address from next PC then get value from address
+
+                Byte zero_point_address = Fetch( memory );
+                Byte value = Read( memory, zero_point_address );
+
+                // Load Accumulator
+
+                A = value;
+
+                // Set Flags
+
+                Z = (A == 0);
+                N = (A & 0b10000000) > 0;
+
+            } break;
             default: {
                 
             }
