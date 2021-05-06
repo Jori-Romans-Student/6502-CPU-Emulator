@@ -18,7 +18,7 @@ namespace IMM {
 
         // Addressing mode to test
 
-        Byte receivedValue = cpu.Immediate( mem );
+        Byte receivedValue = cpu.IMM( mem );
 
         // Assertions
         

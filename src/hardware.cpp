@@ -53,7 +53,7 @@ struct CPU {
 
     // ========== Addressing Modes ==========
 
-    Byte Immediate( Mem& memory ) {
+    Byte IMM( Mem& memory ) {
 
         // Get value and increment PC
 
@@ -65,11 +65,11 @@ struct CPU {
         return value;
     }
 
-    Byte ZeroPage( Mem& memory ) {
+    Byte ZP( Mem& memory ) {
 
         // Fetch Zero Page address at PC
 
-        Byte zero_point_address = Immediate( memory );
+        Byte zero_point_address = IMM( memory );
 
         // Return byte at zero point address
 
@@ -81,10 +81,10 @@ struct CPU {
     Byte RetrieveAddressMode( Mem& memory, Byte ins ) {
         switch( ins ) {
             case 0xA9: {
-                return Immediate( memory );
+                return IMM( memory );
             } break;
             case 0xA5: {
-                return ZeroPage( memory );
+                return ZP( memory );
             }
         }
     }
@@ -114,7 +114,7 @@ struct CPU {
         
         // Get instruction at PC
 
-        Byte instruction = Immediate( memory );
+        Byte instruction = IMM( memory );
 
         // Retrieve the value to execute the instruction on
 

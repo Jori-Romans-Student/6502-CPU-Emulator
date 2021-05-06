@@ -23,7 +23,7 @@ namespace ZP {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.ZeroPage( mem );
+            Byte receivedValue = cpu.ZP( mem );
 
             // Assertions
             
