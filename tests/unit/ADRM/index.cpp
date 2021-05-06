@@ -8,3 +8,4 @@
 #include "tests/ZPY.cpp" // Zero Page X Address Mode
 #include "tests/AB.cpp" // Absolute Address Mode
 #include "tests/ABX.cpp" // Absolute X Address Mode
+#include "tests/ABY.cpp" // Absolute Y Address Mode

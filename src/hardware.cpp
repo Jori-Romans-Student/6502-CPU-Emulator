@@ -120,6 +120,17 @@ struct CPU {
         return memory[address];
     }
 
+    Byte ABY( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Word address = ((IMM( memory ) << 8) | IMM(memory)) + Y; // Get next 2 bytes in memory
+
+        // Return byte at address
+
+        return memory[address];
+    }
+
     // ========== OP Codes ==========
 
     Byte RetrieveAddressMode( Mem& memory, Byte ins ) {
