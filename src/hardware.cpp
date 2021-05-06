@@ -87,6 +87,17 @@ struct CPU {
         return memory[zero_point_address];
     }
 
+    Byte ZPY( Mem& memory ) {
+
+        // Fetch Zero Page address at PC
+
+        Byte zero_point_address = IMM( memory ) + Y;
+
+        // Return byte at zero point address
+
+        return memory[zero_point_address];
+    }
+
     // ========== OP Codes ==========
 
     Byte RetrieveAddressMode( Mem& memory, Byte ins ) {

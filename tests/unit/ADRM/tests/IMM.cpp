@@ -40,6 +40,9 @@ namespace IMM {
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00;
 
+        config.Y.start = (Byte) 0x00;
+        config.Y.end = (Byte) 0x00; 
+
         // Run Script
 
         run(&test, config);
