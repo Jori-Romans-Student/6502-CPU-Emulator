@@ -1,74 +1,50 @@
 #include "catch2/catch.hpp"
 #include "../constants.hpp"
 
-// Immediate Test Case
+// Zero Page Test Case
 
-TEST_CASE( "Zero Page Addressing Mode" ) {
+namespace ZP {
 
-    // Initialize Memory and CPU
+    void test(Mem& mem, CPU& cpu) {
 
-    Mem mem;
-    CPU cpu;
+        // Run loop for every ZP Address
 
-    // Initialize Random Seed
+        for (Byte ZPAddress = 0x00; ZPAddress < 0xFF; ZPAddress++) {
 
-    srand( time(NULL) );
+            // Vars for script
 
-    // Amount of runs for test
+            Word PC = cpu.PC;
+            Byte value = (Byte) rand();
 
-    int runs = 256;
+            // Initialization Script
 
-    // PC Start
+            mem[PC] = ZPAddress;
+            mem[ZPAddress] = value;
 
-    Word start = (Word) 0x0100;
+            // Addressing mode to test
 
-    while (runs > 0) {
+            Byte receivedValue = cpu.ZeroPage( mem );
 
-        // ZP Address
-
-        Byte zeroPageAddress = 0x00;
-
-        // ZP Runs
-
-        int zeroPageRuns = 256;
-
-        while (zeroPageRuns > 0 ) {
+            // Assertions
             
-            // ========== Script ========== //
-
-            cpu.Reset( mem );
-            cpu.PC = start;
-            Byte expectedValue = (Byte) rand();
-
-            mem[start] = zeroPageAddress;
-            mem[zeroPageAddress] = expectedValue;
-
-            // ========== Script ========== //
-
-            // Run addressing mode
-
-            Byte value = cpu.ZeroPage( mem );
-
-            // Run tests
-        
-            REQUIRE( value == expectedValue ); // Ensure values match up
-            REQUIRE( start + 1 == cpu.PC ); // Ensure PC was incremented
-
-            // Subtract amount of zeroPageRuns
-
-            zeroPageRuns--;
-
-            // Add zero page address
-
-            zeroPageAddress++;
+            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( PC + 1 == cpu.PC ); // Ensure PC was incremented
         }
+    }
 
-        // Subtract amount of runs
+    TEST_CASE( "Zero Page Addressing Mode" ) {
 
-        runs--;
+        // CPU Config
 
-        // Increment script start
+        CPUConfig config;
 
-        start++;
+        // Ranges for Tests
+
+        config.PC.start = (Word) 0x0100;
+        config.PC.end = (Word) 0x01FF; 
+
+        // Run Script
+
+        run(&test, config);
     }
 }

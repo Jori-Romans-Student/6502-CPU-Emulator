@@ -3,52 +3,43 @@
 
 // Immediate Test Case
 
-TEST_CASE( "Immediate Addressing Mode" ) {
+namespace IMM {
 
-    // Initialize Memory and CPU
+    void test(Mem& mem, CPU& cpu) {
 
-    Mem mem;
-    CPU cpu;
+        // Vars for script
 
-    // Initialize Random Seed
+        Word PC = cpu.PC;
+        Byte value = (Byte) rand();
 
-    srand( time(NULL) );
+        // Initialization Script
 
-    // Amount of runs for test
+        mem[PC] = value;
 
-    int runs = 256;
+        // Addressing mode to test
 
-    // PC Start
+        Byte receivedValue = cpu.Immediate( mem );
 
-    Word start = (Word) 0x0100;
-
-    while (runs > 0) {
-
-        // ========== Script ========== //
-
-        cpu.Reset( mem );
-        cpu.PC = start;
-        Byte expectedValue = (Byte) rand();
-
-        mem[start] = expectedValue;
-
-        // ========== Script ========== //
-
-        // Run addressing mode
-
-        Byte value = cpu.Immediate( mem );
-
-        // Run tests
+        // Assertions
         
-        REQUIRE( value == expectedValue ); // Ensure values match up
-        REQUIRE( start + 1 == cpu.PC ); // Ensure PC was incremented
+        REQUIRE( receivedValue == value ); // Ensure values match up
+        REQUIRE( PC + 1 == cpu.PC ); // Ensure PC was incremented
+    }
 
-        // Subtract amount of runs
+    TEST_CASE( "Immediate Addressing Mode" ) {
 
-        runs--;
+        // CPU Config
 
-        // Increment script start
+        CPUConfig config;
 
-        start++;
+        // Ranges for Tests
+
+        config.PC.start = (Word) 0x0100;
+        config.PC.end = (Word) 0x01FF; 
+
+        // Run Script
+
+        run(&test, config);
     }
 }
+
