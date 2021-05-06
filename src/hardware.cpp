@@ -131,6 +131,21 @@ struct CPU {
         return memory[address];
     }
 
+    Byte IDX( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Word addressOfAddress = ((IMM( memory ) << 8) | IMM(memory)) + X; // Get next 2 bytes in memory
+
+        // Fetch address at address
+
+        Byte address = memory[addressOfAddress];
+
+        // Return byte at address
+
+        return memory[address];
+    }
+
     // ========== OP Codes ==========
 
     Byte RetrieveAddressMode( Mem& memory, Byte ins ) {
