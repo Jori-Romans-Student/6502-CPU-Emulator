@@ -37,6 +37,9 @@ namespace IMM {
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x01FF; 
 
+        config.X.start = (Byte) 0x00;
+        config.X.end = (Byte) 0x00;
+
         // Run Script
 
         run(&test, config);

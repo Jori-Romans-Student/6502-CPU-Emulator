@@ -1,9 +1,9 @@
 #include "catch2/catch.hpp"
 #include "../constants.hpp"
 
-// Zero Page Test Case
+// Zero Page X Test Case
 
-namespace ZP {
+namespace ZPX {
 
     void test(Mem& mem, CPU& cpu) {
 
@@ -14,16 +14,17 @@ namespace ZP {
             // Vars for script
 
             Word PC = cpu.PC;
+            Byte X = cpu.X;
             Byte value = (Byte) rand();
 
             // Initialization Script
 
             mem[PC] = (Byte) ZPAddress;
-            mem[(Byte) ZPAddress] = value;
+            mem[(Byte) (ZPAddress + X)] = value;
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.ZP( mem );
+            Byte receivedValue = cpu.ZPX( mem );
 
             // Assertions
             
@@ -32,7 +33,7 @@ namespace ZP {
         }
     }
 
-    TEST_CASE( "Zero Page Addressing Mode" ) {
+    TEST_CASE( "Zero Page X Addressing Mode" ) {
 
         // CPU Config
 
@@ -44,7 +45,7 @@ namespace ZP {
         config.PC.end = (Word) 0x01FF;
 
         config.X.start = (Byte) 0x00;
-        config.X.end = (Byte) 0x00; 
+        config.X.end = (Byte) 0xFF; 
 
         // Run Script
 
