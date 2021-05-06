@@ -78,7 +78,7 @@ struct CPU {
 
     Byte ZPX( Mem& memory ) {
 
-        // Fetch Zero Page address at PC
+        // Fetch Zero Page address at PC plus X
 
         Byte zero_point_address = IMM( memory ) + X;
 
@@ -89,13 +89,24 @@ struct CPU {
 
     Byte ZPY( Mem& memory ) {
 
-        // Fetch Zero Page address at PC
+        // Fetch Zero Page address at PC plus Y
 
         Byte zero_point_address = IMM( memory ) + Y;
 
         // Return byte at zero point address
 
         return memory[zero_point_address];
+    }
+
+    Byte AB( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Word address = (IMM( memory ) << 8) | IMM(memory); // Get next 2 bytes in memory
+
+        // Return byte at address
+
+        return memory[address];
     }
 
     // ========== OP Codes ==========
@@ -111,6 +122,9 @@ struct CPU {
             case 0xB5: {
                 return ZPX( memory );
             } break;
+            case 0xAD: {
+                return AB( memory );
+            } break;
         }
     }
 
@@ -119,7 +133,7 @@ struct CPU {
     void Run( Mem& memory, Byte ins, Byte value ) {
         switch ( ins ) {
             // LDA
-            case 0xA9: case 0xA5: case 0xB5: {
+            case 0xA9: case 0xA5: case 0xB5: case 0xAD: {
                 
                 // Load Accumulator
 
