@@ -135,11 +135,11 @@ struct CPU {
 
         // Fetch address at PC
 
-        Word addressOfAddress = ((IMM( memory ) << 8) | IMM(memory)) + X; // Get next 2 bytes in memory
+        Byte addressOfAddress = IMM( memory );
 
         // Fetch address at address
 
-        Byte address = memory[addressOfAddress];
+        Word address = (Word) ((memory[addressOfAddress + X] << 8) | memory[addressOfAddress + 1 + X]);
 
         // Return byte at address
 

@@ -9,7 +9,7 @@ namespace IDY {
 
         // Run loop for first 16 addresses in 0x00 range
 
-        for (int address = 0x00; address <= 0x0F; address++) {
+        for (int PCAddress = 0x00; PCAddress <= 0x0F; PCAddress++) {
 
             for (int effectiveAddress = 0x0500; effectiveAddress <= 0x050F; effectiveAddress++) {
                 
@@ -22,9 +22,9 @@ namespace IDY {
 
                 // Initialization Script
 
-                mem[PC] = (Byte) (address);
-                mem[(Byte) (address)] = (Byte) ((effectiveAddress - Y) >> 8);
-                mem[(Byte) (address + 1)] = (Byte) (effectiveAddress - Y);
+                mem[PC] = (Byte) (PCAddress);
+                mem[(Byte) (PCAddress)] = (Byte) ((effectiveAddress - Y) >> 8);
+                mem[(Byte) (PCAddress + 1)] = (Byte) (effectiveAddress - Y);
                 mem[(Word) effectiveAddress] = value;
 
                 // Addressing mode to test

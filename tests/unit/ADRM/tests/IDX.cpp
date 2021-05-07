@@ -9,11 +9,11 @@ namespace IDX {
 
         // Run loop for PC on first 16 addresses in 0x03 range
 
-        for (int PCAddress = 0x0400; PCAddress <= 0x040F; PCAddress++) {
+        for (int PCAddress = 0x00; PCAddress <= 0x00F; PCAddress++) {
             
             // Run loop for value address on first 16 addresses in zero page
 
-            for (int valueAddress = 0x00; valueAddress <= 0x0F; valueAddress++) {
+            for (int effectiveAddress = 0x0400; effectiveAddress <= 0x040F; effectiveAddress++) {
                 
                 // Vars for script
 
@@ -23,10 +23,10 @@ namespace IDX {
 
                 // Initialization Script
 
-                mem[PC] = (Byte) (PCAddress >> 8);
-                mem[PC + 1] = (Byte) PCAddress;
-                mem[(Word) (PCAddress + X)] = (Byte) valueAddress;
-                mem[(Byte) valueAddress] = value;
+                mem[PC] = (Byte) PCAddress;
+                mem[(Word) (PCAddress + X)] = (Byte) (effectiveAddress >> 8);
+                mem[(Word) (PCAddress + X + 1)] = (Byte) (effectiveAddress);
+                mem[(Word) effectiveAddress] = value;
 
                 // Addressing mode to test
 
@@ -35,7 +35,7 @@ namespace IDX {
                 // Assertions
                 
                 REQUIRE( receivedValue == value ); // Ensure values match up
-                REQUIRE( PC + 2 == cpu.PC ); // Ensure PC was incremented twice
+                REQUIRE( PC + 1 == cpu.PC ); // Ensure PC was incremented twice
             }
         }
     }
