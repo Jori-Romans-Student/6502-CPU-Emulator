@@ -53,51 +53,6 @@ struct CPU {
 
     // ========== Addressing Modes ==========
 
-    Word IMM( Mem& memory ) {
-
-        // Get value and increment PC
-
-        Word address = PC;
-        PC++;
-
-        // Return value
-
-        return address;
-    }
-
-    Byte ZP( Mem& memory ) {
-
-        // Fetch Zero Page address address at PC
-
-        Word addressOfAddress = IMM( memory );
-
-        // Return zero point address
-
-        return (Byte) memory[addressOfAddress];
-    }
-
-    Byte ZPX( Mem& memory ) {
-
-        // Fetch Zero Page address address at PC
-
-        Word addressOfAddress = IMM( memory );
-
-        // Return zero point address plus X
-
-        return (Byte) (memory[addressOfAddress] + X);
-    }
-
-    Byte ZPY( Mem& memory ) {
-
-        // Fetch Zero Page address address at PC
-
-        Word addressOfAddress = IMM( memory );
-
-        // Return zero point address plus X
-
-        return (Byte) (memory[addressOfAddress] + Y);
-    }
-
     Word AB( Mem& memory ) {
 
         // Fetch address at PC
@@ -159,6 +114,57 @@ struct CPU {
         // Return address
 
         return address;
+    }
+
+    Word IMM( Mem& memory ) {
+
+        // Get value and increment PC
+
+        Word address = PC;
+        PC++;
+
+        // Return value
+
+        return address;
+    }
+
+    Byte IMP( Mem& memory ) {
+        // Return 0x00 value for now
+
+        return (Byte) 0x00;
+    }
+
+    Byte ZP( Mem& memory ) {
+
+        // Fetch Zero Page address address at PC
+
+        Word addressOfAddress = IMM( memory );
+
+        // Return zero point address
+
+        return (Byte) memory[addressOfAddress];
+    }
+
+    Byte ZPX( Mem& memory ) {
+
+        // Fetch Zero Page address address at PC
+
+        Word addressOfAddress = IMM( memory );
+
+        // Return zero point address plus X
+
+        return (Byte) (memory[addressOfAddress] + X);
+    }
+
+    Byte ZPY( Mem& memory ) {
+
+        // Fetch Zero Page address address at PC
+
+        Word addressOfAddress = IMM( memory );
+
+        // Return zero point address plus X
+
+        return (Byte) (memory[addressOfAddress] + Y);
     }
 
     // ========== OP Codes ==========
@@ -224,6 +230,17 @@ struct CPU {
                 return IMM( memory );
             } 
             break;
+
+            // Implied Address Mode
+
+            case 0x00: case 0x18: case 0xD8: case 0x58: case 0xB8:
+            case 0xCA: case 0x88: case 0xE8: case 0xC8: case 0xEA:
+            case 0x48: case 0x08: case 0x68: case 0x28: case 0x40:
+            case 0x60: case 0x38: case 0xF8: case 0x78: case 0xAA:
+            case 0xA8: case 0xBA: case 0x8A: case 0x9A: case 0x98:
+            {
+                return IMP( memory );
+            } break;
 
             // Zero Page Addressing Mode
 
