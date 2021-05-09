@@ -64,7 +64,10 @@ namespace IDY {
 
         // OPCodes for Absolute Addressing Mode Y
 
-        Byte OPCodes[1] = {0xB1};
+        Byte OPCodes[8] = {
+            0xB1, 0x71, 0x31, 0xD1, 0x51,
+            0x11, 0xF1, 0x91
+        };
 
         // Vars for script
 

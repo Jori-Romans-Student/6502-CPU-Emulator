@@ -59,7 +59,10 @@ namespace ABY {
 
         // OPCodes for Absolute Addressing Mode Y
 
-        Byte OPCodes[2] = { 0xB9, 0xBE };
+        Byte OPCodes[9] = { 
+            0xB9, 0xBE, 0x79, 0x39, 0xD9,
+            0x59, 0x19, 0xF9, 0x99
+        };
 
         // Vars for script
 

@@ -65,7 +65,10 @@ namespace IDX {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[1] = {0xA1};
+        Byte OPCodes[8] = {
+            0xA1, 0x61, 0x21, 0xC1, 0x41,
+            0x01, 0xE1, 0x81
+        };
 
         // Vars for script
 
