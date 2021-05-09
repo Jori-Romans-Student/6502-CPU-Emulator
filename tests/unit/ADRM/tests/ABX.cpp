@@ -44,6 +44,9 @@ namespace ABX {
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x01FF;
 
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
+
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0xFF; 
 
@@ -111,6 +114,9 @@ namespace ABX {
 
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x0100;
+
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
 
         config.X.start = (Byte) rand();
         config.X.end = config.X.start; 

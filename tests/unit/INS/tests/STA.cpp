@@ -1,47 +1,29 @@
 #include "catch2/catch.hpp"
 #include "../constants.hpp"
 
-// LDX Test Case
+// STA Test Case
 
-namespace LDX {
+namespace STA {
 
     void testOne(Mem& mem, CPU& cpu) {
 
-        for (int value = 0x00; value <= 0xFF; value++) {
+        for (int address = 0x0400; address <= 0x04FF; address++) {
             
             // Reset CPU
 
             cpu.Reset( mem );
             
-            // Add script
-
-            mem[cpu.PC] = value;
-            
             // Run instruction for value at PC
 
-            cpu.LDX( mem, cpu.PC );
+            cpu.STA( mem, (Word) address );
         
             // Assertions
         
-            REQUIRE( cpu.X == value ); // Ensure values match up
-
-            if ( value >= 0x80 ) {
-                REQUIRE( cpu.N == 1 );
-            }
-            else {
-                REQUIRE( cpu.N == 0 );
-            }
-
-            if ( value == 0x00 ) {
-                REQUIRE( cpu.Z == 1 );
-            }
-            else {
-                REQUIRE( cpu.Z == 0 );
-            } 
+            REQUIRE( mem[(Word) address] == cpu.A ); // Ensure value was stored at address
         }
     }
 
-    TEST_CASE( "LDX Instruction" ) {
+    TEST_CASE( "STA Instruction" ) {
 
         // CPU Config
 
@@ -53,7 +35,7 @@ namespace LDX {
         config.PC.end = (Word) 0x0100;
 
         config.A.start = (Byte) 0x00;
-        config.A.end = (Byte) 0x00;
+        config.A.end = (Byte) 0xFF;
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
@@ -70,7 +52,7 @@ namespace LDX {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[5] = { 0xA2, 0xA6, 0xB6, 0xAE, 0xBE };
+        Byte OPCodes[8] = { 0xA9, 0xA5, 0xB5, 0xAD, 0xBD, 0xB9, 0xA1, 0xB1 };
 
         // Vars for script
 
@@ -88,7 +70,7 @@ namespace LDX {
             // Get value at index
 
             Byte ins = OPCodes[i];
-            
+
             // Add script
 
             mem[cpu.PC] = value;
@@ -99,11 +81,11 @@ namespace LDX {
         
             // Assertions
         
-            REQUIRE( cpu.X == value ); // Ensure values match up
+            REQUIRE( cpu.A == value ); // Ensure values match up
         }
     }
 
-    TEST_CASE( "LDX Instruction OP Codes" ) {
+    TEST_CASE( "LDA Instruction OP Codes" ) {
 
         // CPU Config
 
@@ -113,9 +95,6 @@ namespace LDX {
 
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x0100;
-
-        config.A.start = (Byte) 0x00;
-        config.A.end = (Byte) 0x00;
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 

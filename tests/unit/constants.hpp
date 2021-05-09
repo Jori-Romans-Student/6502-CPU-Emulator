@@ -18,8 +18,9 @@ struct CPUConfig {
 
     Range<Word> PC;
 
-    // Range for X and Y Register
+    // Range for A, X and Y Register
 
+    Range<Byte> A;
     Range<Byte> X;
     Range<Byte> Y;
 };
@@ -35,24 +36,30 @@ void run(void (*script)(Mem&, CPU&), CPUConfig config) {
 
     for (int PC = config.PC.start; PC <= config.PC.end; PC++) {
 
-        // Run from X start to X end
+        // Run from A start to A end
 
-        for (int X = config.X.start; X <= config.X.end; X++) {
+        for (int A = config.A.start; A <= config.A.end; A++) {
+            
+            // Run from X start to X end
 
-            // Run from Y start to Y end
+            for (int X = config.X.start; X <= config.X.end; X++) {
 
-            for (int Y = config.Y.start; Y <= config.Y.end; Y++) {
-                
-                // Reset memory on every run and reinitialize PC
+                // Run from Y start to Y end
 
-                cpu.Reset( mem );
-                cpu.PC = (Word) PC;
-                cpu.X = (Byte) X;
-                cpu.Y = (Byte) Y;
-                
-                // Run script
+                for (int Y = config.Y.start; Y <= config.Y.end; Y++) {
+                    
+                    // Reset memory on every run and reinitialize PC
 
-                script(mem, cpu);
+                    cpu.Reset( mem );
+                    cpu.PC = (Word) PC;
+                    cpu.A = (Byte) A;
+                    cpu.X = (Byte) X;
+                    cpu.Y = (Byte) Y;
+                    
+                    // Run script
+
+                    script(mem, cpu);
+                }
             }
         }
     }

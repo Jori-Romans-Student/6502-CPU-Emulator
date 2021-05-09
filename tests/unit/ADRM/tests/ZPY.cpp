@@ -46,6 +46,9 @@ namespace ZPY {
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
 
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
+
         config.Y.start = (Byte) 0x00;
         config.Y.end = (Byte) 0xFF;
 
@@ -110,6 +113,9 @@ namespace ZPY {
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
+
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
 
         config.Y.start = (Byte) rand();
         config.Y.end = config.Y.start; 
