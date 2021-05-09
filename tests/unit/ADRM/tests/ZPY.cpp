@@ -58,7 +58,7 @@ namespace ZPY {
 
         // OPCodes for Absolute Addressing Mode Y
 
-        Byte OPCodes[0] = {};
+        Byte OPCodes[1] = { 0xB6 };
 
         // Vars for script
 

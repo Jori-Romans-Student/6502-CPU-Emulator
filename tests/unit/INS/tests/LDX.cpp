@@ -1,37 +1,43 @@
 #include "catch2/catch.hpp"
 #include "../constants.hpp"
 
-// Zero Page Test Case
+// LDX Test Case
 
-namespace ZP {
+namespace LDX {
 
     void testOne(Mem& mem, CPU& cpu) {
 
-        // Run loop for every ZP Address
-
-        for (int ZPAddress = 0x00; ZPAddress <= 0xFF; ZPAddress++) {
-
-            // Vars for script
-
-            Word PC = cpu.PC;
-            Byte value = (Byte) rand();
-
-            // Initialization Script
-
-            mem[PC] = (Byte) ZPAddress;
-            mem[(Byte) ZPAddress] = value;
-
-            // Addressing mode to test
-
-            Byte receivedValue = cpu.ZP( mem );
-
-            // Assertions
+        for (int value = 0x00; value <= 0xFF; value++) {
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            // Reset CPU
+
+            cpu.Reset( mem );
+            
+            // Run script
+
+            cpu.LDX( (Byte) value );
+        
+            // Assertions
+        
+            REQUIRE( cpu.X == value ); // Ensure values match up
+
+            if ( value >= 0x80 ) {
+                REQUIRE( cpu.N == 1 );
+            }
+            else {
+                REQUIRE( cpu.N == 0 );
+            }
+
+            if ( value == 0x00 ) {
+                REQUIRE( cpu.Z == 1 );
+            }
+            else {
+                REQUIRE( cpu.Z == 0 );
+            } 
         }
     }
 
-    TEST_CASE( "Zero Page Addressing Mode" ) {
+    TEST_CASE( "LDX Instruction" ) {
 
         // CPU Config
 
@@ -40,7 +46,7 @@ namespace ZP {
         // Ranges for Tests
 
         config.PC.start = (Word) 0x0100;
-        config.PC.end = (Word) 0x01FF;
+        config.PC.end = (Word) 0x0100;
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
@@ -57,43 +63,36 @@ namespace ZP {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[2] = { 0xAD, 0xA6 };
+        Byte OPCodes[5] = { 0xA2, 0xA6, 0xB6, 0xAE, 0xBE };
 
         // Vars for script
 
-        Word ZPAddress = 0x00;
-        Word PC = cpu.PC;
         Byte value = (Byte) rand();
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
-
-        // Initialization Script
-
-        mem[PC] = (Byte) ZPAddress;
-        mem[(Byte) ZPAddress] = value;
 
         // Addressing mode to test
 
         for (int i = 0; i < length; i++) {
+                
+            // Reset CPU
+
+            cpu.Reset( mem );
 
             // Get value at index
 
-            Byte code = OPCodes[i];
-
-            // Reset PC
-
-            cpu.PC = PC;
+            Byte ins = OPCodes[i];
             
-            // Get value
+            // Run script
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            cpu.Run( mem, ins, (Byte) value );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( cpu.X == value ); // Ensure values match up
         }
     }
 
-    TEST_CASE("Zero Page Mode OP Codes") {
+    TEST_CASE( "LDX Instruction OP Codes" ) {
 
         // CPU Config
 

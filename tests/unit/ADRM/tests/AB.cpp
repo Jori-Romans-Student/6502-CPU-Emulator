@@ -58,7 +58,7 @@ namespace AB {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[1] = {0xAD};
+        Byte OPCodes[2] = { 0xAD, 0xAE };
 
         // Vars for script
 

@@ -51,7 +51,7 @@ namespace IMM {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[1] = {0xA9};
+        Byte OPCodes[2] = { 0xA9, 0xA2 };
 
         // Vars for script
 
