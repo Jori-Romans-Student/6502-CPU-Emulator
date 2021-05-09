@@ -93,4 +93,26 @@ namespace LDA {
             REQUIRE( cpu.A == value ); // Ensure values match up
         }
     }
+
+    TEST_CASE( "LDA Instruction OP Codes" ) {
+
+        // CPU Config
+
+        CPUConfig config;
+
+        // Ranges for Tests
+
+        config.PC.start = (Word) 0x0100;
+        config.PC.end = (Word) 0x0100;
+
+        config.X.start = (Byte) 0x00;
+        config.X.end = (Byte) 0x00; 
+
+        config.Y.start = (Byte) 0x00;
+        config.Y.end = (Byte) 0x00; 
+
+        // Run Script
+
+        run(&testTwo, config);
+    }
 }
