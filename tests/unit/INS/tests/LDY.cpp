@@ -70,7 +70,9 @@ namespace LDY {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[5] = { 0xA0, 0xA4, 0xB4, 0xAC, 0xBC };
+        Byte OPCodes[5] = { 
+            0xA0, 0xA4, 0xB4, 0xAC, 0xBC 
+        };
 
         // Vars for script
 

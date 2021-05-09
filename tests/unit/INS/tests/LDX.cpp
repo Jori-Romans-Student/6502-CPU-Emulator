@@ -70,7 +70,9 @@ namespace LDX {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[5] = { 0xA2, 0xA6, 0xB6, 0xAE, 0xBE };
+        Byte OPCodes[5] = { 
+            0xA2, 0xA6, 0xB6, 0xAE, 0xBE 
+        };
 
         // Vars for script
 
