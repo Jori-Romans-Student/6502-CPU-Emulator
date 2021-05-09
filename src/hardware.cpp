@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <map>
+
+// ========== Types ==========
 
 using Byte = unsigned char;
 using Word = unsigned short;
 
 using u32 = unsigned int;
+
+// ========== Hardware ==========
 
 struct Mem {
     static constexpr u32 MAX_MEM = 256 * 256;
@@ -46,54 +51,199 @@ struct CPU {
     Byte V : 1;
     Byte N : 1;
 
-    // Instructions;
+    // ========== Addressing Modes ==========
 
-    static constexpr Byte INS_LDA_IM = 0xA9;
-    static constexpr Byte INS_LDA_ZP = 0xA5;
+    Byte IMM( Mem& memory ) {
 
-    // Actions
+        // Get value and increment PC
 
-    Byte Read( Mem& memory, Word address ) {
-        Byte data = memory[address];
-        return data;
-    }
-
-    Byte Fetch( Mem& memory ) {
-        Byte data = Read(memory, PC);
+        Byte value = memory[PC];
         PC++;
-        return data;
+
+        // Return value
+
+        return value;
     }
 
-    void Execute( Mem& memory, Byte instruction ) {
-        switch (instruction) {
-            case INS_LDA_IM: {
+    Byte ZP( Mem& memory ) {
 
-                // Fetch value from PC that will contain actual value instead of pointer
+        // Fetch Zero Page address at PC
 
-                Byte value = Fetch( memory );
+        Byte zero_point_address = IMM( memory );
 
-                // Load Accumulator
+        // Return byte at zero point address
 
-                A = value;
+        return memory[zero_point_address];
+    }
 
-                // Set Flags
+    Byte ZPX( Mem& memory ) {
 
-                Z = (A == 0);
-                N = (A & 0b10000000) > 0;
+        // Fetch Zero Page address at PC plus X
 
+        Byte zero_point_address = IMM( memory ) + X;
+
+        // Return byte at zero point address
+
+        return memory[zero_point_address];
+    }
+
+    Byte ZPY( Mem& memory ) {
+
+        // Fetch Zero Page address at PC plus Y
+
+        Byte zero_point_address = IMM( memory ) + Y;
+
+        // Return byte at zero point address
+
+        return memory[zero_point_address];
+    }
+
+    Byte AB( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Word address = (IMM( memory ) << 8) | IMM(memory); // Get next 2 bytes in memory
+
+        // Return byte at address
+
+        return memory[address];
+    }
+
+    Byte ABX( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Word address = ((IMM( memory ) << 8) | IMM(memory)) + X; // Get next 2 bytes in memory
+
+        // Return byte at address
+
+        return memory[address];
+    }
+
+    Byte ABY( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Word address = ((IMM( memory ) << 8) | IMM(memory)) + Y; // Get next 2 bytes in memory
+
+        // Return byte at address
+
+        return memory[address];
+    }
+
+    Byte IDX( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Byte addressOfAddress = IMM( memory );
+
+        // Fetch address at address
+
+        Word address = (Word) ((memory[addressOfAddress + X] << 8) | memory[addressOfAddress + 1 + X]);
+
+        // Return byte at address
+
+        return memory[address];
+    }
+
+    Byte IDY( Mem& memory ) {
+
+        // Fetch address at PC
+
+        Byte addressOfAddress = IMM( memory );
+
+        // Fetch address at address
+
+        Word address = (Word) (((memory[addressOfAddress] << 8) | memory[addressOfAddress + 1]) + Y);
+
+        // Return byte at address
+
+        return memory[address];
+    }
+
+    // ========== OP Codes ==========
+
+    Byte RetrieveAddressMode( Mem& memory, Byte ins ) {
+        switch( ins ) {
+            case 0xAD: {
+                return AB( memory );
+            } break;
+            case 0xBD: {
+                return ABX( memory );
+            } break;
+            case 0xB9: {
+                return ABY( memory );
+            } break;
+            case 0xA9: {
+                return IMM( memory );
+            } break;
+            case 0xA1: {
+                return IDX( memory );
+            } break;
+            case 0xB1: {
+                return IDY( memory );
+            } break;
+            case 0xA5: {
+                return ZP( memory );
+            } break;
+            case 0xB5: {
+                return ZPX( memory );
             } break;
             default: {
-                
+                return (Byte) 0x00;
             }
         }
+    }
+
+    // ========== Instructions ==========
+
+    void LDA( Byte value ) {
+        // Load Accumulator
+
+        A = value;
+
+        // Set Flags
+
+        Z = (A == 0);
+        N = (A & 0b10000000) > 0;
+    }
+
+    void Run( Mem& memory, Byte ins, Byte value ) {
+        switch ( ins ) {
+
+            // LDA
+            
+            case 0xA9: case 0xA5: case 0xB5: case 0xAD: case 0xBD: case 0xB9: case 0xA1: case 0xB1: {
+                LDA( value );
+            }
+        }
+    }
+
+    // ========== Operations ==========
+
+    void Execute( Mem& memory ) {
+        
+        // Get instruction at PC
+
+        Byte instruction = IMM( memory );
+
+        // Retrieve the value to execute the instruction on
+
+        Byte value = RetrieveAddressMode( memory, instruction );
+
+        // Run Instruction
+
+        Run( memory, instruction, value );
     };
+
+    // ========== Scripts ==========
 
     // Reset script at memory location ** TO BE REMOVED **
 
     void Reset(Mem& memory) {
         // Boot Up
 
-        PC = 0x0000;
+        PC = 0x0100;
         SP = 0x00;
         D = 0;
         A = X = Y = 0;
@@ -112,10 +262,6 @@ struct CPU {
         
         // Fetch instruction from memory
 
-        Byte instruction = Fetch( memory );
-
-        // Execute instruciton
-
-        Execute( memory, instruction );
+        Execute( memory );
     };
 };
