@@ -311,6 +311,54 @@ struct CPU {
         memory[address] = Y;
     }
 
+    void TAX( Mem& memory ) {
+
+        // Load X Register
+
+        X = A;
+
+        // Set Flags
+
+        Z = (X == 0);
+        N = (X & 0b10000000) > 0;
+    }
+
+    void TAY( Mem& memory ) {
+
+        // Load Y Register
+
+        Y = A;
+
+        // Set Flags
+
+        Z = (Y == 0);
+        N = (Y & 0b10000000) > 0;
+    }
+
+    void TXA( Mem& memory ) {
+
+        // Load A Register
+
+        A = X;
+
+        // Set Flags
+
+        Z = (A == 0);
+        N = (A & 0b10000000) > 0;
+    }
+
+    void TYA( Mem& memory ) {
+
+        // Load A Register
+
+        A = Y;
+
+        // Set Flags
+
+        Z = (A == 0);
+        N = (A & 0b10000000) > 0;
+    }
+
     void Run( Mem& memory, Byte ins, Word address ) {
 
         switch ( ins ) {
@@ -362,6 +410,38 @@ struct CPU {
             case 0x84: case 0x94: case 0x8C:
             {
                 STY( memory, address );
+            }
+            break;
+
+            // TAX Instruction
+
+            case 0xAA:
+            {
+                TAX( memory );
+            }
+            break;
+
+            // TAY Instruction
+
+            case 0xA8:
+            {
+                TAY( memory );
+            }
+            break;
+
+            // TXA Instruction
+
+            case 0x8A:
+            {
+                TXA( memory );
+            }
+            break;
+
+            // TYA Instruction
+
+            case 0x98:
+            {
+                TYA( memory );
             }
             break;
         }
