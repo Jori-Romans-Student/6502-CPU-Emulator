@@ -3,181 +3,94 @@
 
 // Immediate Test Case Zero Value
 
-TEST_CASE( "LDA Instruction on Zero Value" ) {
+// LDA Test Case
 
-    // Initialize Memory and CPU
+namespace LDA {
 
-    Mem mem;
-    CPU cpu;
+    void testOne(Mem& mem, CPU& cpu) {
 
-    // Instruction
-
-    int amountOfIns = 2;
-    Byte Insructions[2] = { 0xA9, 0xA5 };
-
-    // Starting Value
-
-    Byte expectedValue = (Byte) 0x00;
-
-    for (int i = 0; i < amountOfIns; i++) {
-
-        // Fetch expected instruction
-
-        Byte ins = Insructions[i];
-
-        // ========== Script ========== //
-
-        cpu.Reset( mem );
-
-        // ========== Script ========== //
-
-        // Run Instruction
-
-        cpu.Run( mem, ins, expectedValue );
-
-        // Run tests
-        
-        REQUIRE( cpu.A == expectedValue ); // Ensure values match up
-        
-        REQUIRE( cpu.N == 0 ); 
-        REQUIRE( cpu.Z == 1 ); 
-
-        REQUIRE( cpu.C == 0 );
-        REQUIRE( cpu.I == 0 ); 
-        REQUIRE( cpu.D == 0 ); 
-        REQUIRE( cpu.B == 0 ); 
-        REQUIRE( cpu.V == 0 );  
-    }
-}
-
-// Immediate Test Case Positive Values
-
-TEST_CASE( "LDA Instruction on Positive Value" ) {
-
-    // Initialize Memory and CPU
-
-    Mem mem;
-    CPU cpu;
-
-    // Instruction
-
-    int amountOfIns = 2;
-    Byte Insructions[2] = { 0xA9, 0xA5 };
-
-    for (int i = 0; i < amountOfIns; i++) {
-
-        // Fetch expected instruction
-
-        Byte ins = Insructions[i];
-
-        // Starting Value
-
-        Byte expectedValue = (Byte) 0x01;
-
-        // Amount of runs for test
-
-        int runs = 127;
-
-        // Run for all positive values
-
-        while (runs > 0) {
-
-            // ========== Script ========== //
+        for (int value = 0x00; value <= 0xFF; value++) {
+            
+            // Reset CPU
 
             cpu.Reset( mem );
-
-            // ========== Script ========== //
-
-            // Run Instruction
-
-            cpu.Run( mem, ins, expectedValue );
-
-            // Run tests
             
-            REQUIRE( cpu.A == expectedValue ); // Ensure values match up
-            
-            REQUIRE( cpu.N == 0 ); 
-            REQUIRE( cpu.Z == 0 ); 
+            // Run script
 
-            REQUIRE( cpu.C == 0 );
-            REQUIRE( cpu.I == 0 ); 
-            REQUIRE( cpu.D == 0 ); 
-            REQUIRE( cpu.B == 0 ); 
-            REQUIRE( cpu.V == 0 );  
+            cpu.LDA( (Byte) value );
+        
+            // Assertions
+        
+            REQUIRE( cpu.A == value ); // Ensure values match up
 
-            // Subtract amount of runs
+            if ( value >= 0x80 ) {
+                REQUIRE( cpu.N == 1 );
+            }
+            else {
+                REQUIRE( cpu.N == 0 );
+            }
 
-            runs--;
-
-            // Increment value
-
-            expectedValue++;
+            if ( value == 0x00 ) {
+                REQUIRE( cpu.Z == 1 );
+            }
+            else {
+                REQUIRE( cpu.Z == 0 );
+            } 
         }
     }
-}
 
-// Immediate Test Case Negative Values
+    TEST_CASE( "LDA Instruction" ) {
 
-TEST_CASE( "LDA Instruction on Negative Value" ) {
+        // CPU Config
 
-    // Initialize Memory and CPU
+        CPUConfig config;
 
-    Mem mem;
-    CPU cpu;
+        // Ranges for Tests
 
-    // Instruction
+        config.PC.start = (Word) 0x0100;
+        config.PC.end = (Word) 0x0100;
 
-    int amountOfIns = 2;
-    Byte Insructions[2] = { 0xA9, 0xA5 };
+        config.X.start = (Byte) 0x00;
+        config.X.end = (Byte) 0x00; 
 
-    for (int i = 0; i < amountOfIns; i++) {
+        config.Y.start = (Byte) 0x00;
+        config.Y.end = (Byte) 0x00; 
 
-        // Fetch expected instruction
+        // Run Script
 
-        Byte ins = Insructions[i];
+        run(&testOne, config);
+    }
 
-        // Starting Value
+    void testTwo(Mem& mem, CPU& cpu) {
 
-        Byte expectedValue = (Byte) 0x80;
+        // OPCodes for Absolute Addressing Mode
 
-        // Amount of runs for test
+        Byte OPCodes[8] = { 0xA9, 0xA5, 0xB5, 0xAD, 0xBD, 0xB9, 0xA1, 0xB1 };
 
-        int runs = 128;
+        // Vars for script
 
-        // Run for all negative values
+        Byte value = (Byte) rand();
+        int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
-        while (runs > 0) {
+        // Addressing mode to test
 
-            // ========== Script ========== //
+        for (int i = 0; i < length; i++) {
+                
+            // Reset CPU
 
             cpu.Reset( mem );
 
-            // ========== Script ========== //
+            // Get value at index
 
-            // Run Instruction
-
-            cpu.Run( mem, ins, expectedValue );
-
-            // Run tests
+            Byte ins = OPCodes[i];
             
-            REQUIRE( cpu.A == expectedValue ); // Ensure values match up
-            
-            REQUIRE( cpu.N == 1 ); 
-            REQUIRE( cpu.Z == 0 ); 
+            // Run script
 
-            REQUIRE( cpu.C == 0 );
-            REQUIRE( cpu.I == 0 ); 
-            REQUIRE( cpu.D == 0 ); 
-            REQUIRE( cpu.B == 0 ); 
-            REQUIRE( cpu.V == 0 );  
-
-            // Subtract amount of runs
-
-            runs--;
-
-            // Increment value
-
-            expectedValue++;
+            cpu.Run( mem, ins, (Byte) value );
+        
+            // Assertions
+        
+            REQUIRE( cpu.A == value ); // Ensure values match up
         }
     }
 }

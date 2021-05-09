@@ -197,19 +197,24 @@ struct CPU {
 
     // ========== Instructions ==========
 
+    void LDA( Byte value ) {
+        // Load Accumulator
+
+        A = value;
+
+        // Set Flags
+
+        Z = (A == 0);
+        N = (A & 0b10000000) > 0;
+    }
+
     void Run( Mem& memory, Byte ins, Byte value ) {
         switch ( ins ) {
+
             // LDA
-            case 0xA9: case 0xA5: case 0xB5: case 0xAD: {
-                
-                // Load Accumulator
-
-                A = value;
-
-                // Set Flags
-
-                Z = (A == 0);
-                N = (A & 0b10000000) > 0;
+            
+            case 0xA9: case 0xA5: case 0xB5: case 0xAD: case 0xBD: case 0xB9: case 0xA1: case 0xB1: {
+                LDA( value );
             }
         }
     }
