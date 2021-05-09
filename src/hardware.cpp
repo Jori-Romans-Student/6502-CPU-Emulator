@@ -165,8 +165,23 @@ struct CPU {
 
     Byte RetrieveAddressMode( Mem& memory, Byte ins ) {
         switch( ins ) {
+            case 0xAD: {
+                return AB( memory );
+            } break;
+            case 0xBD: {
+                return ABX( memory );
+            } break;
+            case 0xB9: {
+                return ABY( memory );
+            } break;
             case 0xA9: {
                 return IMM( memory );
+            } break;
+            case 0xA1: {
+                return IDX( memory );
+            } break;
+            case 0xB1: {
+                return IDY( memory );
             } break;
             case 0xA5: {
                 return ZP( memory );
@@ -174,9 +189,9 @@ struct CPU {
             case 0xB5: {
                 return ZPX( memory );
             } break;
-            case 0xAD: {
-                return AB( memory );
-            } break;
+            default: {
+                return (Byte) 0x00;
+            }
         }
     }
 
