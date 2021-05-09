@@ -299,26 +299,46 @@ struct CPU {
         N = (Y & 0b10000000) > 0;
     }
 
+    void STA( Mem& memory, Word address ) {
+        memory[address] = A;
+    }
+
     void Run( Mem& memory, Byte ins, Word address ) {
         switch ( ins ) {
 
-            // LDA
+            // LDA Instruction
             
-            case 0xA9: case 0xA5: case 0xB5: case 0xAD: case 0xBD: case 0xB9: case 0xA1: case 0xB1: {
+            case 0xA9: case 0xA5: case 0xB5: case 0xAD: case 0xBD: 
+            case 0xB9: case 0xA1: case 0xB1: 
+            {
                 LDA( memory, address );
-            } break;
+            } 
+            break;
 
-            // LDX
+            // LDX Instruction
 
-            case 0xA2: case 0xA6: case 0xB6: case 0xAE: case 0xBE: {
+            case 0xA2: case 0xA6: case 0xB6: case 0xAE: case 0xBE: 
+            {
                 LDX( memory, address );
-            } break;
+            } 
+            break;
 
-            // LDX
+            // LDY Instruction
 
-            case 0xA0: case 0xA4: case 0xB4: case 0xAC: case 0xBC: {
+            case 0xA0: case 0xA4: case 0xB4: case 0xAC: case 0xBC: 
+            {
                 LDY( memory, address );
-            } break;
+            } 
+            break;
+
+            // STA Instruction
+
+            case 0x85: case 0x95: case 0x8D: case 0x9D: case 0x99:
+            case 0x81: case 0x91:
+            {
+                STA( memory, address );
+            }
+            break;
         }
     }
 
