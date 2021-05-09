@@ -24,11 +24,11 @@ namespace AB {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.AB( mem );
+            Word receivedAddress = cpu.AB( mem );
 
             // Assertions
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
@@ -85,13 +85,13 @@ namespace AB {
 
             cpu.PC = PC;
             
-            // Get value
+            // Get address
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

@@ -25,11 +25,11 @@ namespace ABY {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.ABY( mem );
+            Word receivedAddress = cpu.ABY( mem );
 
             // Assertions
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
@@ -89,11 +89,11 @@ namespace ABY {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

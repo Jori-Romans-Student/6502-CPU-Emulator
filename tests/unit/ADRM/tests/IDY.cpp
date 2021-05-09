@@ -29,11 +29,11 @@ namespace IDY {
 
                 // Addressing mode to test
 
-                Byte receivedValue = cpu.IDY( mem );
+                Word receivedAddress = cpu.IDY( mem );
 
                 // Assertions
                 
-                REQUIRE( receivedValue == value ); // Ensure values match up
+                REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
             }
         }
     }
@@ -96,11 +96,11 @@ namespace IDY {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

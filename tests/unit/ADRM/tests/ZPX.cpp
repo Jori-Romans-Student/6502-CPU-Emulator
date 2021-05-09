@@ -24,11 +24,11 @@ namespace ZPX {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.ZPX( mem );
+            Word receivedAddress = cpu.ZPX( mem );
 
             // Assertions
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
@@ -87,11 +87,11 @@ namespace ZPX {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

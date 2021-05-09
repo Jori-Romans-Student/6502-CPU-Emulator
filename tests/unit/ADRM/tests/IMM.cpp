@@ -18,11 +18,11 @@ namespace IMM {
 
         // Addressing mode to test
 
-        Byte receivedValue = cpu.IMM( mem );
+        Word receivedAddress = cpu.IMM( mem );
 
         // Assertions
         
-        REQUIRE( receivedValue == value ); // Ensure values match up
+        REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
     }
 
     TEST_CASE( "Immediate Addressing Mode" ) {
@@ -77,11 +77,11 @@ namespace IMM {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
