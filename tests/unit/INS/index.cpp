@@ -7,3 +7,4 @@
 #include "tests/LDY.cpp" // LDY Instruction
 
 #include "tests/STA.cpp" // STA Instruction
+#include "tests/STX.cpp" // STX Instruction

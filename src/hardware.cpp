@@ -303,7 +303,12 @@ struct CPU {
         memory[address] = A;
     }
 
+    void STX( Mem& memory, Word address ) {
+        memory[address] = X;
+    }
+
     void Run( Mem& memory, Byte ins, Word address ) {
+
         switch ( ins ) {
 
             // LDA Instruction
@@ -337,6 +342,14 @@ struct CPU {
             case 0x81: case 0x91:
             {
                 STA( memory, address );
+            }
+            break;
+
+            // STX Instruction
+
+            case 0x86: case 0x96: case 0x8E:
+            {
+                STX( memory, address );
             }
             break;
         }
