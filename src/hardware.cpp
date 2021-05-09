@@ -299,26 +299,71 @@ struct CPU {
         N = (Y & 0b10000000) > 0;
     }
 
+    void STA( Mem& memory, Word address ) {
+        memory[address] = A;
+    }
+
+    void STX( Mem& memory, Word address ) {
+        memory[address] = X;
+    }
+
+    void STY( Mem& memory, Word address ) {
+        memory[address] = Y;
+    }
+
     void Run( Mem& memory, Byte ins, Word address ) {
+
         switch ( ins ) {
 
-            // LDA
+            // LDA Instruction
             
-            case 0xA9: case 0xA5: case 0xB5: case 0xAD: case 0xBD: case 0xB9: case 0xA1: case 0xB1: {
+            case 0xA9: case 0xA5: case 0xB5: case 0xAD: case 0xBD: 
+            case 0xB9: case 0xA1: case 0xB1: 
+            {
                 LDA( memory, address );
-            } break;
+            } 
+            break;
 
-            // LDX
+            // LDX Instruction
 
-            case 0xA2: case 0xA6: case 0xB6: case 0xAE: case 0xBE: {
+            case 0xA2: case 0xA6: case 0xB6: case 0xAE: case 0xBE: 
+            {
                 LDX( memory, address );
-            } break;
+            } 
+            break;
 
-            // LDX
+            // LDY Instruction
 
-            case 0xA0: case 0xA4: case 0xB4: case 0xAC: case 0xBC: {
+            case 0xA0: case 0xA4: case 0xB4: case 0xAC: case 0xBC: 
+            {
                 LDY( memory, address );
-            } break;
+            } 
+            break;
+
+            // STA Instruction
+
+            case 0x85: case 0x95: case 0x8D: case 0x9D: case 0x99:
+            case 0x81: case 0x91:
+            {
+                STA( memory, address );
+            }
+            break;
+
+            // STX Instruction
+
+            case 0x86: case 0x96: case 0x8E:
+            {
+                STX( memory, address );
+            }
+            break;
+
+            // STY Instruction
+
+            case 0x84: case 0x94: case 0x8C:
+            {
+                STY( memory, address );
+            }
+            break;
         }
     }
 

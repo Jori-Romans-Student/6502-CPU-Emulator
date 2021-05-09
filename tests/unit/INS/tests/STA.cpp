@@ -1,47 +1,29 @@
 #include "catch2/catch.hpp"
 #include "../constants.hpp"
 
-// LDY Test Case
+// STA Test Case
 
-namespace LDY {
+namespace STA {
 
     void testOne(Mem& mem, CPU& cpu) {
 
-        for (int value = 0x00; value <= 0xFF; value++) {
+        for (int address = 0x0400; address <= 0x04FF; address++) {
             
             // Reset CPU
 
             cpu.Reset( mem );
             
-            // Add script
-
-            mem[cpu.PC] = value;
-            
             // Run instruction for value at PC
 
-            cpu.LDY( mem, cpu.PC );
+            cpu.STA( mem, (Word) address );
         
             // Assertions
         
-            REQUIRE( cpu.Y == value ); // Ensure values match up
-
-            if ( value >= 0x80 ) {
-                REQUIRE( cpu.N == 1 );
-            }
-            else {
-                REQUIRE( cpu.N == 0 );
-            }
-
-            if ( value == 0x00 ) {
-                REQUIRE( cpu.Z == 1 );
-            }
-            else {
-                REQUIRE( cpu.Z == 0 );
-            } 
+            REQUIRE( mem[(Word) address] == cpu.A ); // Ensure value was stored at address
         }
     }
 
-    TEST_CASE( "LDY Instruction" ) {
+    TEST_CASE( "STA Instruction" ) {
 
         // CPU Config
 
@@ -53,7 +35,7 @@ namespace LDY {
         config.PC.end = (Word) 0x0100;
 
         config.A.start = (Byte) 0x00;
-        config.A.end = (Byte) 0x00;
+        config.A.end = (Byte) 0xFF;
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
@@ -70,13 +52,14 @@ namespace LDY {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[5] = { 
-            0xA0, 0xA4, 0xB4, 0xAC, 0xBC 
+        Byte OPCodes[7] = { 
+            0x85, 0x95, 0x8D, 0x9D, 0x99,
+            0x81, 0x91
         };
 
         // Vars for script
 
-        Byte value = (Byte) rand();
+        Word address = 0x0400;
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
         // Addressing mode to test
@@ -86,26 +69,23 @@ namespace LDY {
             // Reset CPU
 
             cpu.Reset( mem );
+            cpu.A = (Byte) rand();
 
             // Get value at index
 
             Byte ins = OPCodes[i];
             
-            // Add script
-
-            mem[cpu.PC] = value;
-            
             // Run script
 
-            cpu.Run( mem, ins, cpu.PC );
+            cpu.Run( mem, ins, address );
         
             // Assertions
         
-            REQUIRE( cpu.Y == value ); // Ensure values match up
+            REQUIRE( mem[address] == cpu.A ); // Ensure value stored at address
         }
     }
 
-    TEST_CASE( "LDY Instruction OP Codes" ) {
+    TEST_CASE( "STA Instruction OP Codes" ) {
 
         // CPU Config
 
@@ -117,7 +97,7 @@ namespace LDY {
         config.PC.end = (Word) 0x0100;
 
         config.A.start = (Byte) 0x00;
-        config.A.end = (Byte) 0x00;
+        config.A.end = (Byte) 0x00; 
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 

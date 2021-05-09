@@ -52,6 +52,9 @@ namespace LDX {
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x0100;
 
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
+
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
 
@@ -67,7 +70,9 @@ namespace LDX {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[5] = { 0xA2, 0xA6, 0xB6, 0xAE, 0xBE };
+        Byte OPCodes[5] = { 
+            0xA2, 0xA6, 0xB6, 0xAE, 0xBE 
+        };
 
         // Vars for script
 
@@ -110,6 +115,9 @@ namespace LDX {
 
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x0100;
+
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 

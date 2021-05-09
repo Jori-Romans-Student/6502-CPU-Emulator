@@ -1,47 +1,29 @@
 #include "catch2/catch.hpp"
 #include "../constants.hpp"
 
-// LDY Test Case
+// STX Test Case
 
-namespace LDY {
+namespace STX {
 
     void testOne(Mem& mem, CPU& cpu) {
 
-        for (int value = 0x00; value <= 0xFF; value++) {
+        for (int address = 0x0400; address <= 0x04FF; address++) {
             
             // Reset CPU
 
             cpu.Reset( mem );
             
-            // Add script
-
-            mem[cpu.PC] = value;
-            
             // Run instruction for value at PC
 
-            cpu.LDY( mem, cpu.PC );
+            cpu.STX( mem, (Word) address );
         
             // Assertions
         
-            REQUIRE( cpu.Y == value ); // Ensure values match up
-
-            if ( value >= 0x80 ) {
-                REQUIRE( cpu.N == 1 );
-            }
-            else {
-                REQUIRE( cpu.N == 0 );
-            }
-
-            if ( value == 0x00 ) {
-                REQUIRE( cpu.Z == 1 );
-            }
-            else {
-                REQUIRE( cpu.Z == 0 );
-            } 
+            REQUIRE( mem[(Word) address] == cpu.X ); // Ensure value was stored at address
         }
     }
 
-    TEST_CASE( "LDY Instruction" ) {
+    TEST_CASE( "STX Instruction" ) {
 
         // CPU Config
 
@@ -56,7 +38,7 @@ namespace LDY {
         config.A.end = (Byte) 0x00;
 
         config.X.start = (Byte) 0x00;
-        config.X.end = (Byte) 0x00; 
+        config.X.end = (Byte) 0xFF; 
 
         config.Y.start = (Byte) 0x00;
         config.Y.end = (Byte) 0x00; 
@@ -68,15 +50,15 @@ namespace LDY {
 
     void testTwo(Mem& mem, CPU& cpu) {
 
-        // OPCodes for Absolute Addressing Mode
+        // OPCodes for STX Instruction
 
-        Byte OPCodes[5] = { 
-            0xA0, 0xA4, 0xB4, 0xAC, 0xBC 
+        Byte OPCodes[3] = { 
+            0x86, 0x96, 0x8E
         };
 
         // Vars for script
 
-        Byte value = (Byte) rand();
+        Word address = 0x0400;
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
         // Addressing mode to test
@@ -86,26 +68,23 @@ namespace LDY {
             // Reset CPU
 
             cpu.Reset( mem );
+            cpu.X = (Byte) rand();
 
             // Get value at index
 
             Byte ins = OPCodes[i];
             
-            // Add script
-
-            mem[cpu.PC] = value;
-            
             // Run script
 
-            cpu.Run( mem, ins, cpu.PC );
+            cpu.Run( mem, ins, address );
         
             // Assertions
         
-            REQUIRE( cpu.Y == value ); // Ensure values match up
+            REQUIRE( mem[address] == cpu.X ); // Ensure value stored at address
         }
     }
 
-    TEST_CASE( "LDY Instruction OP Codes" ) {
+    TEST_CASE( "STX Instruction OP Codes" ) {
 
         // CPU Config
 
@@ -117,7 +96,7 @@ namespace LDY {
         config.PC.end = (Word) 0x0100;
 
         config.A.start = (Byte) 0x00;
-        config.A.end = (Byte) 0x00;
+        config.A.end = (Byte) 0x00; 
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 

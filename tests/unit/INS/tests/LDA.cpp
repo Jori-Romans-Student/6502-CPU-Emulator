@@ -54,6 +54,9 @@ namespace LDA {
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x0100;
 
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
+
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
 
@@ -69,7 +72,10 @@ namespace LDA {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[8] = { 0xA9, 0xA5, 0xB5, 0xAD, 0xBD, 0xB9, 0xA1, 0xB1 };
+        Byte OPCodes[8] = { 
+            0xA9, 0xA5, 0xB5, 0xAD, 0xBD, 
+            0xB9, 0xA1, 0xB1 
+        };
 
         // Vars for script
 
@@ -112,6 +118,9 @@ namespace LDA {
 
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x0100;
+
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00;
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
