@@ -52,11 +52,14 @@ namespace STA {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[8] = { 0xA9, 0xA5, 0xB5, 0xAD, 0xBD, 0xB9, 0xA1, 0xB1 };
+        Byte OPCodes[7] = { 
+            0x85, 0x95, 0x8D, 0x9D, 0x99,
+            0x81, 0x91
+        };
 
         // Vars for script
 
-        Byte value = (Byte) rand();
+        Word address = 0x0400;
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
         // Addressing mode to test
@@ -66,26 +69,23 @@ namespace STA {
             // Reset CPU
 
             cpu.Reset( mem );
+            cpu.A = (Byte) rand();
 
             // Get value at index
 
             Byte ins = OPCodes[i];
-
-            // Add script
-
-            mem[cpu.PC] = value;
             
             // Run script
 
-            cpu.Run( mem, ins, cpu.PC );
+            cpu.Run( mem, ins, address );
         
             // Assertions
         
-            REQUIRE( cpu.A == value ); // Ensure values match up
+            REQUIRE( mem[address] == cpu.A ); // Ensure value stored at address
         }
     }
 
-    TEST_CASE( "LDA Instruction OP Codes" ) {
+    TEST_CASE( "STA Instruction OP Codes" ) {
 
         // CPU Config
 
@@ -95,6 +95,9 @@ namespace STA {
 
         config.PC.start = (Word) 0x0100;
         config.PC.end = (Word) 0x0100;
+
+        config.A.start = (Byte) 0x00;
+        config.A.end = (Byte) 0x00; 
 
         config.X.start = (Byte) 0x00;
         config.X.end = (Byte) 0x00; 
