@@ -59,7 +59,7 @@ namespace ABX {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[1] = {0xBD};
+        Byte OPCodes[2] = { 0xBD, 0xBC };
 
         // Vars for script
 

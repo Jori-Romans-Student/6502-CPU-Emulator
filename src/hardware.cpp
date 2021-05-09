@@ -165,16 +165,16 @@ struct CPU {
 
     Byte RetrieveAddressMode( Mem& memory, Byte ins ) {
         switch( ins ) {
-            case 0xAD: {
+            case 0xAD: case 0xAE: case 0xAC: {
                 return AB( memory );
             } break;
-            case 0xBD: {
+            case 0xBD: case 0xBC: {
                 return ABX( memory );
             } break;
-            case 0xB9: {
+            case 0xB9: case 0xBE: {
                 return ABY( memory );
             } break;
-            case 0xA9: {
+            case 0xA9: case 0xA2: case 0xA0: {
                 return IMM( memory );
             } break;
             case 0xA1: {
@@ -183,11 +183,14 @@ struct CPU {
             case 0xB1: {
                 return IDY( memory );
             } break;
-            case 0xA5: {
+            case 0xA5: case 0xA6: case 0xA4: {
                 return ZP( memory );
             } break;
-            case 0xB5: {
+            case 0xB5: case 0xB4: {
                 return ZPX( memory );
+            } break;
+            case 0xB6: {
+                return ZPY( memory );
             } break;
             default: {
                 return (Byte) 0x00;
@@ -208,6 +211,28 @@ struct CPU {
         N = (A & 0b10000000) > 0;
     }
 
+    void LDX( Byte value ) {
+        // Load X Register
+
+        X = value;
+
+        // Set Flags
+
+        Z = (X == 0);
+        N = (X & 0b10000000) > 0;
+    }
+
+    void LDY( Byte value ) {
+        // Load Y Register
+
+        Y = value;
+
+        // Set Flags
+
+        Z = (Y == 0);
+        N = (Y & 0b10000000) > 0;
+    }
+
     void Run( Mem& memory, Byte ins, Byte value ) {
         switch ( ins ) {
 
@@ -215,7 +240,19 @@ struct CPU {
             
             case 0xA9: case 0xA5: case 0xB5: case 0xAD: case 0xBD: case 0xB9: case 0xA1: case 0xB1: {
                 LDA( value );
-            }
+            } break;
+
+            // LDX
+
+            case 0xA2: case 0xA6: case 0xB6: case 0xAE: case 0xBE: {
+                LDX( value );
+            } break;
+
+            // LDX
+
+            case 0xA0: case 0xA4: case 0xB4: case 0xAC: case 0xBC: {
+                LDY( value );
+            } break;
         }
     }
 

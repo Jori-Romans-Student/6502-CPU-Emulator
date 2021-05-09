@@ -58,7 +58,7 @@ namespace ZPX {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[1] = {0xB5};
+        Byte OPCodes[2] = { 0xB5, 0xB4 };
 
         // Vars for script
 
