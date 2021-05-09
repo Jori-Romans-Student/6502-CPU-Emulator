@@ -29,11 +29,11 @@ namespace IDY {
 
                 // Addressing mode to test
 
-                Byte receivedValue = cpu.IDY( mem );
+                Word receivedAddress = cpu.IDY( mem );
 
                 // Assertions
                 
-                REQUIRE( receivedValue == value ); // Ensure values match up
+                REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
             }
         }
     }
@@ -64,7 +64,10 @@ namespace IDY {
 
         // OPCodes for Absolute Addressing Mode Y
 
-        Byte OPCodes[1] = {0xB1};
+        Byte OPCodes[8] = {
+            0xB1, 0x71, 0x31, 0xD1, 0x51,
+            0x11, 0xF1, 0x91
+        };
 
         // Vars for script
 
@@ -96,11 +99,11 @@ namespace IDY {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

@@ -24,11 +24,11 @@ namespace ZPY {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.ZPY( mem );
+            Word receivedAddress = cpu.ZPY( mem );
 
             // Assertions
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
@@ -58,7 +58,9 @@ namespace ZPY {
 
         // OPCodes for Absolute Addressing Mode Y
 
-        Byte OPCodes[1] = { 0xB6 };
+        Byte OPCodes[2] = { 
+            0xB6, 0x96
+        };
 
         // Vars for script
 
@@ -87,11 +89,11 @@ namespace ZPY {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

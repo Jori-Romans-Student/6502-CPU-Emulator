@@ -23,11 +23,11 @@ namespace ZP {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.ZP( mem );
+            Word receivedAddress = cpu.ZP( mem );
 
             // Assertions
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
@@ -57,7 +57,13 @@ namespace ZP {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[3] = { 0xAD, 0xA6, 0xA4 };
+        Byte OPCodes[21] = { 
+            0xA5, 0xA6, 0xA4, 0x65, 0x25,
+            0x06, 0x24, 0xC5, 0xE4, 0xC4,
+            0xC6, 0x45, 0xE6, 0x46, 0x05,
+            0x26, 0x66, 0xE5, 0x85, 0x86, 
+            0x84
+        };
 
         // Vars for script
 
@@ -85,11 +91,11 @@ namespace ZP {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

@@ -25,11 +25,11 @@ namespace ABY {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.ABY( mem );
+            Word receivedAddress = cpu.ABY( mem );
 
             // Assertions
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
@@ -59,7 +59,10 @@ namespace ABY {
 
         // OPCodes for Absolute Addressing Mode Y
 
-        Byte OPCodes[2] = { 0xB9, 0xBE };
+        Byte OPCodes[9] = { 
+            0xB9, 0xBE, 0x79, 0x39, 0xD9,
+            0x59, 0x19, 0xF9, 0x99
+        };
 
         // Vars for script
 
@@ -89,11 +92,11 @@ namespace ABY {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

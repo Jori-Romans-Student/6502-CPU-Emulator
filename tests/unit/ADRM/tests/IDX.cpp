@@ -9,7 +9,7 @@ namespace IDX {
 
         // Run loop for PC on first 16 addresses in 0x03 range
 
-        for (int PCAddress = 0x00; PCAddress <= 0x00F; PCAddress++) {
+        for (int PCAddress = 0x00; PCAddress <= 0x0F; PCAddress++) {
             
             // Run loop for value address on first 16 addresses in zero page
 
@@ -24,17 +24,17 @@ namespace IDX {
                 // Initialization Script
 
                 mem[PC] = (Byte) PCAddress;
-                mem[(Word) (PCAddress + X)] = (Byte) (effectiveAddress >> 8);
-                mem[(Word) (PCAddress + X + 1)] = (Byte) (effectiveAddress);
+                mem[(Byte) (PCAddress + X)] = (Byte) (effectiveAddress >> 8);
+                mem[(Byte) (PCAddress + X + 1)] = (Byte) (effectiveAddress);
                 mem[(Word) effectiveAddress] = value;
 
                 // Addressing mode to test
 
-                Byte receivedValue = cpu.IDX( mem );
+                Word receivedAddress = cpu.IDX( mem );
 
                 // Assertions
                 
-                REQUIRE( receivedValue == value ); // Ensure values match up
+                REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
             }
         }
     }
@@ -65,7 +65,10 @@ namespace IDX {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[1] = {0xA1};
+        Byte OPCodes[8] = {
+            0xA1, 0x61, 0x21, 0xC1, 0x41,
+            0x01, 0xE1, 0x81
+        };
 
         // Vars for script
 
@@ -79,8 +82,8 @@ namespace IDX {
         // Initialization Script
 
         mem[PC] = (Byte) PCAddress;
-        mem[(Word) (PCAddress + X)] = (Byte) (effectiveAddress >> 8);
-        mem[(Word) (PCAddress + X + 1)] = (Byte) (effectiveAddress);
+        mem[(Byte) (PCAddress + X)] = (Byte) (effectiveAddress >> 8);
+        mem[(Byte) (PCAddress + X + 1)] = (Byte) (effectiveAddress);
         mem[(Word) effectiveAddress] = value;
 
         // Addressing mode to test
@@ -97,11 +100,11 @@ namespace IDX {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

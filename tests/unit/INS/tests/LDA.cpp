@@ -14,10 +14,14 @@ namespace LDA {
             // Reset CPU
 
             cpu.Reset( mem );
-            
-            // Run script
 
-            cpu.LDA( (Byte) value );
+            // Add script
+
+            mem[cpu.PC] = value;
+            
+            // Run instruction for value at PC
+
+            cpu.LDA( mem, cpu.PC );
         
             // Assertions
         
@@ -83,10 +87,14 @@ namespace LDA {
             // Get value at index
 
             Byte ins = OPCodes[i];
+
+            // Add script
+
+            mem[cpu.PC] = value;
             
             // Run script
 
-            cpu.Run( mem, ins, (Byte) value );
+            cpu.Run( mem, ins, cpu.PC );
         
             // Assertions
         

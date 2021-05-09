@@ -13,9 +13,13 @@ namespace LDX {
 
             cpu.Reset( mem );
             
-            // Run script
+            // Add script
 
-            cpu.LDX( (Byte) value );
+            mem[cpu.PC] = value;
+            
+            // Run instruction for value at PC
+
+            cpu.LDX( mem, cpu.PC );
         
             // Assertions
         
@@ -82,9 +86,13 @@ namespace LDX {
 
             Byte ins = OPCodes[i];
             
+            // Add script
+
+            mem[cpu.PC] = value;
+            
             // Run script
 
-            cpu.Run( mem, ins, (Byte) value );
+            cpu.Run( mem, ins, cpu.PC );
         
             // Assertions
         

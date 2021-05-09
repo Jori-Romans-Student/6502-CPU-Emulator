@@ -18,11 +18,11 @@ namespace IMM {
 
         // Addressing mode to test
 
-        Byte receivedValue = cpu.IMM( mem );
+        Word receivedAddress = cpu.IMM( mem );
 
         // Assertions
         
-        REQUIRE( receivedValue == value ); // Ensure values match up
+        REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
     }
 
     TEST_CASE( "Immediate Addressing Mode" ) {
@@ -51,7 +51,11 @@ namespace IMM {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[3] = { 0xA9, 0xA2, 0xA0 };
+        Byte OPCodes[11] = { 
+            0xA9, 0xA2, 0xA0, 0x69, 0x29,
+            0xC9, 0xE0, 0xC0, 0x49, 0x09,
+            0xE9
+        };
 
         // Vars for script
 
@@ -77,11 +81,11 @@ namespace IMM {
             
             // Get value
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 

@@ -24,11 +24,11 @@ namespace AB {
 
             // Addressing mode to test
 
-            Byte receivedValue = cpu.AB( mem );
+            Word receivedAddress = cpu.AB( mem );
 
             // Assertions
             
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
@@ -58,7 +58,13 @@ namespace AB {
 
         // OPCodes for Absolute Addressing Mode
 
-        Byte OPCodes[3] = { 0xAD, 0xAE, 0xAC };
+        Byte OPCodes[22] = { 
+            0xAD, 0xAE, 0xAC, 0x6D, 0x2D,
+            0x0E, 0x2C, 0xCD, 0xEC, 0xCC,
+            0xCE, 0x4D, 0xEE, 0x4C, 0x20,
+            0x4E, 0x0D, 0x2E, 0x6E, 0xED,
+            0x8D, 0x8E
+        };
 
         // Vars for script
 
@@ -85,13 +91,13 @@ namespace AB {
 
             cpu.PC = PC;
             
-            // Get value
+            // Get address
 
-            Byte receivedValue = cpu.RetrieveAddressMode( mem, code );
+            Word receivedAddress = cpu.RetrieveAddressMode( mem, code );
         
             // Assertions
         
-            REQUIRE( receivedValue == value ); // Ensure values match up
+            REQUIRE( mem[receivedAddress] == value ); // Ensure values match up
         }
     }
 
