@@ -307,6 +307,10 @@ struct CPU {
         memory[address] = X;
     }
 
+    void STY( Mem& memory, Word address ) {
+        memory[address] = Y;
+    }
+
     void Run( Mem& memory, Byte ins, Word address ) {
 
         switch ( ins ) {
@@ -350,6 +354,14 @@ struct CPU {
             case 0x86: case 0x96: case 0x8E:
             {
                 STX( memory, address );
+            }
+            break;
+
+            // STY Instruction
+
+            case 0x84: case 0x94: case 0x8C:
+            {
+                STY( memory, address );
             }
             break;
         }
