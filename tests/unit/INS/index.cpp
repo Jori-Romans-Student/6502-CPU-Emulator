@@ -9,3 +9,8 @@
 #include "tests/STA.cpp" // STA Instruction
 #include "tests/STX.cpp" // STX Instruction
 #include "tests/STY.cpp" // STY Instruction
+
+#include "tests/TAX.cpp" // TAX Instruction
+#include "tests/TAY.cpp" // TAY Instruction
+#include "tests/TXA.cpp" // TXA Instruction
+#include "tests/TYA.cpp" // TXY Instruction
