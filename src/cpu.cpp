@@ -40,6 +40,14 @@ struct CPU{
     Byte B : 1;
     Byte V : 1;
     Byte N : 1;
+
+    Byte Read(Word address) {
+        return (*mem)[address];
+    };
+
+    void Write(Word address, Byte value) {
+        (*mem)[address] = value;
+    }
     
     Byte Fetch() {
         
@@ -95,13 +103,19 @@ struct CPU{
         }
     }
 
-    // Word Address(Byte mode) {
-    //     switch (mode) {
-    //         case AB: return Fetch() << 8 | Fetch();
-    //         case ABX: return (Fetch() << 8 | Fetch()) + X;
-    //         case ABY: return (Fetch() << 8 | Fetch()) + Y; 
-    //     }
-    // }
+    Word Address(Byte mode) {
+        switch (mode) {
+            case AB: return Fetch() << 8 | Fetch();
+            case ABX: return (Fetch() << 8 | Fetch()) + X;
+            case ABY: return (Fetch() << 8 | Fetch()) + Y; 
+            case IMM: return PC;
+            case IDX: Byte address = Fetch(); return Read(address + X) << 8 | Read(address + X + 1);
+            case IDY: Byte address = Fetch(); return (Read(address) << 8 | Read(address + 1)) + Y;
+            case ZP: return Fetch();
+            case ZPX: return Fetch() + X;
+            case ZPY: return Fetch() + Y;
+        }
+    }
 
     CPU(Mem *_mem ) {
         mem = _mem;
