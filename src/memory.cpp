@@ -17,4 +17,8 @@ struct Mem {
     Byte& operator[](u32 address) {
         return Data[address];
     }
+
+    Mem() {
+        Initialize();
+    };
 };
