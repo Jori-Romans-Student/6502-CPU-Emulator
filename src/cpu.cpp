@@ -5,18 +5,23 @@
 
 // Codes
 
-#define AB 0x0
-#define ABX 0x1
-#define ABY 0x2
-#define AC 0x3
-#define IMM 0x4
-#define ID 0x5
-#define IDX 0x6
-#define IDY 0x7
-#define REL 0x8
-#define ZP 0x9
-#define ZPX 0xA
-#define ZPY 0xB
+#define AB 0x00
+#define ABX 0x01
+#define ABY 0x02
+#define AC 0x03
+#define IMM 0x04
+#define ID 0x05
+#define IDX 0x06
+#define IDY 0x07
+#define REL 0x08
+#define ZP 0x09
+#define ZPX 0x0A
+#define ZPY 0x0B
+
+// Instructions
+
+#define LDA 0x15
+#define LDX 0x16
 
 
 struct CPU{
@@ -49,14 +54,12 @@ struct CPU{
         (*mem)[address] = value;
     }
     
+    // Get value and increment PC
+
     Byte Fetch() {
-        
-        // Get value and increment PC
 
         Byte value = (*mem)[PC];
         PC++;
-
-        // Return value
 
         return value;
     };
@@ -99,22 +102,50 @@ struct CPU{
                 if (code == 0xBE) return ABY;
                 else return ABX; 
                 break;
-            default: return 0xFF;
+        }
+        return 0xFF;
+    };
+
+    Word Address(Byte mode) {
+
+        Byte address;
+
+        switch (mode) {
+            case AB: return Fetch() << 8 | Fetch(); break;
+            case ABX: return (Fetch() << 8 | Fetch()) + X; break;
+            case ABY: return (Fetch() << 8 | Fetch()) + Y; break;
+            case IMM: return PC; break;
+            case IDX: address = Fetch(); return Read(address + X) << 8 | Read(address + X + 1); break;
+            case IDY: address = Fetch(); return (Read(address) << 8 | Read(address + 1)) + Y; break;
+            case ZP: return Fetch(); break;
+            case ZPX: return Fetch() + X; break;
+            case ZPY: return Fetch() + Y; break;
+        }
+
+        return 0xFF;
+    };
+
+    Byte Instruct(Byte code) {
+        switch ((code & 0xE0) >> 3 | (code & 0x03)) {
+            case 0x15: return LDA; break;
+            case 0x16: return LDX; break;
+        }
+        return 0xFF;
+    };
+
+    void Execute(Byte mode, Word address) {
+        switch (mode) {
+            case LDA: A = Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case LDX: X = Read(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
         }
     }
 
-    Word Address(Byte mode) {
-        switch (mode) {
-            case AB: return Fetch() << 8 | Fetch();
-            case ABX: return (Fetch() << 8 | Fetch()) + X;
-            case ABY: return (Fetch() << 8 | Fetch()) + Y; 
-            case IMM: return PC;
-            case IDX: Byte address = Fetch(); return Read(address + X) << 8 | Read(address + X + 1);
-            case IDY: Byte address = Fetch(); return (Read(address) << 8 | Read(address + 1)) + Y;
-            case ZP: return Fetch();
-            case ZPX: return Fetch() + X;
-            case ZPY: return Fetch() + Y;
-        }
+    void Run() {
+        Byte OP = Fetch();
+        Byte ADRM = Decode(OP);
+        Word ADR = Address(ADRM);
+        Byte INS = Instruct(OP);
+        Execute(INS, ADR);
     }
 
     CPU(Mem *_mem ) {
