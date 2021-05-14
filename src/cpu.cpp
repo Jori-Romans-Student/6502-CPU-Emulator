@@ -27,8 +27,7 @@
 #define LDA 0x15
 #define LDX 0x16
 
-
-struct CPU{
+struct CPU {
     
     // Progarm Counter and Stack Pointer
 
