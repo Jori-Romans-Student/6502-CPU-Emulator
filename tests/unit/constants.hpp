@@ -1,66 +1,66 @@
 # pragma once
 
-#include "../../src/hardware.cpp"
+#include "../../src/cpu.cpp"
 #include <time.h>
 
-template <typename T>
-struct Range {
+// template <typename T>
+// struct Range {
     
-    // Start and end of range
+//     // Start and end of range
 
-    T start;
-    T end;
-};
+//     T start;
+//     T end;
+// };
 
-struct CPUConfig {
+// struct CPUConfig {
     
-    // Range for Program Counter
+//     // Range for Program Counter
 
-    Range<Word> PC;
+//     Range<Word> PC;
 
-    // Range for A, X and Y Register
+//     // Range for A, X and Y Register
 
-    Range<Byte> A;
-    Range<Byte> X;
-    Range<Byte> Y;
-};
+//     Range<Byte> A;
+//     Range<Byte> X;
+//     Range<Byte> Y;
+// };
 
-void run(void (*script)(Mem&, CPU&), CPUConfig config) {
+// void run(void (*script)(Mem&, CPU&), CPUConfig config) {
 
-    // Initialize Memory and CPU
+//     // Initialize Memory and CPU
 
-    Mem mem;
-    CPU cpu;
+//     Mem mem;
+//     CPU cpu;
 
-    // Run from PC Start to PC end
+//     // Run from PC Start to PC end
 
-    for (int PC = config.PC.start; PC <= config.PC.end; PC++) {
+//     for (int PC = config.PC.start; PC <= config.PC.end; PC++) {
 
-        // Run from A start to A end
+//         // Run from A start to A end
 
-        for (int A = config.A.start; A <= config.A.end; A++) {
+//         for (int A = config.A.start; A <= config.A.end; A++) {
             
-            // Run from X start to X end
+//             // Run from X start to X end
 
-            for (int X = config.X.start; X <= config.X.end; X++) {
+//             for (int X = config.X.start; X <= config.X.end; X++) {
 
-                // Run from Y start to Y end
+//                 // Run from Y start to Y end
 
-                for (int Y = config.Y.start; Y <= config.Y.end; Y++) {
+//                 for (int Y = config.Y.start; Y <= config.Y.end; Y++) {
                     
-                    // Reset memory on every run and reinitialize PC
+//                     // Reset memory on every run and reinitialize PC
 
-                    cpu.Reset( mem );
-                    cpu.PC = (Word) PC;
-                    cpu.A = (Byte) A;
-                    cpu.X = (Byte) X;
-                    cpu.Y = (Byte) Y;
+//                     cpu.Reset( mem );
+//                     cpu.PC = (Word) PC;
+//                     cpu.A = (Byte) A;
+//                     cpu.X = (Byte) X;
+//                     cpu.Y = (Byte) Y;
                     
-                    // Run script
+//                     // Run script
 
-                    script(mem, cpu);
-                }
-            }
-        }
-    }
-}
+//                     script(mem, cpu);
+//                 }
+//             }
+//         }
+//     }
+// }
