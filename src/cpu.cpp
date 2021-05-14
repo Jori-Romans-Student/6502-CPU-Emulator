@@ -20,6 +20,10 @@
 
 // Instructions
 
+#define STY 0x10
+#define STA 0x11
+#define STX 0x12
+#define LDY 0x14
 #define LDA 0x15
 #define LDX 0x16
 
@@ -127,6 +131,14 @@ struct CPU{
 
     Byte Instruct(Byte code) {
         switch ((code & 0xE0) >> 3 | (code & 0x03)) {
+            case 0x10:
+                if ((code & 0x0F) != 0x08) return STY;
+                break;
+            case 0x11: return STA; break;
+            case 0x12: return STX; break;
+            case 0x14:
+                if ((code & 0x0F) == 0x04 || (code & 0x0F) == 0x0C || code == 0xA0) return LDY;
+                break;
             case 0x15: return LDA; break;
             case 0x16: return LDX; break;
         }
@@ -137,6 +149,10 @@ struct CPU{
         switch (mode) {
             case LDA: A = Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDX: X = Read(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
+            case LDY: Y = Read(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
+            case STA: Write(address, A); break;
+            case STX: Write(address, X); break;
+            case STY: Write(address, Y); break;
         }
     }
 
