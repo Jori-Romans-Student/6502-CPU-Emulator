@@ -7,8 +7,9 @@ TEST_CASE("Immediate addressing mode") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    // Word PC;
-    // Word address;
+
+    Word PC;
+    Word address;
 
     SECTION("decodes all matching OP codes") {
 
@@ -24,15 +25,12 @@ TEST_CASE("Immediate addressing mode") {
         }
     };
 
-    // SECTION("returns proper address for random PC") {
+    SECTION("returns proper address for random PC") {
 
-    //     PC = (Word) rand();
-    //     address = (Word) rand();
-    //     cpu.PC = PC;
+        PC = (Word) rand();
 
-    //     mem[PC] = (Byte) (address >> 8);
-    //     mem[PC + 1] = (Byte) address;
+        cpu.PC = PC;
 
-    //     REQUIRE(cpu.Address(AB) == address);
-    // };
+        REQUIRE(cpu.Address(IMM) == PC);
+    };
 }

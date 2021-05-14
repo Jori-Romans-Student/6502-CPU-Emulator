@@ -7,8 +7,10 @@ TEST_CASE("Absolute Y addressing mode") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    // Word PC;
-    // Word address;
+    
+    Byte Y;
+    Word PC;
+    Word address;
 
     SECTION("decodes all matching OP codes") {
 
@@ -23,15 +25,18 @@ TEST_CASE("Absolute Y addressing mode") {
         }
     };
 
-    // SECTION("returns proper address for random PC") {
+    SECTION("returns proper address for random PC and Y register") {
 
-    //     PC = (Word) rand();
-    //     address = (Word) rand();
-    //     cpu.PC = PC;
+        PC = (Word) rand();
+        Y = (Byte) rand();
+        address = (Word) rand();
 
-    //     mem[PC] = (Byte) (address >> 8);
-    //     mem[PC + 1] = (Byte) address;
+        cpu.PC = PC;
+        cpu.Y = Y;
 
-    //     REQUIRE(cpu.Address(AB) == address);
-    // };
+        mem[PC] = (Byte) (address >> 8);
+        mem[PC + 1] = (Byte) address;
+
+        REQUIRE(cpu.Address(ABY) == address + Y);
+    };
 }

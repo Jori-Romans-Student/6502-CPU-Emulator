@@ -7,8 +7,9 @@ TEST_CASE("Zero Page addressing mode") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    // Word PC;
-    // Word address;
+
+    Word PC;
+    Byte address;
 
     SECTION("decodes all matching OP codes") {
 
@@ -26,15 +27,14 @@ TEST_CASE("Zero Page addressing mode") {
         }
     };
 
-    // SECTION("returns proper address for random PC") {
+    SECTION("returns proper address for random PC") {
 
-    //     PC = (Word) rand();
-    //     address = (Word) rand();
-    //     cpu.PC = PC;
+        PC = (Word) rand();
+        address = (Byte) rand();
+        cpu.PC = PC;
 
-    //     mem[PC] = (Byte) (address >> 8);
-    //     mem[PC + 1] = (Byte) address;
+        mem[PC] = (Byte) (address);
 
-    //     REQUIRE(cpu.Address(AB) == address);
-    // };
+        REQUIRE(cpu.Address(ZP) == address);
+    };
 }

@@ -7,8 +7,10 @@ TEST_CASE("Absolute X addressing mode") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    // Word PC;
-    // Word address;
+
+    Byte X;
+    Word PC;
+    Word address;
 
     SECTION("decodes all matching OP codes") {
 
@@ -24,15 +26,18 @@ TEST_CASE("Absolute X addressing mode") {
         }
     };
 
-    // SECTION("returns proper address for random PC") {
+    SECTION("returns proper address for random PC and X register") {
 
-    //     PC = (Word) rand();
-    //     address = (Word) rand();
-    //     cpu.PC = PC;
+        PC = (Word) rand();
+        X = (Byte) rand();
+        address = (Word) rand();
 
-    //     mem[PC] = (Byte) (address >> 8);
-    //     mem[PC + 1] = (Byte) address;
+        cpu.PC = PC;
+        cpu.X = X;
 
-    //     REQUIRE(cpu.Address(AB) == address);
-    // };
+        mem[PC] = (Byte) (address >> 8);
+        mem[PC + 1] = (Byte) address;
+
+        REQUIRE(cpu.Address(ABX) == address + X);
+    };
 }
