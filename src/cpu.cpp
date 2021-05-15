@@ -8,7 +8,7 @@ struct CPU {
     // Progarm Counter and Stack Pointer
 
     Word PC;
-    Byte SP;
+    Byte S;
     Mem* mem;
 
     // Registers
@@ -31,6 +31,16 @@ struct CPU {
 
     void Write(Word address, Byte value) {
         (*mem)[address] = value;
+    }
+
+    Byte Pull() {
+        S--;
+        return Read((Word) (0x0100 | S));
+    }
+
+    void Push(Byte value) {
+        Write((Word) (0x0100 | S), value);
+        S++;
     }
     
     // Get value and increment PC
@@ -122,6 +132,7 @@ struct CPU {
             case 0x15: return LDA; break;
             case 0x16: 
                 if (code == 0xAA) return TAX; 
+                else if (code == 0xBA) return TSX;
                 else return LDX; 
                 break;
         }
@@ -138,6 +149,7 @@ struct CPU {
             case STY: Write(address, Y); break;
             case TAX: X = A; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TAY: Y = A; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
+            case TSX: Push(X); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TXA: A = X; Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case TYA: A = Y; Z = (A == 0); N = (A & 0b10000000) > 0; break;
         }
@@ -153,5 +165,6 @@ struct CPU {
 
     CPU(Mem *_mem ) {
         mem = _mem;
+        S = 0x00;
     };
 };

@@ -30,5 +30,6 @@ using u32 = unsigned int;
 #define STY 0x06
 #define TAX 0x07
 #define TAY 0x08
-#define TXA 0x09
-#define TYA 0x0A
+#define TSX 0x09
+#define TXA 0x0A
+#define TYA 0x0B

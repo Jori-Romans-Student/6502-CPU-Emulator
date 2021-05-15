@@ -6,6 +6,8 @@
 #include "tests/unit/methods/read.cpp"
 #include "tests/unit/methods/write.cpp"
 #include "tests/unit/methods/fetch.cpp"
+#include "tests/unit/methods/pull.cpp"
+#include "tests/unit/methods/push.cpp"
 
 // Addressing
 
@@ -32,6 +34,7 @@
 #include "tests/unit/instructions/STY.cpp"
 #include "tests/unit/instructions/TAX.cpp"
 #include "tests/unit/instructions/TAY.cpp"
+#include "tests/unit/instructions/TSX.cpp"
 #include "tests/unit/instructions/TXA.cpp"
 #include "tests/unit/instructions/TYA.cpp"
 
