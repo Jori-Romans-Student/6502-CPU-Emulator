@@ -1,7 +1,7 @@
 #include "catch2/catch.hpp"
-#include "../constants.hpp"
+#include "../../constants.hpp"
 
-TEST_CASE("LDY instruction") {
+TEST_CASE("LDA instruction") {
 
     // Vars
 
@@ -13,13 +13,14 @@ TEST_CASE("LDY instruction") {
 
     SECTION("decodes all matching OP codes") {
 
-        Byte OPCodes[5] = { 
-            0xA0, 0xA4, 0xB4, 0xAC, 0xBC 
+        Byte OPCodes[8] = { 
+            0xA9, 0xA5, 0xB5, 0xAD, 0xBD, 
+            0xB9, 0xA1, 0xB1 
         };
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
         for (int i = 0; i < length; i++) {
-            REQUIRE(cpu.Instruct(OPCodes[i]) == LDY);
+            REQUIRE(cpu.Instruct(OPCodes[i]) == LDA);
         }
     };
 
@@ -30,9 +31,9 @@ TEST_CASE("LDY instruction") {
 
         mem[address] = value;
 
-        cpu.Execute(LDY, address);
+        cpu.Execute(LDA, address);
 
-        REQUIRE(cpu.Y == value);
+        REQUIRE(cpu.A == value);
         REQUIRE(cpu.Z == 1);
         REQUIRE(cpu.N == 0);
     };
@@ -44,9 +45,9 @@ TEST_CASE("LDY instruction") {
 
         mem[address] = value;
 
-        cpu.Execute(LDY, address);
+        cpu.Execute(LDA, address);
 
-        REQUIRE(cpu.Y == value);
+        REQUIRE(cpu.A == value);
         REQUIRE(cpu.Z == 0);
         REQUIRE(cpu.N == 0);
     };
@@ -58,9 +59,9 @@ TEST_CASE("LDY instruction") {
 
         mem[address] = value;
 
-        cpu.Execute(LDY, address);
+        cpu.Execute(LDA, address);
 
-        REQUIRE(cpu.Y == value);
+        REQUIRE(cpu.A == value);
         REQUIRE(cpu.Z == 0);
         REQUIRE(cpu.N == 1);
     };

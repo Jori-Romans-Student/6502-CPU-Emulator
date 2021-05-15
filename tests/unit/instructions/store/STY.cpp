@@ -1,7 +1,7 @@
 #include "catch2/catch.hpp"
-#include "../constants.hpp"
+#include "../../constants.hpp"
 
-TEST_CASE("STX instruction") {
+TEST_CASE("STY instruction") {
 
     // Vars
 
@@ -9,28 +9,28 @@ TEST_CASE("STX instruction") {
     CPU cpu = CPU(&mem);
     
     Word address;
-    Byte X;
+    Byte Y;
 
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[3] = { 
-            0x86, 0x96, 0x8E
+            0x84, 0x94, 0x8C
         };
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
         for (int i = 0; i < length; i++) {
-            REQUIRE(cpu.Instruct(OPCodes[i]) == STX);
+            REQUIRE(cpu.Instruct(OPCodes[i]) == STY);
         }
     };
 
     SECTION("executes properly on random value") {
 
         address = (Word) rand();
-        X = (Byte) rand();
-        cpu.X = X;
+        Y = (Byte) rand();
+        cpu.Y = Y;
 
-        cpu.Execute(STX, address);
+        cpu.Execute(STY, address);
 
-        REQUIRE(cpu.Read(address) == X);
+        REQUIRE(cpu.Read(address) == Y);
     };
 }

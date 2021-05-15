@@ -1,5 +1,5 @@
 #include "catch2/catch.hpp"
-#include "../constants.hpp"
+#include "../../constants.hpp"
 
 TEST_CASE("PLA instruction") {
 

@@ -1,7 +1,7 @@
 #include "catch2/catch.hpp"
-#include "../constants.hpp"
+#include "../../constants.hpp"
 
-TEST_CASE("TAX instruction") {
+TEST_CASE("TYA instruction") {
 
     // Vars
 
@@ -10,30 +10,30 @@ TEST_CASE("TAX instruction") {
     
     Byte value;
     Byte address;
-    Byte A;
+    Byte Y;
 
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
-            0xAA
+            0x98
         };
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
         for (int i = 0; i < length; i++) {
-            REQUIRE(cpu.Instruct(OPCodes[i]) == TAX);
+            REQUIRE(cpu.Instruct(OPCodes[i]) == TYA);
         }
     };
 
     SECTION("executes properly on zero value") {
 
         address = (Byte) 0x00;
-        A = (Byte) 0x00;
+        Y = (Byte) 0x00;
 
-        cpu.A = A;
+        cpu.Y = Y;
 
-        cpu.Execute(TAX, address);
+        cpu.Execute(TYA, address);
 
-        REQUIRE(cpu.X == A);
+        REQUIRE(cpu.A == Y);
         REQUIRE(cpu.Z == 1);
         REQUIRE(cpu.N == 0);
     };
@@ -41,13 +41,13 @@ TEST_CASE("TAX instruction") {
     SECTION("executes properly on positive value") {
 
         address = (Byte) 0x00;
-        A = (Byte) 0x57;
+        Y = (Byte) 0x57;
 
-        cpu.A = A;
+        cpu.Y = Y;
 
-        cpu.Execute(TAX, address);
+        cpu.Execute(TYA, address);
 
-        REQUIRE(cpu.X == A);
+        REQUIRE(cpu.A == Y);
         REQUIRE(cpu.Z == 0);
         REQUIRE(cpu.N == 0);
     };
@@ -55,13 +55,13 @@ TEST_CASE("TAX instruction") {
     SECTION("executes properly on negative value") {
 
         address = (Byte) 0x00;
-        A = (Byte) 0xBA;
+        Y = (Byte) 0xBA;
 
-        cpu.A = A;
+        cpu.Y = Y;
 
-        cpu.Execute(TAX, address);
+        cpu.Execute(TYA, address);
 
-        REQUIRE(cpu.X == A);
+        REQUIRE(cpu.A == Y);
         REQUIRE(cpu.Z == 0);
         REQUIRE(cpu.N == 1);
     };
