@@ -1,7 +1,7 @@
 #include "catch2/catch.hpp"
 #include "../constants.hpp"
 
-TEST_CASE("TSX instruction") {
+TEST_CASE("PLA instruction") {
 
     // Vars
 
@@ -14,12 +14,12 @@ TEST_CASE("TSX instruction") {
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
-            0xBA
+            0x68
         };
         int length = (int) (sizeof(OPCodes) / sizeof(OPCodes[0]));
 
         for (int i = 0; i < length; i++) {
-            REQUIRE(cpu.Instruct(OPCodes[i]) == TSX);
+            REQUIRE(cpu.Instruct(OPCodes[i]) == PLA);
         }
     };
 }

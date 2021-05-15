@@ -116,13 +116,26 @@ struct CPU {
 
     Byte Instruct(Byte code) {
         switch ((code & 0xE0) >> 3 | (code & 0x03)) {
+            case 0x00:
+                if (code == 0x08) return PHP;
+                break;
+            case 0x04:
+                if (code == 0x28) return PLP;
+                break;
+            case 0x08:
+                if (code == 0x48) return PHA;
+                break;
+            case 0x0C:
+                if (code == 0x68) return PLA;
+                break;
             case 0x10:
                 if (code == 0x98) return TYA;
                 else if ((code & 0x0F) != 0x08) return STY;
                 break;
             case 0x11: return STA; break;
             case 0x12:
-                if (code == 0x8A) return TXA; 
+                if (code == 0x8A) return TXA;
+                else if (code == 0x9A) return TXS; 
                 else return STX; 
                 break;
             case 0x14:
@@ -149,8 +162,8 @@ struct CPU {
             case STY: Write(address, Y); break;
             case TAX: X = A; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TAY: Y = A; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
-            case TSX: Push(X); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TXA: A = X; Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case TXS: Push(X); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TYA: A = Y; Z = (A == 0); N = (A & 0b10000000) > 0; break;
         }
     }

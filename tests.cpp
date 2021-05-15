@@ -29,12 +29,20 @@
 #include "tests/unit/instructions/LDA.cpp"
 #include "tests/unit/instructions/LDX.cpp"
 #include "tests/unit/instructions/LDY.cpp"
+
+#include "tests/unit/instructions/PHA.cpp"
+#include "tests/unit/instructions/PHP.cpp"
+#include "tests/unit/instructions/PLA.cpp"
+#include "tests/unit/instructions/PLP.cpp"
+
 #include "tests/unit/instructions/STA.cpp"
 #include "tests/unit/instructions/STX.cpp"
 #include "tests/unit/instructions/STY.cpp"
+
 #include "tests/unit/instructions/TAX.cpp"
 #include "tests/unit/instructions/TAY.cpp"
 #include "tests/unit/instructions/TSX.cpp"
 #include "tests/unit/instructions/TXA.cpp"
+#include "tests/unit/instructions/TXS.cpp"
 #include "tests/unit/instructions/TYA.cpp"
 
