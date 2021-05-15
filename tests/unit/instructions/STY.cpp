@@ -7,8 +7,9 @@ TEST_CASE("STY instruction") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    Word PC;
+    
     Word address;
+    Byte Y;
 
     SECTION("decodes all matching OP codes") {
 
@@ -22,15 +23,14 @@ TEST_CASE("STY instruction") {
         }
     };
 
-    // SECTION("returns proper address for random PC") {
+    SECTION("executes properly on random value") {
 
-    //     PC = (Word) rand();
-    //     address = (Word) rand();
-    //     cpu.PC = PC;
+        address = (Word) rand();
+        Y = (Byte) rand();
+        cpu.Y = Y;
 
-    //     mem[PC] = (Byte) (address >> 8);
-    //     mem[PC + 1] = (Byte) address;
+        cpu.Execute(STY, address);
 
-    //     REQUIRE(cpu.Address(AB) == address);
-    // };
+        REQUIRE(cpu.Read(address) == Y);
+    };
 }

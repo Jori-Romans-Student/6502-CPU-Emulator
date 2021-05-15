@@ -7,8 +7,9 @@ TEST_CASE("LDX instruction") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    Word PC;
+    
     Word address;
+    Byte value;
 
     SECTION("decodes all matching OP codes") {
 
@@ -22,15 +23,45 @@ TEST_CASE("LDX instruction") {
         }
     };
 
-    // SECTION("returns proper address for random PC") {
+    SECTION("executes properly on zero value") {
 
-    //     PC = (Word) rand();
-    //     address = (Word) rand();
-    //     cpu.PC = PC;
+        address = (Word) rand();
+        value = (Byte) 0x00;
 
-    //     mem[PC] = (Byte) (address >> 8);
-    //     mem[PC + 1] = (Byte) address;
+        mem[address] = value;
 
-    //     REQUIRE(cpu.Address(AB) == address);
-    // };
+        cpu.Execute(LDX, address);
+
+        REQUIRE(cpu.X == value);
+        REQUIRE(cpu.Z == 1);
+        REQUIRE(cpu.N == 0);
+    };
+
+    SECTION("executes properly on positive value") {
+
+        address = (Word) rand();
+        value = (Byte) 0x27;
+
+        mem[address] = value;
+
+        cpu.Execute(LDX, address);
+
+        REQUIRE(cpu.X == value);
+        REQUIRE(cpu.Z == 0);
+        REQUIRE(cpu.N == 0);
+    };
+
+    SECTION("executes properly on negative value") {
+
+        address = (Word) rand();
+        value = (Byte) 0xA6;
+
+        mem[address] = value;
+
+        cpu.Execute(LDX, address);
+
+        REQUIRE(cpu.X == value);
+        REQUIRE(cpu.Z == 0);
+        REQUIRE(cpu.N == 1);
+    };
 }
