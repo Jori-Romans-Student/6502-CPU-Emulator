@@ -30,4 +30,8 @@
 #include "tests/unit/instructions/STA.cpp"
 #include "tests/unit/instructions/STX.cpp"
 #include "tests/unit/instructions/STY.cpp"
+#include "tests/unit/instructions/TAX.cpp"
+#include "tests/unit/instructions/TAY.cpp"
+#include "tests/unit/instructions/TXA.cpp"
+#include "tests/unit/instructions/TYA.cpp"
 

@@ -26,6 +26,10 @@
 #define LDY 0x14
 #define LDA 0x15
 #define LDX 0x16
+#define TAX 0x07
+#define TAY 0x08
+#define TXA 0x09
+#define TYA 0x06
 
 struct CPU {
     
@@ -131,15 +135,23 @@ struct CPU {
     Byte Instruct(Byte code) {
         switch ((code & 0xE0) >> 3 | (code & 0x03)) {
             case 0x10:
-                if ((code & 0x0F) != 0x08) return STY;
+                if (code == 0x98) return TYA;
+                else if ((code & 0x0F) != 0x08) return STY;
                 break;
             case 0x11: return STA; break;
-            case 0x12: return STX; break;
+            case 0x12:
+                if (code == 0x8A) return TXA; 
+                else return STX; 
+                break;
             case 0x14:
                 if ((code & 0x0F) == 0x04 || (code & 0x0F) == 0x0C || code == 0xA0) return LDY;
+                else if (code == 0xA8) return TAY;
                 break;
             case 0x15: return LDA; break;
-            case 0x16: return LDX; break;
+            case 0x16: 
+                if (code == 0xAA) return TAX; 
+                else return LDX; 
+                break;
         }
         return 0xFF;
     };
@@ -152,6 +164,10 @@ struct CPU {
             case STA: Write(address, A); break;
             case STX: Write(address, X); break;
             case STY: Write(address, Y); break;
+            case TAX: X = A; Z = (X == 0); N = (X & 0b10000000) > 0; break;
+            case TAY: Y = A; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
+            case TXA: A = X; Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case TYA: A = Y; Z = (A == 0); N = (A & 0b10000000) > 0; break;
         }
     }
 
