@@ -162,9 +162,9 @@ struct CPU {
             case STY: Write(address, Y); break;
             case TAX: X = A; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TAY: Y = A; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
-            case TSX: X = Pull(); Z = (X == 0); N = (X & 0b10000000) > 0; break;
+            case TSX: X = S; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TXA: A = X; Z = (A == 0); N = (A & 0b10000000) > 0; break;
-            case TXS: Push(X); break;
+            case TXS: S = X; break;
             case TYA: A = Y; Z = (A == 0); N = (A & 0b10000000) > 0; break;
         }
     }

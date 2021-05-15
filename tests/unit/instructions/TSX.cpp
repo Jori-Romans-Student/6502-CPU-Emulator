@@ -7,9 +7,8 @@ TEST_CASE("TSX instruction") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    
-    Byte value;
-    Word address;
+
+    Byte S;
 
     SECTION("decodes all matching OP codes") {
 
@@ -25,48 +24,36 @@ TEST_CASE("TSX instruction") {
 
     SECTION("executes properly on zero value") {
 
-        address = 0x0100;
-        value = (Byte) 0x00;
-
-        mem[address] = value;
-        cpu.S += 1;
+        S = (Byte) 0x00;
+        cpu.S = S;
 
         cpu.Execute(TSX, 0);
 
-        REQUIRE(cpu.X == value);
-        REQUIRE(cpu.S == (Byte) address);
+        REQUIRE(cpu.X == S);
         REQUIRE(cpu.Z == 1);
         REQUIRE(cpu.N == 0);
     };
 
     SECTION("executes properly on positive value") {
 
-        address = 0x0100;
-        value = (Byte) 0x6B;
-
-        mem[address] = value;
-        cpu.S += 1;
+        S = (Byte) 0x22;
+        cpu.S = S;
 
         cpu.Execute(TSX, 0);
 
-        REQUIRE(cpu.X == value);
-        REQUIRE(cpu.S == (Byte) address);
+        REQUIRE(cpu.X == S);
         REQUIRE(cpu.Z == 0);
         REQUIRE(cpu.N == 0);
     };
 
     SECTION("executes properly on negative value") {
 
-        address = 0x0100;
-        value = (Byte) 0xAC;
-
-        mem[address] = value;
-        cpu.S += 1;
+        S = (Byte) 0xF9;
+        cpu.S = S;
 
         cpu.Execute(TSX, 0);
 
-        REQUIRE(cpu.X == value);
-        REQUIRE(cpu.S == (Byte) address);
+        REQUIRE(cpu.X == S);
         REQUIRE(cpu.Z == 0);
         REQUIRE(cpu.N == 1);
     };

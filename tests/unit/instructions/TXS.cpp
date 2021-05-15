@@ -9,7 +9,6 @@ TEST_CASE("TXS instruction") {
     CPU cpu = CPU(&mem);
     
     Byte X;
-    Word address;
 
     SECTION("decodes all matching OP codes") {
 
@@ -25,13 +24,11 @@ TEST_CASE("TXS instruction") {
 
     SECTION("executes properly on random value") {
 
-        address = 0x0100;
         X = (Byte) rand();
         cpu.X = X;
 
         cpu.Execute(TXS, 0);
 
-        REQUIRE(mem[address] == X);
-        REQUIRE(cpu.S == ((Byte) address) + 1);
+        REQUIRE(cpu.S == X);
     };
 }
