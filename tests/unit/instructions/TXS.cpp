@@ -9,7 +9,7 @@ TEST_CASE("TXS instruction") {
     CPU cpu = CPU(&mem);
     
     Byte X;
-    Byte address;
+    Word address;
 
     SECTION("decodes all matching OP codes") {
 
@@ -23,42 +23,15 @@ TEST_CASE("TXS instruction") {
         }
     };
 
-    SECTION("executes properly on zero value") {
+    SECTION("executes properly on random value") {
 
-        address = 0x00;
-        X = (Byte) 0x00;
+        address = 0x0100;
+        X = (Byte) rand();
         cpu.X = X;
 
-        cpu.Execute(TXS, address);
+        cpu.Execute(TXS, 0);
 
-        REQUIRE(mem[0x0100] == X);
-        REQUIRE(cpu.Z == 1);
-        REQUIRE(cpu.N == 0);
-    };
-
-    SECTION("executes properly on positive value") {
-
-        address = 0x00;
-        X = (Byte) 0x72;
-        cpu.X = X;
-
-        cpu.Execute(TXS, address);
-
-        REQUIRE(mem[0x0100] == X);
-        REQUIRE(cpu.Z == 0);
-        REQUIRE(cpu.N == 0);
-    };
-
-    SECTION("executes properly on negative value") {
-
-        address = 0x00;
-        X = (Byte) 0xD9;
-        cpu.X = X;
-
-        cpu.Execute(TXS, address);
-
-        REQUIRE(mem[0x0100] == X);
-        REQUIRE(cpu.Z == 0);
-        REQUIRE(cpu.N == 1);
+        REQUIRE(mem[address] == X);
+        REQUIRE(cpu.S == ((Byte) address) + 1);
     };
 }
