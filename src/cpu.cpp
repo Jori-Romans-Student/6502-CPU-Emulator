@@ -3,34 +3,6 @@
 #include <map>
 #include "memory.cpp"
 
-// Codes
-
-#define AB 0x00
-#define ABX 0x01
-#define ABY 0x02
-#define AC 0x03
-#define IMM 0x04
-#define ID 0x05
-#define IDX 0x06
-#define IDY 0x07
-#define REL 0x08
-#define ZP 0x09
-#define ZPX 0x0A
-#define ZPY 0x0B
-
-// Instructions
-
-#define STY 0x10
-#define STA 0x11
-#define STX 0x12
-#define LDY 0x14
-#define LDA 0x15
-#define LDX 0x16
-#define TAX 0x07
-#define TAY 0x08
-#define TXA 0x09
-#define TYA 0x06
-
 struct CPU {
     
     // Progarm Counter and Stack Pointer
