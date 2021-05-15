@@ -21,5 +21,12 @@
 #include "addressing/ZPX.cpp"
 #include "addressing/ZPY.cpp"
 
-// #include "ADRM/index.cpp" // ADRM Unit Tests
-// #include "INS/index.cpp" // INS Unit Tests
+// Instructions
+
+#include "instructions/LDA.cpp"
+#include "instructions/LDX.cpp"
+#include "instructions/LDY.cpp"
+#include "instructions/STA.cpp"
+#include "instructions/STX.cpp"
+#include "instructions/STY.cpp"
+
