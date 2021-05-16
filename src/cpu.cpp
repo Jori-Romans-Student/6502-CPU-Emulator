@@ -203,16 +203,20 @@ struct CPU {
 
     void Execute(Byte mode, Word address) {
         
-        Byte value; // Used if any storage is required between lines
+        Byte store; // Used if any storage is required between lines
 
         switch (mode) {
+            case AND: A = (A & Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case BIT: store = Read(address); Z = ((A & store) == 0); N = (store & 0b10000000) > 0; V = (store & 0b01000000) > 0; break;
+            case EOR: A = (A ^ Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDA: A = Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDX: X = Read(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case LDY: Y = Read(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
+            case ORA: A = (A | Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case PHA: Push(A); break;
-            case PHP: value = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push(value); break;
+            case PHP: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push(store); break;
             case PLA: A = Pull(); Z = (A == 0); N = (A & 0b10000000) > 0; break;
-            case PLP: value = Pull(); N = (value >> 7) % 2; V = (value >> 6) % 2; B = (value >> 4) % 2; D = (value >> 3) % 2; I = (value >> 2) % 2; Z = (value >> 1) % 2; C = value % 2; break;
+            case PLP: store = Pull(); N = (store >> 7) % 2; V = (store >> 6) % 2; B = (store >> 4) % 2; D = (store >> 3) % 2; I = (store >> 2) % 2; Z = (store >> 1) % 2; C = store % 2; break;
             case STA: Write(address, A); break;
             case STX: Write(address, X); break;
             case STY: Write(address, Y); break;

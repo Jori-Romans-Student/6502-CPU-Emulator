@@ -8,6 +8,10 @@ TEST_CASE("ORA instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
+    Byte A;
+    Byte value;
+    Word address;
+
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[8] = { 
@@ -19,5 +23,53 @@ TEST_CASE("ORA instruction") {
         for (int i = 0; i < length; i++) {
             REQUIRE(cpu.Instruct(OPCodes[i]) == ORA);
         }
+    };
+
+    SECTION("executes properly on zero value") {
+
+        value = (Byte) 0x00;
+        address = (Word) rand();
+        A = (Byte) 0x00;
+        cpu.A = A;
+
+        mem[address] = value;
+
+        cpu.Execute(ORA, address);
+
+        REQUIRE(cpu.A == (value | A));
+        REQUIRE(cpu.Z == 1);
+        REQUIRE(cpu.N == 0);
+    };
+
+    SECTION("executes properly on positive value") {
+
+        value = (Byte) rand() & 0x7F; // gurantees positive ORA
+        address = (Word) rand();
+        A = (Byte) rand() & 0x7F; // gurantees positive ORA
+        cpu.A = A;
+
+        mem[address] = value;
+
+        cpu.Execute(ORA, address);
+
+        REQUIRE(cpu.A == (value | A));
+        REQUIRE(cpu.Z == 0);
+        REQUIRE(cpu.N == 0);
+    };
+
+    SECTION("executes properly on negative value") {
+
+        value = (Byte) rand() | 0x80; // gurantees negative ORA
+        address = (Word) rand();
+        A = (Byte) rand();
+        cpu.A = A;
+
+        mem[address] = value;
+
+        cpu.Execute(ORA, address);
+
+        REQUIRE(cpu.A == (value | A));
+        REQUIRE(cpu.Z == 0);
+        REQUIRE(cpu.N == 1);
     };
 }
