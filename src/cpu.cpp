@@ -117,20 +117,45 @@ struct CPU {
     Byte Instruct(Byte code) {
         switch ((code & 0xE0) >> 3 | (code & 0x03)) {
             case 0x00:
-                if (code == 0x08) return PHP;
+                if (code == 0x00) return BRK;
+                else if (code == 0x08) return PHP;
+                else if (code == 0x10) return BPL;
+                else if (code == 0x18) return CLC;
                 break;
+            case 0x01: return ORA; break;
+            case 0x02: return ASL; break;
             case 0x04:
-                if (code == 0x28) return PLP;
+                if ((code & 0x07) == 0x04) return BIT;
+                else if (code == 0x20) return JSR;
+                else if (code == 0x28) return PLP;
+                else if (code == 0x30) return BMI;
+                else if (code == 0x38) return SEC;
                 break;
+            case 0x05: return AND; break;
+            case 0x06: return ROL; break;
             case 0x08:
-                if (code == 0x48) return PHA;
+                if (code == 0x40) return RTI;
+                else if (code == 0x48) return PHA;
+                else if (code == 0x4C) return JMP;
+                else if (code == 0x50) return BVC;
+                else if (code == 0x58) return CLI;
                 break;
+            case 0x09: return EOR;
+            case 0x0A: return LSR;
             case 0x0C:
-                if (code == 0x68) return PLA;
+                if (code == 0x60) return RTS;
+                else if (code == 0x68) return PLA;
+                else if (code == 0x6C) return JMP;
+                else if (code == 0x70) return BVS;
+                else if (code == 0x78) return SEI;
                 break;
+            case 0x0D: return ADC; break;
+            case 0x0E: return ROR; break;
             case 0x10:
-                if (code == 0x98) return TYA;
-                else if ((code & 0x0F) != 0x08) return STY;
+                if ((code & 0x07) == 0x04) return STY;
+                else if (code == 0x88) return DEY;
+                else if (code == 0x90) return BCC;
+                else if (code == 0x98) return TYA;
                 break;
             case 0x11: return STA; break;
             case 0x12:
@@ -139,14 +164,38 @@ struct CPU {
                 else return STX; 
                 break;
             case 0x14:
-                if ((code & 0x0F) == 0x04 || (code & 0x0F) == 0x0C || code == 0xA0) return LDY;
+                if ((code & 0x07) == 0x04 || code == 0xA0) return LDY;
                 else if (code == 0xA8) return TAY;
+                else if (code == 0xB0) return BCS;
+                else if (code == 0xB8) return CLV;
                 break;
             case 0x15: return LDA; break;
             case 0x16: 
                 if (code == 0xAA) return TAX; 
                 else if (code == 0xBA) return TSX;
                 else return LDX; 
+                break;
+            case 0x18:
+                if ((code & 0x07) == 0x04 || code == 0xC0) return CPY;
+                else if (code == 0xC8) return INY;
+                else if (code == 0xD0) return BNE;
+                else if (code == 0xD8) return CLD;
+                break;
+            case 0x19: return CMP; break;
+            case 0x1A:
+                if (code == 0xCA) return DEX;
+                else return DEC;
+                break;
+            case 0x1C:
+                if ((code & 0x07) == 0x04 || code == 0xE0) return CPX;
+                else if (code == 0xE8) return INX;
+                else if (code == 0xF0) return BEQ;
+                else if (code == 0xF8) return SED;
+                break;
+            case 0x1D: return SBC; break;
+            case 0x1E:
+                if (code == 0xEA) return NOP;
+                else return INC;
                 break;
         }
         return 0xFF;
