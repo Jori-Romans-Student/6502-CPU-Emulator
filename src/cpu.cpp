@@ -206,7 +206,8 @@ struct CPU {
         Byte store; // Used if any storage is required between lines
 
         switch (mode) {
-            case AND: A = (A & Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case ADC: store = Read(address) + C; C = (~(A ^ store) & (A ^ (A + store)) & 0x80) > 0; V = C; A = (Byte) (A + store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case AND: A = A & Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case BIT: store = Read(address); Z = ((A & store) == 0); N = (store & 0b10000000) > 0; V = (store & 0b01000000) > 0; break;
             case EOR: A = (A ^ Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDA: A = Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
