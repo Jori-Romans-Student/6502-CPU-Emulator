@@ -8,6 +8,9 @@ TEST_CASE("INC instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
+    Word address;
+    Byte value;
+
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[4] = { 
@@ -18,5 +21,59 @@ TEST_CASE("INC instruction") {
         for (int i = 0; i < length; i++) {
             REQUIRE(cpu.Instruct(OPCodes[i]) == INC);
         }
+    };
+
+    SECTION("increments random value") {
+
+        address = (Word) rand();
+        value = (Byte) rand();
+
+        mem[address] = value;
+
+        cpu.Execute(INC, address);
+
+        REQUIRE(mem[address] == value + 1);
+    };
+
+    SECTION("increments value to zero") {
+
+        address = (Word) rand();
+        value = (Byte) 0xFF;
+
+        mem[address] = value;
+
+        cpu.Execute(INC, address);
+
+        REQUIRE(mem[address] == 0x00);
+        REQUIRE(cpu.Z == 1);
+        REQUIRE(cpu.N == 0);
+    };
+
+    SECTION("increments value to negative") {
+
+        address = (Word) rand();
+        value = (Byte) 0x7F;
+
+        mem[address] = value;
+
+        cpu.Execute(INC, address);
+
+        REQUIRE(mem[address] == 0x80);
+        REQUIRE(cpu.Z == 0);
+        REQUIRE(cpu.N == 1);
+    };
+
+    SECTION("increments value to positive") {
+
+        address = (Word) rand();
+        value = (Byte) 0x00;
+
+        mem[address] = value;
+
+        cpu.Execute(INC, address);
+
+        REQUIRE(mem[address] == 0x01);
+        REQUIRE(cpu.Z == 0);
+        REQUIRE(cpu.N == 0);
     };
 }
