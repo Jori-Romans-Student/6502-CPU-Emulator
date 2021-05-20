@@ -208,6 +208,7 @@ struct CPU {
         switch (mode) {
             case ADC: store = Read(address) + C; V = (~(A ^ store) & (A ^ (A + store)) & 0x80) > 0; C = V; A = (Byte) (A + store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case AND: A = A & Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case ASL: store = Read(address); C = (store & 0b10000000) > 0; store = store << 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case BIT: store = Read(address); Z = ((A & store) == 0); N = (store & 0b10000000) > 0; V = (store & 0b01000000) > 0; break;
             case CMP: store = Read(address); Z = (A == store); N = ((A - store) & 0b10000000) > 0; C = (A >= store); break;
             case CPX: store = Read(address); Z = (X == store); N = ((X - store) & 0b10000000) > 0; C = (X >= store); break;
@@ -222,11 +223,14 @@ struct CPU {
             case LDA: A = Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDX: X = Read(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case LDY: Y = Read(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
+            case LSR: store = Read(address); C = (store & 0b00000001) > 0; store = store >> 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case ORA: A = (A | Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case PHA: Push(A); break;
             case PHP: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push(store); break;
             case PLA: A = Pull(); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case PLP: store = Pull(); N = (store >> 7) % 2; V = (store >> 6) % 2; B = (store >> 4) % 2; D = (store >> 3) % 2; I = (store >> 2) % 2; Z = (store >> 1) % 2; C = store % 2; break;
+            case ROL: store = Read(address); N = (store & 0b10000000) > 0; store = (store << 1) + C; Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
+            case ROR: store = Read(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
             case SBC: store = Read(address) + (C ^ 0x01); V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = ~V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case STA: Write(address, A); break;
             case STX: Write(address, X); break;
