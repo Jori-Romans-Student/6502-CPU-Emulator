@@ -107,7 +107,7 @@ struct CPU {
             case ID: address = Fetch() << 8 | Fetch(); return Read(address) << 8 | Read(address + 1); break;
             case IDX: address = Fetch(); return Read(address + X) << 8 | Read(address + X + 1); break;
             case IDY: address = Fetch(); return (Read(address) << 8 | Read(address + 1)) + Y; break;
-            case REL: return Fetch();
+            case REL: address = PC; PC++; return address; break;
             case ZP: return Fetch(); break;
             case ZPX: return Fetch() + X; break;
             case ZPY: return Fetch() + Y; break;
