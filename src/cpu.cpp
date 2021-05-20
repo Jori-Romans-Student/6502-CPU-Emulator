@@ -211,6 +211,8 @@ struct CPU {
             case ADC: store = Read(address) + C; V = (~(A ^ store) & (A ^ (A + store)) & 0x80) > 0; C = V; A = (Byte) (A + store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case AND: A = A & Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case ASL: store = Read(address); C = (store & 0b10000000) > 0; store = store << 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
+            case BCC: store = Read(address); if (C == 0) PC += (signed char) store; break;
+            case BCS: store = Read(address); if (C == 1) PC += (signed char) store; break;
             case BIT: store = Read(address); Z = ((A & store) == 0); N = (store & 0b10000000) > 0; V = (store & 0b01000000) > 0; break;
             case CMP: store = Read(address); Z = (A == store); N = ((A - store) & 0b10000000) > 0; C = (A >= store); break;
             case CPX: store = Read(address); Z = (X == store); N = ((X - store) & 0b10000000) > 0; C = (X >= store); break;
