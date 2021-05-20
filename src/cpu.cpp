@@ -97,13 +97,14 @@ struct CPU {
 
     Word Address(Byte mode) {
 
-        Byte address;
+        Word address;
 
         switch (mode) {
             case AB: return Fetch() << 8 | Fetch(); break;
             case ABX: return (Fetch() << 8 | Fetch()) + X; break;
             case ABY: return (Fetch() << 8 | Fetch()) + Y; break;
             case IMM: return PC; break;
+            case ID: address = Fetch() << 8 | Fetch(); return Read(address) << 8 | Read(address + 1); break;
             case IDX: address = Fetch(); return Read(address + X) << 8 | Read(address + X + 1); break;
             case IDY: address = Fetch(); return (Read(address) << 8 | Read(address + 1)) + Y; break;
             case ZP: return Fetch(); break;
@@ -220,6 +221,7 @@ struct CPU {
             case INC: store = Read(address) + 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case INX: X += 0x01; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case INY: Y += 0x01; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
+            case JMP: PC = Read(address);
             case LDA: A = Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDX: X = Read(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case LDY: Y = Read(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
