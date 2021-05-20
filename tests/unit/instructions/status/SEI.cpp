@@ -8,6 +8,8 @@ TEST_CASE("SEI instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
+    Byte I;
+
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -18,5 +20,25 @@ TEST_CASE("SEI instruction") {
         for (int i = 0; i < length; i++) {
             REQUIRE(cpu.Instruct(OPCodes[i]) == SEI);
         }
+    };
+
+    SECTION("executes correctly on cleared flag") {
+        
+        I = 0;
+        cpu.I = I;
+
+        cpu.Execute(SEI, 0x00);
+
+        REQUIRE(cpu.I == 1);
+    };
+
+    SECTION("executes correctly on set flag") {
+        
+        I = 1;
+        cpu.I = I;
+
+        cpu.Execute(SEI, 0x00);
+
+        REQUIRE(cpu.I == 1);
     };
 }

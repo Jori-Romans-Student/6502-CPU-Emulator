@@ -8,6 +8,8 @@ TEST_CASE("CLD instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
+    Byte D;
+
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -18,5 +20,25 @@ TEST_CASE("CLD instruction") {
         for (int i = 0; i < length; i++) {
             REQUIRE(cpu.Instruct(OPCodes[i]) == CLD);
         }
+    };
+
+    SECTION("executes correctly on cleared flag") {
+        
+        D = 0;
+        cpu.D = D;
+
+        cpu.Execute(CLD, 0x00);
+
+        REQUIRE(cpu.D == 0);
+    };
+
+    SECTION("executes correctly on set flag") {
+        
+        D = 1;
+        cpu.D = D;
+
+        cpu.Execute(CLD, 0x00);
+
+        REQUIRE(cpu.D == 0);
     };
 }

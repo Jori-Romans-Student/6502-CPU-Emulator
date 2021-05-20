@@ -220,6 +220,10 @@ struct CPU {
             case BPL: store = Read(address); if (N == 0) PC += (signed char) store; break;
             case BVC: store = Read(address); if (V == 0) PC += (signed char) store; break;
             case BVS: store = Read(address); if (V == 1) PC += (signed char) store; break;
+            case CLC: C = 0; break;
+            case CLD: D = 0; break;
+            case CLI: I = 0; break;
+            case CLV: V = 0; break;
             case CMP: store = Read(address); Z = (A == store); N = ((A - store) & 0b10000000) > 0; C = (A >= store); break;
             case CPX: store = Read(address); Z = (X == store); N = ((X - store) & 0b10000000) > 0; C = (X >= store); break;
             case CPY: store = Read(address); Z = (Y == store); N = ((Y - store) & 0b10000000) > 0; C = (Y >= store); break;
@@ -245,6 +249,9 @@ struct CPU {
             case ROR: store = Read(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
             case RTS: PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
             case SBC: store = Read(address) + (C ^ 0x01); V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = ~V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case SEC: C = 1; break;
+            case SED: D = 1; break;
+            case SEI: I = 1; break;
             case STA: Write(address, A); break;
             case STX: Write(address, X); break;
             case STY: Write(address, Y); break;

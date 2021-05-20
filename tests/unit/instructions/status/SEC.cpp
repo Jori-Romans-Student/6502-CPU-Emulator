@@ -8,6 +8,8 @@ TEST_CASE("SEC instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
+    Byte C;
+
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -18,5 +20,25 @@ TEST_CASE("SEC instruction") {
         for (int i = 0; i < length; i++) {
             REQUIRE(cpu.Instruct(OPCodes[i]) == SEC);
         }
+    };
+
+    SECTION("executes correctly on cleared flag") {
+        
+        C = 0;
+        cpu.C = C;
+
+        cpu.Execute(SEC, 0x00);
+
+        REQUIRE(cpu.C == 1);
+    };
+
+    SECTION("executes correctly on set flag") {
+        
+        C = 1;
+        cpu.C = C;
+
+        cpu.Execute(SEC, 0x00);
+
+        REQUIRE(cpu.C == 1);
     };
 }
