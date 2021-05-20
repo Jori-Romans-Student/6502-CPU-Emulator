@@ -8,6 +8,9 @@ TEST_CASE("JMP instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
+    Word address;
+    Word PC;
+
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[2] = { 
@@ -19,4 +22,16 @@ TEST_CASE("JMP instruction") {
             REQUIRE(cpu.Instruct(OPCodes[i]) == JMP);
         }
     };
+
+    SECTION("executes correctly on random address") {
+        
+        PC = (Word) rand();
+        address = (Word) rand();
+
+        cpu.PC = PC;
+
+        cpu.Execute(JMP, address);
+
+        REQUIRE(cpu.PC == address);
+    }
 }

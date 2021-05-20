@@ -221,7 +221,8 @@ struct CPU {
             case INC: store = Read(address) + 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case INX: X += 0x01; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case INY: Y += 0x01; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
-            case JMP: PC = Read(address);
+            case JMP: PC = address; break;
+            case JSR: Push((Byte) ((PC - 1) >> 8)); Push((Byte) (PC - 1)); PC = address; break;
             case LDA: A = Read(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDX: X = Read(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case LDY: Y = Read(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
@@ -233,6 +234,7 @@ struct CPU {
             case PLP: store = Pull(); N = (store >> 7) % 2; V = (store >> 6) % 2; B = (store >> 4) % 2; D = (store >> 3) % 2; I = (store >> 2) % 2; Z = (store >> 1) % 2; C = store % 2; break;
             case ROL: store = Read(address); N = (store & 0b10000000) > 0; store = (store << 1) + C; Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
             case ROR: store = Read(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
+            case RTS: PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
             case SBC: store = Read(address) + (C ^ 0x01); V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = ~V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case STA: Write(address, A); break;
             case STX: Write(address, X); break;
