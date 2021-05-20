@@ -241,6 +241,7 @@ struct CPU {
             case LDX: X = Read(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case LDY: Y = Read(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
             case LSR: store = Read(address); C = (store & 0b00000001) > 0; store = store >> 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
+            case NOP: PC++; break;
             case ORA: A = (A | Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case PHA: Push(A); break;
             case PHP: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push(store); break;

@@ -8,6 +8,8 @@ TEST_CASE("NOP instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
+    Word PC;
+
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -19,4 +21,15 @@ TEST_CASE("NOP instruction") {
             REQUIRE(cpu.Instruct(OPCodes[i]) == NOP);
         }
     };
+
+    SECTION("executes properly on random PC") {
+        
+        PC = (Word) rand();
+
+        cpu.PC = PC;
+
+        cpu.Execute(NOP, 0x00);
+
+        REQUIRE(cpu.PC == PC + 1);
+    }
 }
