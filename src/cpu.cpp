@@ -218,7 +218,7 @@ struct CPU {
             case BMI: store = Read(address); if (N == 1) PC += (signed char) store; break;
             case BNE: store = Read(address); if (Z == 0) PC += (signed char) store; break;
             case BPL: store = Read(address); if (N == 0) PC += (signed char) store; break;
-            case BRK: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push((Byte) (PC >> 8)); Push((Byte) PC); Push(store); PC = (Read(0xFFFE) << 8 | Read(0xFFFF)); break;
+            case BRK: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push((Byte) (PC >> 8)); Push((Byte) PC); Push(store); PC = (Read(0xFFFE) << 8 | Read(0xFFFF)); B = 1; break;
             case BVC: store = Read(address); if (V == 0) PC += (signed char) store; break;
             case BVS: store = Read(address); if (V == 1) PC += (signed char) store; break;
             case CLC: C = 0; break;
@@ -248,6 +248,7 @@ struct CPU {
             case PLP: store = Pull(); N = (store >> 7) % 2; V = (store >> 6) % 2; B = (store >> 4) % 2; D = (store >> 3) % 2; I = (store >> 2) % 2; Z = (store >> 1) % 2; C = store % 2; break;
             case ROL: store = Read(address); N = (store & 0b10000000) > 0; store = (store << 1) + C; Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
             case ROR: store = Read(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
+            case RTI: store = Pull(); N = (store >> 7) % 2; V = (store >> 6) % 2; B = (store >> 4) % 2; D = (store >> 3) % 2; I = (store >> 2) % 2; Z = (store >> 1) % 2; C = store % 2; PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
             case RTS: PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
             case SBC: store = Read(address) + (C ^ 0x01); V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = ~V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case SEC: C = 1; break;

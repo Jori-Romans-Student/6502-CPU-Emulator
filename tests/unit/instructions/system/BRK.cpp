@@ -67,5 +67,7 @@ TEST_CASE("BRK instruction") {
 
         REQUIRE((mem[0x0100] << 8 | mem[0x0101]) == PC);
         REQUIRE(mem[0x0102] == ((N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C));
+
+        REQUIRE(cpu.B == 1);
     };
 }
