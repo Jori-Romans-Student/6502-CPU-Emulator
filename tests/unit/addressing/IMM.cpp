@@ -32,5 +32,6 @@ TEST_CASE("Immediate addressing mode") {
         cpu.PC = PC;
 
         REQUIRE(cpu.Address(IMM) == PC);
+        REQUIRE(cpu.PC == PC + 1);
     };
 }
