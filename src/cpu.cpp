@@ -214,6 +214,8 @@ struct CPU {
             case BCC: store = Read(address); if (C == 0) PC += (signed char) store; break;
             case BCS: store = Read(address); if (C == 1) PC += (signed char) store; break;
             case BIT: store = Read(address); Z = ((A & store) == 0); N = (store & 0b10000000) > 0; V = (store & 0b01000000) > 0; break;
+            case BVC: store = Read(address); if (V == 0) PC += (signed char) store; break;
+            case BVS: store = Read(address); if (V == 1) PC += (signed char) store; break;
             case CMP: store = Read(address); Z = (A == store); N = ((A - store) & 0b10000000) > 0; C = (A >= store); break;
             case CPX: store = Read(address); Z = (X == store); N = ((X - store) & 0b10000000) > 0; C = (X >= store); break;
             case CPY: store = Read(address); Z = (Y == store); N = ((Y - store) & 0b10000000) > 0; C = (Y >= store); break;
