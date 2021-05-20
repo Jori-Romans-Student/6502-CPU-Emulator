@@ -212,6 +212,9 @@ struct CPU {
             case CMP: store = Read(address); Z = (A == store); N = ((A - store) & 0b10000000) > 0; C = (A >= store); break;
             case CPX: store = Read(address); Z = (X == store); N = ((X - store) & 0b10000000) > 0; C = (X >= store); break;
             case CPY: store = Read(address); Z = (Y == store); N = ((Y - store) & 0b10000000) > 0; C = (Y >= store); break;
+            case DEC: store = Read(address) - 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
+            case DEX: X -= 0x01; Z = (X == 0); N = (X & 0b10000000) > 0; break;
+            case DEY: Y -= 0x01; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
             case EOR: A = (A ^ Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case INC: store = Read(address) + 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case INX: X += 0x01; Z = (X == 0); N = (X & 0b10000000) > 0; break;
