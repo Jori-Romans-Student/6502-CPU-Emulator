@@ -218,6 +218,7 @@ struct CPU {
             case BMI: store = Read(address); if (N == 1) PC += (signed char) store; break;
             case BNE: store = Read(address); if (Z == 0) PC += (signed char) store; break;
             case BPL: store = Read(address); if (N == 0) PC += (signed char) store; break;
+            case BRK: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push((Byte) (PC >> 8)); Push((Byte) PC); Push(store); PC = (Read(0xFFFE) << 8 | Read(0xFFFF)); break;
             case BVC: store = Read(address); if (V == 0) PC += (signed char) store; break;
             case BVS: store = Read(address); if (V == 1) PC += (signed char) store; break;
             case CLC: C = 0; break;
