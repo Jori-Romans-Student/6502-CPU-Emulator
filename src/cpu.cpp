@@ -49,12 +49,22 @@ struct CPU {
     
     // Get value and increment PC
 
-    Byte Fetch() {
+    template <typename T>
+    T Fetch() {
 
-        Byte value = (*mem)[PC];
-        PC++;
+        int bytes = (int) (sizeof(T) / sizeof(Byte));
+        
+        Byte value;
+        T data = 0;
 
-        return value;
+        for (int i = 1; i <= bytes; i++) {
+            value = (*mem)[PC];
+            data |= value << ((bytes - i) * 8);
+            PC++;
+        }
+
+        return data;
+
     };
 
     // Get ADRM bits bbb from OP code aaabbbcc, then filter based on low nibble
@@ -104,17 +114,17 @@ struct CPU {
         Word address;
 
         switch (mode) {
-            case AB: return Fetch() << 8 | Fetch(); break;
-            case ABX: return (Fetch() << 8 | Fetch()) + X; break;
-            case ABY: return (Fetch() << 8 | Fetch()) + Y; break;
+            case AB: return Fetch<Word>(); break;
+            case ABX: return Fetch<Word>() + X; break;
+            case ABY: return Fetch<Word>() + Y; break;
             case IMM: address = PC; PC++; return address; break;
-            case ID: address = Fetch() << 8 | Fetch(); return Read(address) << 8 | Read(address + 1); break;
-            case IDX: address = Fetch(); return Read(address + X) << 8 | Read(address + X + 1); break;
-            case IDY: address = Fetch(); return (Read(address) << 8 | Read(address + 1)) + Y; break;
+            case ID: address = Fetch<Word>(); return Read(address) << 8 | Read(address + 1); break;
+            case IDX: address = Fetch<Byte>(); return Read(address + X) << 8 | Read(address + X + 1); break;
+            case IDY: address = Fetch<Byte>(); return (Read(address) << 8 | Read(address + 1)) + Y; break;
             case REL: address = PC; PC++; return address; break;
-            case ZP: return Fetch(); break;
-            case ZPX: return Fetch() + X; break;
-            case ZPY: return Fetch() + Y; break;
+            case ZP: return Fetch<Byte>(); break;
+            case ZPX: return Fetch<Byte>() + X; break;
+            case ZPY: return Fetch<Byte>() + Y; break;
         }
 
         return 0xFF;
@@ -272,7 +282,7 @@ struct CPU {
     }
 
     void Run() {
-        Byte OP = Fetch();
+        Byte OP = Fetch<Byte>();
         Byte ADRM = Decode(OP);
         Word ADR = Address(ADRM);
         Byte INS = Instruct(OP);
