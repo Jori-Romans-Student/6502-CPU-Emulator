@@ -21,19 +21,24 @@ int main() {
     //     printf("Received value of %X for OP Code %X\n", value, (Byte) i);
     // }
 
-    Bit C = 1;
-    Bit Z = 0;
-    Bit I = 1;
-    Bit D = 0;
-    Bit B = 0;
-    Bit V = 1;
-    Bit N = 0;
+    // Bit C = 1;
+    // Bit Z = 0;
+    // Bit I = 1;
+    // Bit D = 0;
+    // Bit B = 0;
+    // Bit V = 1;
+    // Bit N = 0;
 
-    // Processor Byte
+    // // Processor Byte
 
-    Status P = Status(&C, &Z, &I, &D, &B, &V, &N);
+    // Status P = Status(&C, &Z, &I, &D, &B, &V, &N);
 
-    Byte hello = (Byte) P;
+    // Byte hello = (Byte) P;
+
+    unsigned char test = 0x77;
+    signed char test2 = 0x77;
+    unsigned char test3 = 0x87;
+    signed char test4 = 0x87;
 
     return 0;
 }

@@ -4,6 +4,7 @@ using Byte = unsigned char;
 using Word = unsigned short;
 
 using u32 = unsigned int;
+using Signed = signed char;
 
 using Bit = bool;
 
@@ -42,6 +43,34 @@ struct Status {
     }
 
 };
+
+bool isPositive(Byte value) {
+    return (value & 0b10000000) == 0;
+}
+
+bool isNegative(Byte value) {
+    return (value & 0b10000000) != 0;
+}
+
+bool isZero(Byte value) {
+    return value == 0;
+}
+
+bool isOverflow(Byte value) {
+    return (value & 0b01000000) != 0;
+}
+
+bool isOdd(Byte value) {
+    return (value & 0b00000001) != 0;
+}
+
+bool isClear(Bit value) {
+    return !value;
+}
+
+bool isSet(Bit value) {
+    return value;
+}
 
 // Codes
 
