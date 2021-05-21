@@ -45,8 +45,14 @@ struct CPU {
         return data;
     };
 
-    void Write(Word address, Byte value) {
-        (*mem)[address] = value;
+    template <typename T>
+    void Write(Word address, T value) {
+
+        int bytes = (int) (sizeof(T) / sizeof(Byte));
+
+        for (int i = 1; i <= bytes; i++) {
+            (*mem)[address + i - 1] = (Byte) (value >> ((bytes - i) * 8));
+        }
     }
 
     Byte Pull() {
@@ -55,7 +61,7 @@ struct CPU {
     }
 
     void Push(Byte value) {
-        Write((Word) (0x0100 | S), value);
+        Write<Byte>((Word) (0x0100 | S), value);
         S++;
     }
     
@@ -236,7 +242,7 @@ struct CPU {
         switch (mode) {
             case ADC: store = Read<Byte>(address) + C; V = (~(A ^ store) & (A ^ (A + store)) & 0x80) > 0; C = V; A = (Byte) (A + store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case AND: A = A & Read<Byte>(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
-            case ASL: store = Read<Byte>(address); C = (store & 0b10000000) > 0; store = store << 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
+            case ASL: store = Read<Byte>(address); C = (store & 0b10000000) > 0; store = store << 1; Write<Byte>(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case BCC: store = Read<Byte>(address); if (C == 0) PC += (signed char) store; break;
             case BCS: store = Read<Byte>(address); if (C == 1) PC += (signed char) store; break;
             case BEQ: store = Read<Byte>(address); if (Z == 1) PC += (signed char) store; break;
@@ -254,11 +260,11 @@ struct CPU {
             case CMP: store = Read<Byte>(address); Z = (A == store); N = ((A - store) & 0b10000000) > 0; C = (A >= store); break;
             case CPX: store = Read<Byte>(address); Z = (X == store); N = ((X - store) & 0b10000000) > 0; C = (X >= store); break;
             case CPY: store = Read<Byte>(address); Z = (Y == store); N = ((Y - store) & 0b10000000) > 0; C = (Y >= store); break;
-            case DEC: store = Read<Byte>(address) - 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
+            case DEC: store = Read<Byte>(address) - 1; Write<Byte>(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case DEX: X -= 0x01; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case DEY: Y -= 0x01; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
             case EOR: A = (A ^ Read<Byte>(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
-            case INC: store = Read<Byte>(address) + 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
+            case INC: store = Read<Byte>(address) + 1; Write<Byte>(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case INX: X += 0x01; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case INY: Y += 0x01; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
             case JMP: PC = address; break;
@@ -266,24 +272,24 @@ struct CPU {
             case LDA: A = Read<Byte>(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDX: X = Read<Byte>(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case LDY: Y = Read<Byte>(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
-            case LSR: store = Read<Byte>(address); C = (store & 0b00000001) > 0; store = store >> 1; Write(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
+            case LSR: store = Read<Byte>(address); C = (store & 0b00000001) > 0; store = store >> 1; Write<Byte>(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case NOP: PC++; break;
             case ORA: A = (A | Read<Byte>(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case PHA: Push(A); break;
             case PHP: Push((Byte) P); break;
             case PLA: A = Pull(); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case PLP: P = Pull(); break;
-            case ROL: store = Read<Byte>(address); N = (store & 0b10000000) > 0; store = (store << 1) + C; Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
-            case ROR: store = Read<Byte>(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
+            case ROL: store = Read<Byte>(address); N = (store & 0b10000000) > 0; store = (store << 1) + C; Write<Byte>(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
+            case ROR: store = Read<Byte>(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write<Byte>(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
             case RTI: P = Pull(); PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
             case RTS: PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
             case SBC: store = Read<Byte>(address) + !C; V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = !V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case SEC: C = 1; break;
             case SED: D = 1; break;
             case SEI: I = 1; break;
-            case STA: Write(address, A); break;
-            case STX: Write(address, X); break;
-            case STY: Write(address, Y); break;
+            case STA: Write<Byte>(address, A); break;
+            case STX: Write<Byte>(address, X); break;
+            case STY: Write<Byte>(address, Y); break;
             case TAX: X = A; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case TAY: Y = A; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
             case TSX: X = S; Z = (X == 0); N = (X & 0b10000000) > 0; break;
