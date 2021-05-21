@@ -31,6 +31,6 @@ TEST_CASE("STX instruction") {
 
         cpu.Execute(STX, address);
 
-        REQUIRE(cpu.Read(address) == X);
+        REQUIRE(cpu.Read<Byte>(address) == X);
     };
 }

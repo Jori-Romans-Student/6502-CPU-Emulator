@@ -31,6 +31,6 @@ TEST_CASE("STY instruction") {
 
         cpu.Execute(STY, address);
 
-        REQUIRE(cpu.Read(address) == Y);
+        REQUIRE(cpu.Read<Byte>(address) == Y);
     };
 }

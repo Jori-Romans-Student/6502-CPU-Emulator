@@ -32,6 +32,6 @@ TEST_CASE("STA instruction") {
 
         cpu.Execute(STA, address);
 
-        REQUIRE(cpu.Read(address) == A);
+        REQUIRE(cpu.Read<Byte>(address) == A);
     };
 }
