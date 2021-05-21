@@ -55,14 +55,31 @@ struct CPU {
         }
     }
 
-    Byte Pull() {
-        S--;
-        return Read<Byte>((Word) (0x0100 | S));
+    template <typename T>
+    T Pull() {
+        
+        int bytes = (int) (sizeof(T) / sizeof(Byte));
+
+        Byte value;
+        T data = 0;
+        
+        for (int i = 0; i < bytes; i++) {
+            S--;
+            value = Read<Byte>((Word) (0x0100 | S));
+            data |= value << (i * 8);
+        }
+
+        return data;
     }
 
-    void Push(Byte value) {
-        Write<Byte>((Word) (0x0100 | S), value);
-        S++;
+    template <typename T>
+    void Push(T value) {
+
+        int bytes = (int) (sizeof(T) / sizeof(Byte));
+
+        Write<T>((Word) (0x0100 | S), value);
+        
+        S += (Byte) bytes;
     }
     
     // Get value and increment PC
@@ -250,7 +267,7 @@ struct CPU {
             case BMI: store = Read<Byte>(address); if (N == 1) PC += (signed char) store; break;
             case BNE: store = Read<Byte>(address); if (Z == 0) PC += (signed char) store; break;
             case BPL: store = Read<Byte>(address); if (N == 0) PC += (signed char) store; break;
-            case BRK: Push((Byte) (PC >> 8)); Push((Byte) PC); Push(P); PC = Read<Word>(0xFFFE); B = 1; break;
+            case BRK: Push<Word>(PC); Push<Byte>(P); PC = Read<Word>(0xFFFE); B = 1; break;
             case BVC: store = Read<Byte>(address); if (V == 0) PC += (signed char) store; break;
             case BVS: store = Read<Byte>(address); if (V == 1) PC += (signed char) store; break;
             case CLC: C = 0; break;
@@ -268,21 +285,21 @@ struct CPU {
             case INX: X += 0x01; Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case INY: Y += 0x01; Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
             case JMP: PC = address; break;
-            case JSR: Push((Byte) ((PC - 1) >> 8)); Push((Byte) (PC - 1)); PC = address; break;
+            case JSR: Push<Word>(PC - 1); PC = address; break;
             case LDA: A = Read<Byte>(address); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case LDX: X = Read<Byte>(address); Z = (X == 0); N = (X & 0b10000000) > 0; break;
             case LDY: Y = Read<Byte>(address); Z = (Y == 0); N = (Y & 0b10000000) > 0; break;
             case LSR: store = Read<Byte>(address); C = (store & 0b00000001) > 0; store = store >> 1; Write<Byte>(address, store); Z = (store == 0); N = (store & 0b10000000) > 0; break;
             case NOP: PC++; break;
             case ORA: A = (A | Read<Byte>(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
-            case PHA: Push(A); break;
-            case PHP: Push((Byte) P); break;
-            case PLA: A = Pull(); Z = (A == 0); N = (A & 0b10000000) > 0; break;
-            case PLP: P = Pull(); break;
+            case PHA: Push<Byte>(A); break;
+            case PHP: Push<Byte>((Byte) P); break;
+            case PLA: A = Pull<Byte>(); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case PLP: P = Pull<Byte>(); break;
             case ROL: store = Read<Byte>(address); N = (store & 0b10000000) > 0; store = (store << 1) + C; Write<Byte>(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
             case ROR: store = Read<Byte>(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write<Byte>(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
-            case RTI: P = Pull(); PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
-            case RTS: PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
+            case RTI: P = Pull<Byte>(); PC = (Word) Pull<Byte>(); PC = (Word) (Pull<Byte>() << 8 | PC); break;
+            case RTS: PC = (Word) Pull<Byte>(); PC = (Word) (Pull<Byte>() << 8 | PC); break;
             case SBC: store = Read<Byte>(address) + !C; V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = !V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case SEC: C = 1; break;
             case SED: D = 1; break;

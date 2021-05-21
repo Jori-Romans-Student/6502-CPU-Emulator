@@ -8,17 +8,33 @@ TEST_CASE("Push Method of CPU") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Byte value;
+    Byte byteValue;
+    Word wordValue;
+
     Byte S;
 
-    SECTION("with random value") {
+    SECTION("with random value for one byte") {
 
-        Byte value = (Byte) rand();
-        S = cpu.S;
+        byteValue = (Byte) rand();
+        S = 0x00;
+        cpu.S = S;
 
-        cpu.Push(value);
+        cpu.Push<Byte>(byteValue);
 
-        REQUIRE(mem[0x0100 | S] == value);
+        REQUIRE(mem[0x0100 | S] == byteValue);
         REQUIRE(cpu.S == S + 1);
+    };
+
+    SECTION("with random value for two bytes") {
+
+        wordValue = (Word) rand();
+        S = 0x00;
+        cpu.S = S;
+
+        cpu.Push<Word>(wordValue);
+
+        REQUIRE(mem[0x0100] == (Byte) (wordValue >> 8));
+        REQUIRE(mem[0x0101] == (Byte) wordValue);
+        REQUIRE(cpu.S == S + 2);
     };
 }
