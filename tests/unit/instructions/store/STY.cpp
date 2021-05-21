@@ -9,7 +9,7 @@ TEST_CASE("STY instruction") {
     CPU cpu = CPU(&mem);
     
     Word address;
-    Byte Y;
+    Bit Y;
 
     SECTION("decodes all matching OP codes") {
 

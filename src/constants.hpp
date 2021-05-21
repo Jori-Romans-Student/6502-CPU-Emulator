@@ -18,6 +18,10 @@ struct Status {
     Bit* V;
     Bit* N;
 
+    Byte getByte() {
+        return (*N << 7) | (*V << 6) | (*B << 4) | (*D << 3) | (*I << 2) | (*Z << 1) | *C;
+    }
+
     void operator=(Byte S) {
         *N = (S >> 7) % 2;
         *V = (S >> 6) % 2;
@@ -28,8 +32,12 @@ struct Status {
         *C = (S >> 0) % 2;
     }
 
+    bool operator==(Byte S) {
+        return S == getByte();
+    }
+
     operator Byte() {
-        return (*N << 7) | (*V << 6) | (*B << 4) | (*D << 3) | (*I << 2) | (*Z << 1) | *C;
+        return getByte();
     };
 
     Status(Bit *_C, Bit *_Z, Bit *_I, Bit *_D, Bit *_B, Bit *_V, Bit *_N) {

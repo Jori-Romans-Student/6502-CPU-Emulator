@@ -10,7 +10,7 @@ TEST_CASE("BPL instruction") {
 
     Word PC;
     Byte value;
-    Byte N;
+    Bit N;
 
     SECTION("decodes all matching OP codes") {
 

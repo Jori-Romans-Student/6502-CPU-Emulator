@@ -8,7 +8,7 @@ TEST_CASE("CLV instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Byte V;
+    Bit V;
 
     SECTION("decodes all matching OP codes") {
 

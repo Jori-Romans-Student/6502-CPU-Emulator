@@ -8,13 +8,13 @@ TEST_CASE("PHP instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
     
-    Byte N;
-    Byte V;
-    Byte B;
-    Byte D;
-    Byte I;
-    Byte Z;
-    Byte C;
+    Bit N;
+    Bit V;
+    Bit B;
+    Bit D;
+    Bit I;
+    Bit Z;
+    Bit C;
 
     Byte received;
 

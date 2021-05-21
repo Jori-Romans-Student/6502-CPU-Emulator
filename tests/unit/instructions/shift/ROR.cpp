@@ -10,7 +10,7 @@ TEST_CASE("ROR instruction") {
 
     Word address;
     Byte value;
-    Byte C;
+    Bit C;
 
     SECTION("decodes all matching OP codes") {
 

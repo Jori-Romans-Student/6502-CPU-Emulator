@@ -8,7 +8,7 @@ TEST_CASE("SED instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Byte D;
+    Bit D;
 
     SECTION("decodes all matching OP codes") {
 

@@ -11,7 +11,7 @@ TEST_CASE("SBC instruction") {
     Word address;
     Byte value;
     Byte A;
-    Byte C;
+    Bit C;
 
     SECTION("decodes all matching OP codes") {
 
@@ -61,7 +61,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 1);
         REQUIRE(cpu.V == 0);
         REQUIRE(cpu.N == 0);
@@ -82,7 +82,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 1);
         REQUIRE(cpu.V == 0);
         REQUIRE(cpu.N == 1);
@@ -103,7 +103,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 1);
         REQUIRE(cpu.V == 0);
         REQUIRE(cpu.N == 1);
@@ -124,7 +124,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 1);
         REQUIRE(cpu.V == 0);
         REQUIRE(cpu.N == 0);
@@ -145,7 +145,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 1);
         REQUIRE(cpu.V == 0);
         REQUIRE(cpu.N == 0);
@@ -167,7 +167,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 0);
         REQUIRE(cpu.V == 1);
         REQUIRE(cpu.N == 1);
@@ -188,7 +188,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 1);
         REQUIRE(cpu.V == 0);
         REQUIRE(cpu.N == 1);
@@ -209,7 +209,7 @@ TEST_CASE("SBC instruction") {
 
         cpu.Execute(SBC, address);
 
-        REQUIRE(cpu.A == (Byte)(A - value - (C ^ 0x01)));
+        REQUIRE(cpu.A == (Byte)(A - value - !C));
         REQUIRE(cpu.C == 0);
         REQUIRE(cpu.V == 1);
         REQUIRE(cpu.N == 0);

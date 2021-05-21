@@ -9,7 +9,7 @@ TEST_CASE("STX instruction") {
     CPU cpu = CPU(&mem);
     
     Word address;
-    Byte X;
+    Bit X;
 
     SECTION("decodes all matching OP codes") {
 

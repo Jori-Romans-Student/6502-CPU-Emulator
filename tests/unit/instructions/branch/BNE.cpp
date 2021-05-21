@@ -10,7 +10,7 @@ TEST_CASE("BNE instruction") {
 
     Word PC;
     Byte value;
-    Byte Z;
+    Bit Z;
 
     SECTION("decodes all matching OP codes") {
 

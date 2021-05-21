@@ -8,7 +8,7 @@ TEST_CASE("SEC instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Byte C;
+    Bit C;
 
     SECTION("decodes all matching OP codes") {
 

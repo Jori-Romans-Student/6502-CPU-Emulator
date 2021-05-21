@@ -39,5 +39,6 @@ TEST_CASE("PLP instruction") {
         REQUIRE(cpu.I == (P & 0b00000100) >> 2);
         REQUIRE(cpu.Z == (P & 0b00000010) >> 1);
         REQUIRE(cpu.C == (P & 0b00000001));
+        
     };
 }

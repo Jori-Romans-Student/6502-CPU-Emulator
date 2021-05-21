@@ -8,7 +8,7 @@ TEST_CASE("CLI instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Byte I;
+    Bit I;
 
     SECTION("decodes all matching OP codes") {
 

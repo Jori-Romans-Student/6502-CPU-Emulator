@@ -9,7 +9,7 @@ TEST_CASE("STA instruction") {
     CPU cpu = CPU(&mem);
 
     Word address;
-    Byte A;
+    Bit A;
 
     SECTION("decodes all matching OP codes") {
 

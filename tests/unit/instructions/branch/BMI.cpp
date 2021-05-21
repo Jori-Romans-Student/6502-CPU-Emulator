@@ -10,7 +10,7 @@ TEST_CASE("BMI instruction") {
 
     Word PC;
     Byte value;
-    Byte N;
+    Bit N;
 
     SECTION("decodes all matching OP codes") {
 

@@ -11,7 +11,7 @@ TEST_CASE("ADC instruction") {
     Word address;
     Byte value;
     Byte A;
-    Byte C;
+    Bit C;
 
     SECTION("decodes all matching OP codes") {
 
@@ -31,7 +31,7 @@ TEST_CASE("ADC instruction") {
         address = (Word) rand();
         value = (Byte) (rand() & 0x7F); // ensures a positive value
         A = (value ^ 0xFF) + 0x01; // ensures a negative value matching positive value
-        C = 0x00;
+        C = 0;
 
         cpu.A = A;
         cpu.C = C;

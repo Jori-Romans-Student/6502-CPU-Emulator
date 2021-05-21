@@ -10,7 +10,7 @@ TEST_CASE("BVC instruction") {
 
     Word PC;
     Byte value;
-    Byte V;
+    Bit V;
 
     SECTION("decodes all matching OP codes") {
 
