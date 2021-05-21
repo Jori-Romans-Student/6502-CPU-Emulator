@@ -17,13 +17,17 @@ struct CPU {
 
     // Process Status Flags
 
-    Byte C : 1;
-    Byte Z : 1;
-    Byte I : 1;
-    Byte D : 1;
-    Byte B : 1;
-    Byte V : 1;
-    Byte N : 1;
+    Bit C = 0;
+    Bit Z = 0;
+    Bit I = 0;
+    Bit D = 0;
+    Bit B = 0;
+    Bit V = 0;
+    Bit N = 0;
+
+    // Processor Byte
+
+    Status P = Status(&C, &Z, &I, &D, &B, &V, &N);
 
     Byte Read(Word address) {
         return (*mem)[address];
@@ -218,7 +222,7 @@ struct CPU {
             case BMI: store = Read(address); if (N == 1) PC += (signed char) store; break;
             case BNE: store = Read(address); if (Z == 0) PC += (signed char) store; break;
             case BPL: store = Read(address); if (N == 0) PC += (signed char) store; break;
-            case BRK: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push((Byte) (PC >> 8)); Push((Byte) PC); Push(store); PC = (Read(0xFFFE) << 8 | Read(0xFFFF)); B = 1; break;
+            case BRK: Push((Byte) (PC >> 8)); Push((Byte) PC); Push(P); PC = (Read(0xFFFE) << 8 | Read(0xFFFF)); B = 1; break;
             case BVC: store = Read(address); if (V == 0) PC += (signed char) store; break;
             case BVS: store = Read(address); if (V == 1) PC += (signed char) store; break;
             case CLC: C = 0; break;
@@ -244,14 +248,14 @@ struct CPU {
             case NOP: PC++; break;
             case ORA: A = (A | Read(address)); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case PHA: Push(A); break;
-            case PHP: store = (N << 7) | (V << 6) | (B << 4) | (D << 3) | (I << 2) | (Z << 1) | C; Push(store); break;
+            case PHP: Push((Byte) P); break;
             case PLA: A = Pull(); Z = (A == 0); N = (A & 0b10000000) > 0; break;
-            case PLP: store = Pull(); N = (store >> 7) % 2; V = (store >> 6) % 2; B = (store >> 4) % 2; D = (store >> 3) % 2; I = (store >> 2) % 2; Z = (store >> 1) % 2; C = store % 2; break;
+            case PLP: P = Pull(); break;
             case ROL: store = Read(address); N = (store & 0b10000000) > 0; store = (store << 1) + C; Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
             case ROR: store = Read(address); N = (store & 0b00000001) > 0; store = (store >> 1) | (C << 7); Write(address, store); Z = (store == 0); C = N; N = (store & 0b10000000) > 0; break;
-            case RTI: store = Pull(); N = (store >> 7) % 2; V = (store >> 6) % 2; B = (store >> 4) % 2; D = (store >> 3) % 2; I = (store >> 2) % 2; Z = (store >> 1) % 2; C = store % 2; PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
+            case RTI: P = Pull(); PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
             case RTS: PC = (Word) Pull(); PC = (Word) (Pull() << 8 | PC); break;
-            case SBC: store = Read(address) + (C ^ 0x01); V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = ~V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
+            case SBC: store = Read(address) + !C; V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = !V; A = (Byte) (A - store); Z = (A == 0); N = (A & 0b10000000) > 0; break;
             case SEC: C = 1; break;
             case SED: D = 1; break;
             case SEI: I = 1; break;
