@@ -60,6 +60,14 @@ bool isOverflow(Byte value) {
     return (value & 0b01000000) != 0;
 }
 
+bool isAddedOverflow(Byte valueOne, Byte valueTwo) {
+    return (~(valueOne ^ valueTwo) & (valueOne ^ (valueOne + valueTwo)) & 0x80) > 0;
+}
+
+bool isSubtractedOverflow(Byte valueOne, Byte valueTwo) {
+    return ((valueOne ^ valueTwo) & (valueOne ^ (valueOne - valueTwo)) & 0x80) > 0;
+}
+
 bool isOdd(Byte value) {
     return (value & 0b00000001) != 0;
 }

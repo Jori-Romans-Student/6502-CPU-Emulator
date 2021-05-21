@@ -257,7 +257,7 @@ struct CPU {
         Byte store; // Used if any storage is required between lines
 
         switch (mode) {
-            case ADC: store = Read<Byte>(address) + C; V = (~(A ^ store) & (A ^ (A + store)) & 0x80) > 0; C = V; A += store; Z = isZero(A); N = isNegative(A); break;
+            case ADC: store = Read<Byte>(address) + C; V = isAddedOverflow(A, store); C = V; A += store; Z = isZero(A); N = isNegative(A); break;
             case AND: A &= Read<Byte>(address); Z = isZero(A); N = isNegative(A); break;
             case ASL: store = Read<Byte>(address); C = isNegative(store); store <<= 1; Write<Byte>(address, store); Z = isZero(store); N = isNegative(store); break;
             case BCC: store = Read<Byte>(address); if ( isClear(C) ) PC += (Signed) store; break;
@@ -300,7 +300,7 @@ struct CPU {
             case ROR: store = Read<Byte>(address); N = isOdd(store); store >>= 1; store |= (C << 7); Write<Byte>(address, store); Z = isZero(store); C = N; N = isNegative(store); break;
             case RTI: P = Pull<Byte>(); PC = Pull<Word>(); break;
             case RTS: PC = Pull<Word>(); break;
-            case SBC: store = Read<Byte>(address) + !C; V = ((A ^ store) & (A ^ (A - store)) & 0x80) > 0; C = !V; A -= store; Z = isZero(A); N = isNegative(A); break;
+            case SBC: store = Read<Byte>(address) + !C; V = isSubtractedOverflow(A, store); C = !V; A -= store; Z = isZero(A); N = isNegative(A); break;
             case SEC: C = 1; break;
             case SED: D = 1; break;
             case SEI: I = 1; break;
