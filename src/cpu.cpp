@@ -32,7 +32,7 @@ struct CPU {
     template <typename T>
     T Read(Word address) {
 
-        int bytes = (int) (sizeof(T) / sizeof(Byte));
+        int bytes = sizeof(T);
 
         Byte value;
         T data = 0;
@@ -48,7 +48,7 @@ struct CPU {
     template <typename T>
     void Write(Word address, T value) {
 
-        int bytes = (int) (sizeof(T) / sizeof(Byte));
+        int bytes = sizeof(T);
 
         for (int i = 1; i <= bytes; i++) {
             (*mem)[address + i - 1] = (Byte) (value >> ((bytes - i) * 8));
@@ -58,7 +58,7 @@ struct CPU {
     template <typename T>
     T Pull() {
         
-        int bytes = (int) (sizeof(T) / sizeof(Byte));
+        int bytes = sizeof(T);
 
         Byte value;
         T data = 0;
@@ -75,7 +75,7 @@ struct CPU {
     template <typename T>
     void Push(T value) {
 
-        int bytes = (int) (sizeof(T) / sizeof(Byte));
+        int bytes = sizeof(T);
 
         Write<T>((Word) (0x0100 | S), value);
         
@@ -87,7 +87,7 @@ struct CPU {
     template <typename T>
     T Fetch() {
 
-        int bytes = (int) (sizeof(T) / sizeof(Byte));
+        int bytes = sizeof(T);
         
         Byte value;
         T data = 0;
