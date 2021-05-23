@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <cmath>
+
 // ========== Types ==========
 
 using Byte = unsigned char;
@@ -86,6 +91,25 @@ bool isClear(Bit value) {
 
 bool isSet(Bit value) {
     return value;
+}
+
+template <typename T>
+T random(T start = 0, T end = (T) pow(2, sizeof(T) * 8)) {
+
+    srand(time(NULL));
+
+    int low = start <= end ? start : end;
+    int high = start > end ? start : end;
+    int range = high - low + 1;
+
+    return (T) (rand() % range + low);
+}
+
+template <typename T>
+T negative(T value) {
+
+    return (T) (~value + 1);
+
 }
 
 // Codes

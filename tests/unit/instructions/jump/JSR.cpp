@@ -26,8 +26,8 @@ TEST_CASE("JSR instruction") {
 
     SECTION("executes correctly on random address") {
         
-        PC = (Word) rand();
-        address = (Word) rand();
+        PC = random<Word>();
+        address = random<Word>();
         S = 0x00;
 
         cpu.PC = PC;

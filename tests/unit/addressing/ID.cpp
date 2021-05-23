@@ -26,9 +26,9 @@ TEST_CASE("Indirect addressing mode") {
 
     SECTION("returns proper address for random PC and address") {
 
-        PC = (Word) rand();
-        addressOfAddress = (Word) rand();
-        address = (Word) rand();
+        PC = random<Word>();
+        addressOfAddress = random<Word>();
+        address = random<Word>();
         
         cpu.PC = PC;
 

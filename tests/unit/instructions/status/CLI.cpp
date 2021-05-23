@@ -8,8 +8,6 @@ TEST_CASE("CLI instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Bit I;
-
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -24,8 +22,7 @@ TEST_CASE("CLI instruction") {
 
     SECTION("executes correctly on cleared flag") {
         
-        I = 0;
-        cpu.I = I;
+        cpu.I = 0;
 
         cpu.Execute(CLI, 0x00);
 
@@ -34,8 +31,7 @@ TEST_CASE("CLI instruction") {
 
     SECTION("executes correctly on set flag") {
         
-        I = 1;
-        cpu.I = I;
+        cpu.I = 1;
 
         cpu.Execute(CLI, 0x00);
 

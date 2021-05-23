@@ -8,8 +8,6 @@ TEST_CASE("SED instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Bit D;
-
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -23,9 +21,8 @@ TEST_CASE("SED instruction") {
     };
 
     SECTION("executes correctly on cleared flag") {
-        
-        D = 0;
-        cpu.D = D;
+
+        cpu.D = 0;
 
         cpu.Execute(SED, 0x00);
 
@@ -34,8 +31,7 @@ TEST_CASE("SED instruction") {
 
     SECTION("executes correctly on set flag") {
         
-        D = 1;
-        cpu.D = D;
+        cpu.D = 1;
 
         cpu.Execute(SED, 0x00);
 

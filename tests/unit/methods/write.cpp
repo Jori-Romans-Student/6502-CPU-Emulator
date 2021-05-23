@@ -13,8 +13,8 @@ TEST_CASE("Write Method of CPU") {
     Word wordValue;
 
     SECTION("at random address with one byte") {
-        address = (Word) rand();
-        byteValue = (Byte) rand();
+        address = random<Word>();
+        byteValue = random<Byte>();
 
         cpu.Write<Byte>(address, byteValue);
 
@@ -22,8 +22,8 @@ TEST_CASE("Write Method of CPU") {
     };
 
     SECTION("at random address with two bytes") {
-        address = (Word) rand();
-        wordValue = (Word) rand();
+        address = random<Word>();
+        wordValue = random<Word>();
 
         cpu.Write<Word>(address, wordValue);
 

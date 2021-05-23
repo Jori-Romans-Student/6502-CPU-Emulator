@@ -25,7 +25,7 @@ TEST_CASE("DEY instruction") {
 
     SECTION("decrements value to zero") {
 
-        Y = (Byte) 0x01;
+        Y = 0x01;
 
         cpu.Y = Y;
 
@@ -38,8 +38,8 @@ TEST_CASE("DEY instruction") {
 
     SECTION("decrements value to negative") {
 
-        address = (Word) rand();
-        Y = (Byte) 0x00;
+        address = random<Word>();
+        Y = 0x00;
 
         cpu.Y = Y;
 
@@ -52,8 +52,8 @@ TEST_CASE("DEY instruction") {
 
     SECTION("decrements value to positive") {
 
-        address = (Word) rand();
-        Y = (Byte) 0x80;
+        address = random<Word>();
+        Y = 0x80;
 
         cpu.Y = Y;
 

@@ -26,8 +26,8 @@ TEST_CASE("BPL instruction") {
 
     SECTION("executes correctly on non-cleared negative") {
         
-        PC = (Word) rand();
-        value = (Byte) rand();
+        PC = random<Word>();
+        value = random<Byte>();
         N = 1;
 
         cpu.PC = PC;
@@ -42,7 +42,7 @@ TEST_CASE("BPL instruction") {
 
     SECTION("executes correctly on cleared negative with zero displacement") {
         
-        PC = (Word) rand();
+        PC = random<Word>();
         value = 0x00;
         N = 0;
 
@@ -58,8 +58,8 @@ TEST_CASE("BPL instruction") {
 
     SECTION("executes correctly on cleared negative with positive displacement") {
         
-        PC = (Word) rand();
-        value = (Byte) (rand() & 0x7F) | 0x01;
+        PC = random<Word>();
+        value = random<Byte>(1, 127);
         N = 0;
 
         cpu.PC = PC;
@@ -74,8 +74,8 @@ TEST_CASE("BPL instruction") {
 
     SECTION("executes correctly on cleared negative with negative displacement") {
         
-        PC = (Word) rand();
-        value = (Byte) (rand() | 0x80);
+        PC = random<Word>();
+        value = random<Byte>(-1, -128);
         N = 0;
 
         cpu.PC = PC;
@@ -85,6 +85,6 @@ TEST_CASE("BPL instruction") {
 
         cpu.Execute(BPL, PC);
 
-        REQUIRE(cpu.PC == PC - ((value ^ 0xFF) + 1));
+        REQUIRE(cpu.PC == PC - negative<Byte>(value));
     };
 }

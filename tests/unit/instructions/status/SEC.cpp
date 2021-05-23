@@ -8,8 +8,6 @@ TEST_CASE("SEC instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Bit C;
-
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -24,8 +22,7 @@ TEST_CASE("SEC instruction") {
 
     SECTION("executes correctly on cleared flag") {
         
-        C = 0;
-        cpu.C = C;
+        cpu.C = 0;
 
         cpu.Execute(SEC, 0x00);
 
@@ -34,8 +31,7 @@ TEST_CASE("SEC instruction") {
 
     SECTION("executes correctly on set flag") {
         
-        C = 1;
-        cpu.C = C;
+        cpu.C = 1;
 
         cpu.Execute(SEC, 0x00);
 

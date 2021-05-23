@@ -23,7 +23,7 @@ TEST_CASE("PLA instruction") {
     };
 
     SECTION("executes properly on zero value") {
-        value = (Byte) 0x00;
+        value = 0x00;
         mem[0x0100] = value;
         cpu.S += 1;
 
@@ -36,7 +36,7 @@ TEST_CASE("PLA instruction") {
     };
 
     SECTION("executes properly on positive value") {
-        value = (Byte) 0x72;
+        value = random<Byte>(1, 127);
         mem[0x0100] = value;
         cpu.S += 1;
 
@@ -48,8 +48,8 @@ TEST_CASE("PLA instruction") {
         REQUIRE(cpu.N == 0);
     };
 
-    SECTION("executes properly on zero value") {
-        value = (Byte) 0xAA;
+    SECTION("executes properly on negative value") {
+        value = random<Byte>(-1, -128);
         mem[0x0100] = value;
         cpu.S += 1;
 

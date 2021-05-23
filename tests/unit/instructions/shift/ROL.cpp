@@ -26,8 +26,8 @@ TEST_CASE("ROL instruction") {
 
     SECTION("shift to zero with no carry") {
 
-        address = (Word) rand();
-        value = (Byte) 0x00;
+        address = random<Word>();
+        value = 0x00;
         C = 0;
 
         cpu.C = C;
@@ -43,8 +43,8 @@ TEST_CASE("ROL instruction") {
 
     SECTION("shift to zero with carry") {
 
-        address = (Word) rand();
-        value = (Byte) 0x80;
+        address = random<Word>();
+        value = 0x80;
         C = 0;
 
         cpu.C = C;
@@ -60,9 +60,9 @@ TEST_CASE("ROL instruction") {
 
     SECTION("shift random small positive value") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() & 0x3F) | 0x01;
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(1, 64);
+        C = random<Bit>();
 
         cpu.C = C;
         mem[address] = value;
@@ -77,9 +77,9 @@ TEST_CASE("ROL instruction") {
 
     SECTION("shift random large positive value") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() & 0x7F) | 0x41;
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(65, 127);
+        C = random<Bit>();
 
         cpu.C = C;
         mem[address] = value;
@@ -94,9 +94,9 @@ TEST_CASE("ROL instruction") {
 
     SECTION("shift random small negative value") {
 
-        address = (Word) rand();
-        value = (Byte) rand() | 0xC1;
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(-1, -64);
+        C = random<Bit>();
 
         cpu.C = C;
         mem[address] = value;
@@ -111,9 +111,9 @@ TEST_CASE("ROL instruction") {
 
     SECTION("shift random large negative value") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() & 0x3F) | 0x81;
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(-65, -128);
+        C = random<Bit>();
 
         cpu.C = C;
         mem[address] = value;

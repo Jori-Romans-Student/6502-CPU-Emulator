@@ -27,7 +27,7 @@ TEST_CASE("Immediate addressing mode") {
 
     SECTION("returns proper address for random PC") {
 
-        PC = (Word) rand();
+        PC = random<Word>();
 
         cpu.PC = PC;
 

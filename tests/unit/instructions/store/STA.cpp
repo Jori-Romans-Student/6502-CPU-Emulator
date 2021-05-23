@@ -26,8 +26,8 @@ TEST_CASE("STA instruction") {
 
     SECTION("executes properly on random value") {
 
-        address = (Word) rand();
-        A = (Byte) rand();
+        address = random<Word>();
+        A = random<Byte>();
         cpu.A = A;
 
         cpu.Execute(STA, address);

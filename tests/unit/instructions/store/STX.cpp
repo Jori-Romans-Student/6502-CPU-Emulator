@@ -25,8 +25,8 @@ TEST_CASE("STX instruction") {
 
     SECTION("executes properly on random value") {
 
-        address = (Word) rand();
-        X = (Byte) rand();
+        address = random<Word>();
+        X = random<Byte>();
         cpu.X = X;
 
         cpu.Execute(STX, address);

@@ -26,8 +26,8 @@ TEST_CASE("CPY instruction") {
 
     SECTION("executes properly when equal") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
         Y = value;
 
         cpu.Y = Y;
@@ -43,8 +43,8 @@ TEST_CASE("CPY instruction") {
 
     SECTION("executes properly when less then and negative") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
         Y = value - 1;
 
         cpu.Y = Y;
@@ -60,8 +60,8 @@ TEST_CASE("CPY instruction") {
 
     SECTION("executes properly when less then and positive") {
 
-        address = (Word) rand();
-        value = (Byte) rand() | 0x81;
+        address = random<Word>();
+        value = random<Byte>(-1, -127);
         Y = value - 129;
 
         cpu.Y = Y;
@@ -77,8 +77,8 @@ TEST_CASE("CPY instruction") {
 
     SECTION("executes properly when greater then and negative") {
 
-        address = (Word) rand();
-        value = (Byte) rand() & 0x7F;
+        address = random<Word>();
+        value = random<Byte>(0, 127);
         Y = value + 128;
 
         cpu.Y = Y;
@@ -94,8 +94,8 @@ TEST_CASE("CPY instruction") {
 
     SECTION("executes properly when greater then and postive") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
         Y = value + 1;
 
         cpu.Y = Y;

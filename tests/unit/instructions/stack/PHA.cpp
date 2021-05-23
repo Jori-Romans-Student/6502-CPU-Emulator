@@ -23,7 +23,7 @@ TEST_CASE("PHA instruction") {
     };
 
     SECTION("executes properly on random A value") {
-        A = (Byte) rand();
+        A = random<Byte>();
         cpu.A = A;
 
         cpu.Execute(PHA, 0);

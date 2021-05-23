@@ -26,8 +26,8 @@ TEST_CASE("TYA instruction") {
 
     SECTION("executes properly on zero value") {
 
-        address = (Byte) 0x00;
-        Y = (Byte) 0x00;
+        address = 0x00;
+        Y = 0x00;
 
         cpu.Y = Y;
 
@@ -40,8 +40,8 @@ TEST_CASE("TYA instruction") {
 
     SECTION("executes properly on positive value") {
 
-        address = (Byte) 0x00;
-        Y = (Byte) 0x57;
+        address = 0x00;
+        Y = random<Byte>(1, 127);
 
         cpu.Y = Y;
 
@@ -54,8 +54,8 @@ TEST_CASE("TYA instruction") {
 
     SECTION("executes properly on negative value") {
 
-        address = (Byte) 0x00;
-        Y = (Byte) 0xBA;
+        address = 0x00;
+        Y = random<Byte>(-1, -128);
 
         cpu.Y = Y;
 

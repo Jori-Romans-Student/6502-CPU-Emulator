@@ -24,7 +24,7 @@ TEST_CASE("TXS instruction") {
 
     SECTION("executes properly on random value") {
 
-        X = (Byte) rand();
+        X = random<Byte>();
         cpu.X = X;
 
         cpu.Execute(TXS, 0);

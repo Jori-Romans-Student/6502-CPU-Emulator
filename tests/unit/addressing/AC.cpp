@@ -29,8 +29,8 @@ TEST_CASE("Accumulator addressing mode") {
 
     // SECTION("returns proper address for random PC") {
 
-    //     PC = (Word) rand();
-    //     address = (Word) rand();
+    //     PC = random<Word>();
+    //     address = random<Word>();
     //     cpu.PC = PC;
 
     //     mem[PC] = (Byte) (address >> 8);

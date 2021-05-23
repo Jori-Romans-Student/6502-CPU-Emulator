@@ -14,8 +14,8 @@ TEST_CASE("Pull Method of CPU") {
 
     SECTION("with random value with one byte") {
 
-        Byte byteValue = (Byte) rand();
-        S = (Byte) 0x00;
+        Byte byteValue = random<Byte>();
+        S = 0x00;
         
         mem[0x0100] = byteValue;
 
@@ -27,8 +27,8 @@ TEST_CASE("Pull Method of CPU") {
 
     SECTION("with random value with two bytes") {
 
-        Word wordValue = (Word) rand();
-        S = (Byte) 0x00;
+        Word wordValue = random<Word>();
+        S = 0x00;
         
         mem[0x0100] = (Byte) (wordValue >> 8);
         mem[0x0101] = (Byte) wordValue;

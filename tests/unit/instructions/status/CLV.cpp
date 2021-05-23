@@ -8,8 +8,6 @@ TEST_CASE("CLV instruction") {
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
 
-    Bit V;
-
     SECTION("decodes all matching OP codes") {
 
         Byte OPCodes[1] = { 
@@ -24,8 +22,7 @@ TEST_CASE("CLV instruction") {
 
     SECTION("executes correctly on cleared flag") {
         
-        V = 0;
-        cpu.V = V;
+        cpu.V = 0;
 
         cpu.Execute(CLV, 0x00);
 
@@ -34,8 +31,7 @@ TEST_CASE("CLV instruction") {
 
     SECTION("executes correctly on set flag") {
         
-        V = 1;
-        cpu.V = V;
+        cpu.V = 1;
 
         cpu.Execute(CLV, 0x00);
 

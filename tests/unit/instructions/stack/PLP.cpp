@@ -24,7 +24,7 @@ TEST_CASE("PLP instruction") {
     };
 
     SECTION("executes properly on random value") {
-        P = (Byte) rand();
+        P = random<Byte>();
         mem[0x0100] = P;
         cpu.S += 1;
 

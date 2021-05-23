@@ -26,8 +26,8 @@ TEST_CASE("TAX instruction") {
 
     SECTION("executes properly on zero value") {
 
-        address = (Byte) 0x00;
-        A = (Byte) 0x00;
+        address = 0x00;
+        A = 0x00;
 
         cpu.A = A;
 
@@ -40,8 +40,8 @@ TEST_CASE("TAX instruction") {
 
     SECTION("executes properly on positive value") {
 
-        address = (Byte) 0x00;
-        A = (Byte) 0x57;
+        address = 0x00;
+        A = random<Byte>(1, 127);
 
         cpu.A = A;
 
@@ -54,8 +54,8 @@ TEST_CASE("TAX instruction") {
 
     SECTION("executes properly on negative value") {
 
-        address = (Byte) 0x00;
-        A = (Byte) 0xBA;
+        address = 0x00;
+        A = random<Byte>(-1, -128);
 
         cpu.A = A;
 

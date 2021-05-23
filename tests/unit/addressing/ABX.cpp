@@ -28,9 +28,9 @@ TEST_CASE("Absolute X addressing mode") {
 
     SECTION("returns proper address for random PC and X register") {
 
-        PC = (Word) rand();
-        X = (Byte) rand();
-        address = (Word) rand();
+        PC = random<Word>();
+        X = random<Byte>();
+        address = random<Word>();
 
         cpu.PC = PC;
         cpu.X = X;

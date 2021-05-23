@@ -24,7 +24,7 @@ TEST_CASE("TSX instruction") {
 
     SECTION("executes properly on zero value") {
 
-        S = (Byte) 0x00;
+        S = 0x00;
         cpu.S = S;
 
         cpu.Execute(TSX, 0);
@@ -36,7 +36,7 @@ TEST_CASE("TSX instruction") {
 
     SECTION("executes properly on positive value") {
 
-        S = (Byte) 0x22;
+        S = random<Byte>(1, 127);
         cpu.S = S;
 
         cpu.Execute(TSX, 0);
@@ -48,7 +48,7 @@ TEST_CASE("TSX instruction") {
 
     SECTION("executes properly on negative value") {
 
-        S = (Byte) 0xF9;
+        S = random<Byte>(-1, -128);
         cpu.S = S;
 
         cpu.Execute(TSX, 0);

@@ -25,8 +25,8 @@ TEST_CASE("INC instruction") {
 
     SECTION("increments random value") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
 
         mem[address] = value;
 
@@ -37,8 +37,8 @@ TEST_CASE("INC instruction") {
 
     SECTION("increments value to zero") {
 
-        address = (Word) rand();
-        value = (Byte) 0xFF;
+        address = random<Word>();
+        value = 0xFF;
 
         mem[address] = value;
 
@@ -51,8 +51,8 @@ TEST_CASE("INC instruction") {
 
     SECTION("increments value to negative") {
 
-        address = (Word) rand();
-        value = (Byte) 0x7F;
+        address = random<Word>();
+        value = 0x7F;
 
         mem[address] = value;
 
@@ -65,8 +65,8 @@ TEST_CASE("INC instruction") {
 
     SECTION("increments value to positive") {
 
-        address = (Word) rand();
-        value = (Byte) 0x00;
+        address = random<Word>();
+        value = 0x00;
 
         mem[address] = value;
 

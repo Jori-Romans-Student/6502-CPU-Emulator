@@ -27,9 +27,9 @@ TEST_CASE("Absolute Y addressing mode") {
 
     SECTION("returns proper address for random PC and Y register") {
 
-        PC = (Word) rand();
-        Y = (Byte) rand();
-        address = (Word) rand();
+        PC = random<Word>();
+        Y = random<Byte>();
+        address = random<Word>();
 
         cpu.PC = PC;
         cpu.Y = Y;

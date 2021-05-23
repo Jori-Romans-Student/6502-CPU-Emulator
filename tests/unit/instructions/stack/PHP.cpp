@@ -32,13 +32,13 @@ TEST_CASE("PHP instruction") {
 
     SECTION("executes properly on random P value") {
         
-        N = rand() % 2;
-        V = rand() % 2;
-        B = rand() % 2;
-        D = rand() % 2;
-        I = rand() % 2;
-        Z = rand() % 2;
-        C = rand() % 2;
+        N = random<Bit>();
+        V = random<Bit>();
+        B = random<Bit>();
+        D = random<Bit>();
+        I = random<Bit>();
+        Z = random<Bit>();
+        C = random<Bit>();
 
         cpu.N = N;
         cpu.V = V;

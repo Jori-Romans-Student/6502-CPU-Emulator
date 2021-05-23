@@ -26,8 +26,8 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on non-set overflow") {
         
-        PC = (Word) rand();
-        value = (Byte) rand();
+        PC = random<Word>();
+        value = random<Byte>();
         V = 0;
 
         cpu.PC = PC;
@@ -42,7 +42,7 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on set overflow with zero displacement") {
         
-        PC = (Word) rand();
+        PC = random<Word>();
         value = 0x00;
         V = 1;
 
@@ -58,8 +58,8 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on set overflow with positive displacement") {
         
-        PC = (Word) rand();
-        value = (Byte) (rand() & 0x7F) | 0x01;
+        PC = random<Word>();
+        value = random<Byte>(1, 127);
         V = 1;
 
         cpu.PC = PC;
@@ -74,8 +74,8 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on set overflow with negative displacement") {
         
-        PC = (Word) rand();
-        value = (Byte) (rand() | 0x80);
+        PC = random<Word>();
+        value = random<Byte>(-1, -128);
         V = 1;
 
         cpu.PC = PC;
@@ -85,6 +85,6 @@ TEST_CASE("BVS instruction") {
 
         cpu.Execute(BVS, PC);
 
-        REQUIRE(cpu.PC == PC - ((value ^ 0xFF) + 1));
+        REQUIRE(cpu.PC == PC - negative<Byte>(value));
     };
 }

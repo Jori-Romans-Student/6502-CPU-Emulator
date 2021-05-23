@@ -29,8 +29,8 @@ TEST_CASE("Zero Page addressing mode") {
 
     SECTION("returns proper address for random PC") {
 
-        PC = (Word) rand();
-        address = (Byte) rand();
+        PC = random<Word>();
+        address = random<Byte>();
         cpu.PC = PC;
 
         mem[PC] = (Byte) (address);

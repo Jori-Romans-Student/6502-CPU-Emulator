@@ -24,7 +24,7 @@ TEST_CASE("NOP instruction") {
 
     SECTION("executes properly on random PC") {
         
-        PC = (Word) rand();
+        PC = random<Word>();
 
         cpu.PC = PC;
 

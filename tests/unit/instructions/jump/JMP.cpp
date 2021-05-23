@@ -25,8 +25,8 @@ TEST_CASE("JMP instruction") {
 
     SECTION("executes correctly on random address") {
         
-        PC = (Word) rand();
-        address = (Word) rand();
+        PC = random<Word>();
+        address = random<Word>();
 
         cpu.PC = PC;
 

@@ -25,8 +25,8 @@ TEST_CASE("DEC instruction") {
 
     SECTION("decrements random value") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
 
         mem[address] = value;
 
@@ -37,8 +37,8 @@ TEST_CASE("DEC instruction") {
 
     SECTION("decrements value to zero") {
 
-        address = (Word) rand();
-        value = (Byte) 0x01;
+        address = random<Word>();
+        value = 0x01;
 
         mem[address] = value;
 
@@ -51,8 +51,8 @@ TEST_CASE("DEC instruction") {
 
     SECTION("decrements value to negative") {
 
-        address = (Word) rand();
-        value = (Byte) 0x00;
+        address = random<Word>();
+        value = 0x00;
 
         mem[address] = value;
 
@@ -65,8 +65,8 @@ TEST_CASE("DEC instruction") {
 
     SECTION("decrements value to positive") {
 
-        address = (Word) rand();
-        value = (Byte) 0x80;
+        address = random<Word>();
+        value = 0x80;
 
         mem[address] = value;
 

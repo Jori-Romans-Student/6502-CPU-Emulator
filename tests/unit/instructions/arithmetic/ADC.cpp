@@ -28,9 +28,9 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on zero sum") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() & 0x7F); // ensures a positive value
-        A = (value ^ 0xFF) + 0x01; // ensures a negative value matching positive value
+        address = random<Word>();
+        value = random<Byte>(0, 127); // ensures a positive value
+        A = negative<Byte>(value); // ensures a negative value matching positive value
         C = 0;
 
         cpu.A = A;
@@ -49,10 +49,10 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on positive overflow") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() & 0x7F) | 0x40; // ensures a positive value greater then 64
-        A = (Byte) (rand() & 0x7F) | 0x40; // ensures a positive value greater then 64
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(64, 127); // ensures a positive value greater then 64
+        A = random<Byte>(64, 127); // ensures a positive value greater then 64
+        C = random<Bit>();
 
         cpu.A = A;
         cpu.C = C;
@@ -70,10 +70,10 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on positive non-overflow") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() & 0x3F); // ensures a positive value less then 64
-        A = (Byte) (rand() & 0x3F); // ensures a positive value less then 64
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(1, 63); // ensures a positive value less then 64
+        A = random<Byte>(1, 63); // ensures a positive value less then 64
+        C = random<Bit>();
 
         cpu.A = A;
         cpu.C = C;
@@ -91,10 +91,10 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on negative overflow") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() | 0x80) & 0xBF; // ensures a negative value greater then -64
-        A = (Byte) (rand() | 0x80) & 0xBF; // ensures a negative value greater then -64
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(-65, -128); // ensures a negative value greater then -64
+        A = random<Byte>(-65, -128); // ensures a negative value greater then -64
+        C = random<Bit>();
 
         cpu.A = A;
         cpu.C = C;
@@ -112,10 +112,10 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on negative non-overflow") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() | 0xC0); // ensures a negative value less then -64
-        A = (Byte) (rand() | 0xC0); // ensures a negative value less then -64
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>(-1, -64); // ensures a negative value less then -64
+        A = random<Byte>(-1, -64); // ensures a negative value less then -64
+        C = random<Bit>();
 
         cpu.A = A;
         cpu.C = C;

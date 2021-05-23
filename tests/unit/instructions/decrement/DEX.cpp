@@ -25,7 +25,7 @@ TEST_CASE("DEX instruction") {
 
     SECTION("decrements value to zero") {
 
-        X = (Byte) 0x01;
+        X = 0x01;
 
         cpu.X = X;
 
@@ -38,8 +38,8 @@ TEST_CASE("DEX instruction") {
 
     SECTION("decrements value to negative") {
 
-        address = (Word) rand();
-        X = (Byte) 0x00;
+        address = random<Word>();
+        X = 0x00;
 
         cpu.X = X;
 
@@ -52,8 +52,8 @@ TEST_CASE("DEX instruction") {
 
     SECTION("decrements value to positive") {
 
-        address = (Word) rand();
-        X = (Byte) 0x80;
+        address = random<Word>();
+        X = 0x80;
 
         cpu.X = X;
 

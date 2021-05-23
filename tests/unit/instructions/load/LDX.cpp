@@ -25,8 +25,8 @@ TEST_CASE("LDX instruction") {
 
     SECTION("executes properly on zero value") {
 
-        address = (Word) rand();
-        value = (Byte) 0x00;
+        address = random<Word>();
+        value = 0x00;
 
         mem[address] = value;
 
@@ -39,8 +39,8 @@ TEST_CASE("LDX instruction") {
 
     SECTION("executes properly on positive value") {
 
-        address = (Word) rand();
-        value = (Byte) 0x27;
+        address = random<Word>();
+        value = random<Byte>(1, 127);
 
         mem[address] = value;
 
@@ -53,8 +53,8 @@ TEST_CASE("LDX instruction") {
 
     SECTION("executes properly on negative value") {
 
-        address = (Word) rand();
-        value = (Byte) 0xA6;
+        address = random<Word>();
+        value = random<Byte>(-1, -128);
 
         mem[address] = value;
 

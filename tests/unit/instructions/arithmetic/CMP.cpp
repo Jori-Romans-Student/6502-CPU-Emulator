@@ -27,8 +27,8 @@ TEST_CASE("CMP instruction") {
 
     SECTION("executes properly when equal") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
         A = value;
 
         cpu.A = A;
@@ -44,8 +44,8 @@ TEST_CASE("CMP instruction") {
 
     SECTION("executes properly when less then and negative") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
         A = value - 1;
 
         cpu.A = A;
@@ -61,8 +61,8 @@ TEST_CASE("CMP instruction") {
 
     SECTION("executes properly when less then and positive") {
 
-        address = (Word) rand();
-        value = (Byte) rand() | 0x81;
+        address = random<Word>();
+        value = random<Byte>(-1, -127);
         A = value - 129;
 
         cpu.A = A;
@@ -78,8 +78,8 @@ TEST_CASE("CMP instruction") {
 
     SECTION("executes properly when greater then and negative") {
 
-        address = (Word) rand();
-        value = (Byte) rand() & 0x7F;
+        address = random<Word>();
+        value = random<Byte>(0, 127);
         A = value + 128;
 
         cpu.A = A;
@@ -95,8 +95,8 @@ TEST_CASE("CMP instruction") {
 
     SECTION("executes properly when greater then and postive") {
 
-        address = (Word) rand();
-        value = (Byte) rand();
+        address = random<Word>();
+        value = random<Byte>();
         A = value + 1;
 
         cpu.A = A;

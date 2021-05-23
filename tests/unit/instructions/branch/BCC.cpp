@@ -26,8 +26,8 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on non-cleared carry") {
         
-        PC = (Word) rand();
-        value = (Byte) rand();
+        PC = random<Word>();
+        value = random<Byte>();
         C = 1;
 
         cpu.PC = PC;
@@ -42,7 +42,7 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on cleared carry with zero displacement") {
         
-        PC = (Word) rand();
+        PC = random<Word>();
         value = 0x00;
         C = 0;
 
@@ -58,8 +58,8 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on cleared carry with positive displacement") {
         
-        PC = (Word) rand();
-        value = (Byte) (rand() & 0x7F) | 0x01;
+        PC = random<Word>();
+        value = random<Byte>(1, 127);
         C = 0;
 
         cpu.PC = PC;
@@ -74,8 +74,8 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on cleared carry with negative displacement") {
         
-        PC = (Word) rand();
-        value = (Byte) (rand() | 0x80);
+        PC = random<Word>();
+        value = random<Byte>(-1, -128);
         C = 0;
 
         cpu.PC = PC;
@@ -85,6 +85,6 @@ TEST_CASE("BCC instruction") {
 
         cpu.Execute(BCC, PC);
 
-        REQUIRE(cpu.PC == PC - ((value ^ 0xFF) + 1));
+        REQUIRE(cpu.PC == PC - negative<Byte>(value));
     };
 }

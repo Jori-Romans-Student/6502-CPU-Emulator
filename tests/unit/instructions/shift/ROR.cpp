@@ -26,8 +26,8 @@ TEST_CASE("ROR instruction") {
 
     SECTION("shift to zero with no carry") {
 
-        address = (Word) rand();
-        value = (Byte) 0x00;
+        address = random<Word>();
+        value = 0x00;
         C = 0;
 
         cpu.C = C;
@@ -43,8 +43,8 @@ TEST_CASE("ROR instruction") {
 
     SECTION("shift to zero with carry") {
 
-        address = (Word) rand();
-        value = (Byte) 0x01;
+        address = random<Word>();
+        value = 0x01;
         C = 0;
 
         cpu.C = C;
@@ -60,9 +60,9 @@ TEST_CASE("ROR instruction") {
 
     SECTION("shift random odd value") {
 
-        address = (Word) rand();
-        value = (Byte) rand() | 0x03;
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>() | 1;
+        C = random<Bit>();
 
         cpu.C = C;
         mem[address] = value;
@@ -77,9 +77,9 @@ TEST_CASE("ROR instruction") {
 
     SECTION("shift random even value") {
 
-        address = (Word) rand();
-        value = (Byte) (rand() | 0x02) & 0xFE;
-        C = rand() % 2;
+        address = random<Word>();
+        value = random<Byte>() & 0xFE;
+        C = random<Bit>();
 
         cpu.C = C;
         mem[address] = value;

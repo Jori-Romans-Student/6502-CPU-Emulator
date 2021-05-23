@@ -15,7 +15,7 @@ TEST_CASE("Push Method of CPU") {
 
     SECTION("with random value for one byte") {
 
-        byteValue = (Byte) rand();
+        byteValue = random<Byte>();
         S = 0x00;
         cpu.S = S;
 
@@ -27,7 +27,7 @@ TEST_CASE("Push Method of CPU") {
 
     SECTION("with random value for two bytes") {
 
-        wordValue = (Word) rand();
+        wordValue = random<Word>();
         S = 0x00;
         cpu.S = S;
 

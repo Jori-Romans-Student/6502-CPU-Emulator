@@ -26,9 +26,9 @@ TEST_CASE("Zero Page Y addressing mode") {
 
     SECTION("returns proper address for random PC and Y Register") {
 
-        PC = (Word) rand();
-        Y = (Byte) rand();
-        address = (Byte) rand();
+        PC = random<Word>();
+        Y = random<Byte>();
+        address = random<Byte>();
 
         cpu.PC = PC;
         cpu.Y = Y;

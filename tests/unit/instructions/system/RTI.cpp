@@ -27,10 +27,10 @@ TEST_CASE("RTI instruction") {
 
     SECTION("executes correctly on random PC and processor status") {
         
-        PC = (Word) rand();
-        newPC = (Word) rand();
+        PC = random<Word>();
+        newPC = random<Word>();
         S = 0x03;
-        SP = (Byte) rand() & 0xDF;
+        SP = random<Byte>();
 
         cpu.PC = PC;
         cpu.S = S;

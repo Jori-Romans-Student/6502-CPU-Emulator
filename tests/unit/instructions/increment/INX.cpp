@@ -25,7 +25,7 @@ TEST_CASE("INX instruction") {
 
     SECTION("increments value to zero") {
 
-        X = (Byte) 0xFF;
+        X = 0xFF;
 
         cpu.X = X;
 
@@ -38,8 +38,8 @@ TEST_CASE("INX instruction") {
 
     SECTION("increments value to negative") {
 
-        address = (Word) rand();
-        X = (Byte) 0x7F;
+        address = random<Word>();
+        X = 0x7F;
 
         cpu.X = X;
 
@@ -52,8 +52,8 @@ TEST_CASE("INX instruction") {
 
     SECTION("increments value to positive") {
 
-        address = (Word) rand();
-        X = (Byte) 0x00;
+        address = random<Word>();
+        X = 0x00;
 
         cpu.X = X;
 

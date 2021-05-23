@@ -34,17 +34,17 @@ TEST_CASE("BRK instruction") {
 
     SECTION("executes correctly on random PC and processor status") {
         
-        PC = (Word) rand();
+        PC = random<Word>();
         S = 0x00;
-        value = (Word) rand(); // replace later with proper interupt handler
+        value = random<Word>(); // replace later with proper interupt handler
 
-        N = rand() % 2;
-        V = rand() % 2;
-        B = rand() % 2;
-        D = rand() % 2;
-        I = rand() % 2;
-        Z = rand() % 2;
-        C = rand() % 2;
+        N = random<Bit>();
+        V = random<Bit>();
+        B = random<Bit>();
+        D = random<Bit>();
+        I = random<Bit>();
+        Z = random<Bit>();
+        C = random<Bit>();
 
         cpu.PC = PC;
         cpu.S = S;

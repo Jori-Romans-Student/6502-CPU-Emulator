@@ -26,8 +26,8 @@ TEST_CASE("RTS instruction") {
 
     SECTION("executes correctly on random address") {
         
-        PC = (Word) rand();
-        address = (Word) rand();
+        PC = random<Word>();
+        address = random<Word>();
         S = 0x02;
 
         cpu.PC = PC;
