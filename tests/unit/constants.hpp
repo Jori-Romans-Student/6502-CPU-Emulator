@@ -1,4 +1,4 @@
 #pragma once
 
-#include "../../src/cpu.cpp"
+#include "../../src/hardware/cpu.cpp"
 #include <time.h>

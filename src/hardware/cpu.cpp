@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <map>
+#include "../constants/types.hpp"
+#include "../constants/instructions.hpp"
+#include "../constants/address.hpp"
+#include "../methods/bytes.hpp"
+#include "status.cpp"
 #include "memory.cpp"
 
 struct CPU {

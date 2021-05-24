@@ -1,4 +1,4 @@
-#include "constants.hpp"
+#include "../constants/types.hpp"
 
 struct Mem {
     static constexpr u32 MAX_MEM = 256 * 256;
