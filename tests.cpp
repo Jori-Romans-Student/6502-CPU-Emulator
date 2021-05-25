@@ -1,7 +1,19 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch2/catch.hpp"
 
-// Common Methods
+// Byte Functions
+
+#include "tests/unit/functions/bytes/isAddedOverflow.cpp"
+#include "tests/unit/functions/bytes/isClear.cpp"
+#include "tests/unit/functions/bytes/isNegative.cpp"
+#include "tests/unit/functions/bytes/isOdd.cpp"
+#include "tests/unit/functions/bytes/isOverflow.cpp"
+#include "tests/unit/functions/bytes/isPositive.cpp"
+#include "tests/unit/functions/bytes/isSet.cpp"
+#include "tests/unit/functions/bytes/isSubtractedOverflow.cpp"
+#include "tests/unit/functions/bytes/isZero.cpp"
+
+// CPU Methods
 
 #include "tests/unit/cpu/methods/read.cpp"
 #include "tests/unit/cpu/methods/write.cpp"
