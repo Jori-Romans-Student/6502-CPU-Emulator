@@ -158,6 +158,7 @@ struct CPU {
             case AB: return Fetch<Word>(); break;
             case ABX: return Fetch<Word>() + X; break;
             case ABY: return Fetch<Word>() + Y; break;
+            case AC: return 0xFFFF; break;
             case IMM: address = PC; PC++; return address; break;
             case ID: address = Fetch<Word>(); return Read<Word>(address); break;
             case IDX: address = Fetch<Byte>(); return Read<Word>(address + X); break;
@@ -168,7 +169,7 @@ struct CPU {
             case ZPY: return Fetch<Byte>() + Y; break;
         }
 
-        return 0xFF;
+        return 0xFFFF;
     };
 
     Byte Instruct(Byte code) {

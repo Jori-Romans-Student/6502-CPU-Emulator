@@ -7,8 +7,8 @@ TEST_CASE("Accumulator addressing mode") {
 
     Mem mem = Mem();
     CPU cpu = CPU(&mem);
-    // Word PC;
-    // Word address;
+    Word PC;
+    Word address;
 
     SECTION("decodes all matching OP codes") {
 
@@ -27,15 +27,11 @@ TEST_CASE("Accumulator addressing mode") {
         }
     };
 
-    // SECTION("returns proper address for random PC") {
+    SECTION("returns null address for random PC") {
 
-    //     PC = random<Word>();
-    //     address = random<Word>();
-    //     cpu.PC = PC;
+        PC = random<Word>();
+        cpu.PC = PC;
 
-    //     mem[PC] = (Byte) (address >> 8);
-    //     mem[PC + 1] = (Byte) address;
-
-    //     REQUIRE(cpu.Address(AB) == address);
-    // };
+        REQUIRE(cpu.Address(AC) == 0xFFFF);
+    };
 }
