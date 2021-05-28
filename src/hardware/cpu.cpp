@@ -35,6 +35,10 @@ struct CPU {
 
     Status P = Status(&C, &Z, &I, &D, &B, &V, &N);
 
+    // Clock
+
+    int cycle = 0;
+
     template <typename T>
     T Read(Word address) {
 
@@ -46,6 +50,7 @@ struct CPU {
         for (int i = 1; i <= bytes; i++) {
             value = (*mem)[address + i - 1];
             data |= value << ((bytes - i) * 8);
+            cycle++;
         }
 
         return data;
@@ -58,6 +63,7 @@ struct CPU {
 
         for (int i = 1; i <= bytes; i++) {
             (*mem)[address + i - 1] = (Byte) (value >> ((bytes - i) * 8));
+            cycle++;
         }
     }
 
@@ -99,7 +105,7 @@ struct CPU {
         T data = 0;
 
         for (int i = 1; i <= bytes; i++) {
-            value = (*mem)[PC];
+            value = Read<Byte>(PC);
             data |= value << ((bytes - i) * 8);
             PC++;
         }
