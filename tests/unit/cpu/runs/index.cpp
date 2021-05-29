@@ -13,13 +13,13 @@
 #include "branch/BVC.cpp"
 #include "branch/BVS.cpp"
 
-// #include "decrement/DEC.cpp"
-// #include "decrement/DEX.cpp"
-// #include "decrement/DEY.cpp"
+#include "decrement/DEC.cpp"
+#include "decrement/DEX.cpp"
+#include "decrement/DEY.cpp"
 
-// #include "increment/INC.cpp"
-// #include "increment/INX.cpp"
-// #include "increment/INY.cpp"
+#include "increment/INC.cpp"
+#include "increment/INX.cpp"
+#include "increment/INY.cpp"
 
 // #include "jump/JMP.cpp"
 // #include "jump/JSR.cpp"
