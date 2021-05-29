@@ -69,7 +69,7 @@ TEST_CASE("ADC Run Tests") {
 
         OPCode = 0x79;
         address = random<Word>();
-        X = random<Byte>();
+        Y = random<Byte>();
 
         // Memory config for absolute addressing mode
 

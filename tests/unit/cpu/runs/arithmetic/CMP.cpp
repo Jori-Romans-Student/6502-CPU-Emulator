@@ -67,7 +67,7 @@ TEST_CASE("CMP Run Tests") {
 
         OPCode = 0xD9;
         address = random<Word>();
-        X = random<Byte>();
+        Y = random<Byte>();
 
         // Memory config for absolute addressing mode
 

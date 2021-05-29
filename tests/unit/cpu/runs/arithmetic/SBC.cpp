@@ -69,7 +69,7 @@ TEST_CASE("SBC Run Tests") {
 
         OPCode = 0xF9;
         address = random<Word>();
-        X = random<Byte>();
+        Y = random<Byte>();
 
         // Memory config for absolute addressing mode
 
