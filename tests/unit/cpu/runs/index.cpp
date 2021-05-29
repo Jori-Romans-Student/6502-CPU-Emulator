@@ -29,7 +29,7 @@
 // #include "load/LDX.cpp"
 // #include "load/LDY.cpp"
 
-// #include "logical/AND.cpp"
+#include "logical/AND.cpp"
 // #include "logical/BIT.cpp"
 // #include "logical/EOR.cpp"
 // #include "logical/ORA.cpp"
