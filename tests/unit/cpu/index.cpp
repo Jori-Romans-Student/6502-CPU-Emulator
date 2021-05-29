@@ -24,3 +24,7 @@
 // Instructions
 
 #include "instructions/index.cpp"
+
+// Runs
+
+#include "runs/index.cpp"
