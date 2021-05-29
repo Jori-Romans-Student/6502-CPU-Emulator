@@ -171,8 +171,8 @@ struct CPU {
             case IDY: address = Fetch<Byte>(); return Read<Word>(address) + Y; break;
             case REL: address = PC; PC++; return address; break;
             case ZP: return Fetch<Byte>(); break;
-            case ZPX: return Fetch<Byte>() + X; break;
-            case ZPY: return Fetch<Byte>() + Y; break;
+            case ZPX: return (Byte) (Fetch<Byte>() + X); break;
+            case ZPY: return (Byte) (Fetch<Byte>() + Y); break;
         }
 
         return 0xFFFF;

@@ -35,6 +35,6 @@ TEST_CASE("Zero Page Y addressing mode") {
 
         mem[PC] = (Byte) (address);
 
-        REQUIRE(cpu.Address(ZPY) == address + Y);
+        REQUIRE(cpu.Address(ZPY) == (Byte) (address + Y));
     };
 }
