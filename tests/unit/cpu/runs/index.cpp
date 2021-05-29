@@ -25,9 +25,9 @@
 #include "jump/JSR.cpp"
 #include "jump/RTS.cpp"
 
-// #include "load/LDA.cpp"
-// #include "load/LDX.cpp"
-// #include "load/LDY.cpp"
+#include "load/LDA.cpp"
+#include "load/LDX.cpp"
+#include "load/LDY.cpp"
 
 #include "logical/AND.cpp"
 // #include "logical/BIT.cpp"
@@ -54,9 +54,9 @@
 // #include "status/SED.cpp"
 // #include "status/SEI.cpp"
 
-// #include "store/STA.cpp"
-// #include "store/STX.cpp"
-// #include "store/STY.cpp"
+#include "store/STA.cpp"
+#include "store/STX.cpp"
+#include "store/STY.cpp"
 
 // #include "system/BRK.cpp"
 // #include "system/NOP.cpp"
