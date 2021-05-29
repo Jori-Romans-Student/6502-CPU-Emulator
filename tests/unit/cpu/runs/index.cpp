@@ -1,8 +1,8 @@
 #include "arithmetic/ADC.cpp"
-// #include "arithmetic/CMP.cpp"
-// #include "arithmetic/CPX.cpp"
-// #include "arithmetic/CPY.cpp"
-// #include "arithmetic/SBC.cpp"
+#include "arithmetic/CMP.cpp"
+#include "arithmetic/CPX.cpp"
+#include "arithmetic/CPY.cpp"
+#include "arithmetic/SBC.cpp"
 
 // #include "branch/BCC.cpp"
 // #include "branch/BCS.cpp"
