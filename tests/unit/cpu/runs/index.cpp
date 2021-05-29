@@ -21,9 +21,9 @@
 #include "increment/INX.cpp"
 #include "increment/INY.cpp"
 
-// #include "jump/JMP.cpp"
-// #include "jump/JSR.cpp"
-// #include "jump/RTS.cpp"
+#include "jump/JMP.cpp"
+#include "jump/JSR.cpp"
+#include "jump/RTS.cpp"
 
 // #include "load/LDA.cpp"
 // #include "load/LDX.cpp"
