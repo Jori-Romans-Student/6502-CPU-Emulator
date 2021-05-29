@@ -1,4 +1,4 @@
-// #include "arithmetic/ADC.cpp"
+#include "arithmetic/ADC.cpp"
 // #include "arithmetic/CMP.cpp"
 // #include "arithmetic/CPX.cpp"
 // #include "arithmetic/CPY.cpp"
