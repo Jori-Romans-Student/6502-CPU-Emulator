@@ -44,8 +44,6 @@ bool isSet(Bit value) {
 template <typename T>
 T random(T start = 0, T end = (T) pow(2, sizeof(T) * 8)) {
 
-    srand(time(NULL));
-
     int low = start <= end ? start : end;
     int high = start > end ? start : end;
     int range = high - low + 1;
