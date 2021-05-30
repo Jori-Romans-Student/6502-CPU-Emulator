@@ -39,12 +39,12 @@
 // #include "shift/ROL.cpp"
 // #include "shift/ROR.cpp"
 
-// #include "stack/PHA.cpp"
-// #include "stack/PHP.cpp"
-// #include "stack/PLA.cpp"
-// #include "stack/PLP.cpp"
-// #include "stack/TXS.cpp"
-// #include "stack/TSX.cpp"
+#include "stack/PHA.cpp"
+#include "stack/PHP.cpp"
+#include "stack/PLA.cpp"
+#include "stack/PLP.cpp"
+#include "stack/TXS.cpp"
+#include "stack/TSX.cpp"
 
 #include "status/CLC.cpp"
 #include "status/CLD.cpp"
