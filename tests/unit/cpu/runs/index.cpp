@@ -30,9 +30,9 @@
 #include "load/LDY.cpp"
 
 #include "logical/AND.cpp"
-// #include "logical/BIT.cpp"
-// #include "logical/EOR.cpp"
-// #include "logical/ORA.cpp"
+#include "logical/BIT.cpp"
+#include "logical/EOR.cpp"
+#include "logical/ORA.cpp"
 
 // #include "shift/ASL.cpp"
 // #include "shift/LSR.cpp"
