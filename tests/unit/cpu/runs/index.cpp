@@ -58,9 +58,9 @@
 #include "store/STX.cpp"
 #include "store/STY.cpp"
 
-// #include "system/BRK.cpp"
-// #include "system/NOP.cpp"
-// #include "system/RTI.cpp"
+#include "system/BRK.cpp"
+#include "system/NOP.cpp"
+#include "system/RTI.cpp"
 
 // #include "transfer/TAX.cpp"
 // #include "transfer/TAY.cpp"
