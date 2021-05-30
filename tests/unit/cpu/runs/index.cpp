@@ -62,7 +62,7 @@
 #include "system/NOP.cpp"
 #include "system/RTI.cpp"
 
-// #include "transfer/TAX.cpp"
-// #include "transfer/TAY.cpp"
-// #include "transfer/TXA.cpp"
-// #include "transfer/TYA.cpp"
+#include "transfer/TAX.cpp"
+#include "transfer/TAY.cpp"
+#include "transfer/TXA.cpp"
+#include "transfer/TYA.cpp"
