@@ -303,7 +303,7 @@ struct CPU {
             case LDX: X = Read<Byte>(address); Z = isZero(X); N = isNegative(X); break;
             case LDY: Y = Read<Byte>(address); Z = isZero(Y); N = isNegative(Y); break;
             case LSR: store = Read<Byte>(address); C = isOdd(store); store >>= 1; Write<Byte>(address, store); Z = isZero(store); N = isNegative(store); break;
-            case NOP: PC++; break;
+            case NOP: break;
             case ORA: A |= Read<Byte>(address); Z = isZero(A); N = isNegative(A); break;
             case PHA: Push<Byte>(A); break;
             case PHP: Push<Byte>((Byte) P); break;

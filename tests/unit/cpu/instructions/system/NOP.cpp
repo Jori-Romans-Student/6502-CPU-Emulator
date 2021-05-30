@@ -30,6 +30,6 @@ TEST_CASE("NOP instruction") {
 
         cpu.Execute(NOP, 0x00);
 
-        REQUIRE(cpu.PC == PC + 1);
+        REQUIRE(cpu.PC == PC);
     }
 }
