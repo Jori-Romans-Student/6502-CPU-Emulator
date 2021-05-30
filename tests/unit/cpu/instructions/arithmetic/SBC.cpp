@@ -28,7 +28,7 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on zero difference") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>();
         A = value;
         C = 1;
@@ -49,8 +49,8 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on big-positive to small-positive difference") {
 
-        address = random<Word>();
-        value = random<Byte>(0, 64);
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(0, 63);
         A = random<Byte>(65, 127); // ensures a positive value greater then 65
         C = random<Bit>();
 
@@ -70,9 +70,9 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on small-positive to big-positive difference") {
 
-        address = random<Word>();
-        value = random<Byte>(65, 127); // ensures a positive value greater then 65
-        A = random<Byte>(0, 64); // ensures a positive value less then 64
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(65, 126); // ensures a positive value greater then 65
+        A = random<Byte>(0, 63); // ensures a positive value less then 64
         C = random<Bit>();
 
         cpu.A = A;
@@ -91,9 +91,9 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on big-negative to small-negative difference") {
 
-        address = random<Word>();
-        value = random<Byte>(-1, -64); // ensures a negative value less then -64
-        A = random<Byte>(-65, -128); // ensures a negative value greater then -65
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(-1, -63); // ensures a negative value less then -64
+        A = random<Byte>(-66, -128); // ensures a negative value greater then -65
         C = random<Bit>();
 
         cpu.A = A;
@@ -112,9 +112,9 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on small-negative to big-negative difference") {
 
-        address = random<Word>();
-        value = random<Byte>(-65, -128); // ensures a negative value greater then -65
-        A = random<Byte>(-1, -64); // ensures a negative value less then -64
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(-66, -128); // ensures a negative value greater then -65
+        A = random<Byte>(-1, -63); // ensures a negative value less then -64
         C = random<Bit>();
 
         cpu.A = A;
@@ -133,7 +133,7 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on positive to negative difference with positive difference") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(-1, -63); // ensures a negative value less then -64
         A = random<Byte>(1, 63); // ensures a positive value less then 64
         C = random<Bit>();
@@ -155,9 +155,9 @@ TEST_CASE("SBC instruction") {
     
     SECTION("executes properly on positive to negative difference with negative difference") {
 
-        address = random<Word>();
-        value = random<Byte>(-65, -128); // ensures a negative value greater then -65
-        A = random<Byte>(65, 128); // ensures a positive value greater then 65
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(-66, -128); // ensures a negative value greater then -65
+        A = random<Byte>(66, 126); // ensures a positive value greater then 65
         C = random<Bit>();
 
         cpu.A = A;
@@ -176,7 +176,7 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on negative to positive difference with negative difference") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(1, 63); // ensures a positive value less then 64
         A = random<Byte>(-1, -63); // ensures a negative value less then -64
         C = random<Bit>();
@@ -197,9 +197,9 @@ TEST_CASE("SBC instruction") {
 
     SECTION("executes properly on negative to positive difference with positive difference") {
 
-        address = random<Word>();
-        value = random<Byte>(65, 127); // ensures a positive value greater then 65
-        A = random<Byte>(-65, -128); // ensures a negative value greater then -65
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(66, 126); // ensures a positive value greater then 65
+        A = random<Byte>(-66, -128); // ensures a negative value greater then -65
         C = random<Bit>();
 
         cpu.A = A;

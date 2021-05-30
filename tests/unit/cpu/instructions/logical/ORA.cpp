@@ -28,7 +28,7 @@ TEST_CASE("ORA instruction") {
     SECTION("executes properly on zero value") {
 
         value = 0x00;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = 0x00;
         cpu.A = A;
 
@@ -44,7 +44,7 @@ TEST_CASE("ORA instruction") {
     SECTION("executes properly on positive value") {
 
         value = random<Byte>(1, 127); // gurantees positive ORA
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = random<Byte>(1, 127); // gurantees positive ORA
         cpu.A = A;
 
@@ -60,7 +60,7 @@ TEST_CASE("ORA instruction") {
     SECTION("executes properly on negative value") {
 
         value = random<Byte>(-1, -128); // gurantees negative ORA
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = random<Byte>();
         cpu.A = A;
 

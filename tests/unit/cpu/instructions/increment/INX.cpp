@@ -38,7 +38,7 @@ TEST_CASE("INX instruction") {
 
     SECTION("increments value to negative") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = 0x7F;
 
         cpu.X = X;
@@ -52,7 +52,7 @@ TEST_CASE("INX instruction") {
 
     SECTION("increments value to positive") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = 0x00;
 
         cpu.X = X;

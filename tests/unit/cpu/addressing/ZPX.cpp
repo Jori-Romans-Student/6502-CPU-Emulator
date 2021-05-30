@@ -29,7 +29,7 @@ TEST_CASE("Zero Page X addressing mode") {
 
     SECTION("returns proper address for random PC and X Register") {
 
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         X = random<Byte>();
         address = random<Byte>();
 

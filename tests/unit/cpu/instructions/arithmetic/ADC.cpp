@@ -28,8 +28,8 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on zero sum") {
 
-        address = random<Word>();
-        value = random<Byte>(0, 127); // ensures a positive value
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(0, 126); // ensures a positive value
         A = negative<Byte>(value); // ensures a negative value matching positive value
         C = 0;
 
@@ -49,9 +49,9 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on positive overflow") {
 
-        address = random<Word>();
-        value = random<Byte>(64, 127); // ensures a positive value greater then 64
-        A = random<Byte>(64, 127); // ensures a positive value greater then 64
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(64, 126); // ensures a positive value greater then 64
+        A = random<Byte>(64, 126); // ensures a positive value greater then 64
         C = random<Bit>();
 
         cpu.A = A;
@@ -70,7 +70,7 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on positive non-overflow") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(1, 63); // ensures a positive value less then 64
         A = random<Byte>(1, 63); // ensures a positive value less then 64
         C = random<Bit>();
@@ -91,9 +91,9 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on negative overflow") {
 
-        address = random<Word>();
-        value = random<Byte>(-65, -128); // ensures a negative value greater then -64
-        A = random<Byte>(-65, -128); // ensures a negative value greater then -64
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(-65, -127); // ensures a negative value greater then -64
+        A = random<Byte>(-65, -127); // ensures a negative value greater then -64
         C = random<Bit>();
 
         cpu.A = A;
@@ -112,9 +112,9 @@ TEST_CASE("ADC instruction") {
 
     SECTION("executes properly on negative non-overflow") {
 
-        address = random<Word>();
-        value = random<Byte>(-1, -64); // ensures a negative value less then -64
-        A = random<Byte>(-1, -64); // ensures a negative value less then -64
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(-1, -63); // ensures a negative value less then -64
+        A = random<Byte>(-1, -63); // ensures a negative value less then -64
         C = random<Bit>();
 
         cpu.A = A;

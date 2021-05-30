@@ -38,7 +38,7 @@ TEST_CASE("INY instruction") {
 
     SECTION("increments value to negative") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = 0x7F;
 
         cpu.Y = Y;
@@ -52,7 +52,7 @@ TEST_CASE("INY instruction") {
 
     SECTION("increments value to positive") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = 0x00;
 
         cpu.Y = Y;

@@ -26,7 +26,7 @@ TEST_CASE("BMI instruction") {
 
     SECTION("executes correctly on non-set negative") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>();
         N = 0;
 
@@ -42,7 +42,7 @@ TEST_CASE("BMI instruction") {
 
     SECTION("executes correctly on set negative with zero displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = 0x00;
         N = 1;
 
@@ -58,7 +58,7 @@ TEST_CASE("BMI instruction") {
 
     SECTION("executes correctly on set negative with positive displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>(1, 127);
         N = 1;
 
@@ -74,7 +74,7 @@ TEST_CASE("BMI instruction") {
 
     SECTION("executes correctly on set negative with negative displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>(-1, -128);
         N = 1;
 

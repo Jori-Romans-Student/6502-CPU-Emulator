@@ -10,7 +10,7 @@ TEST_CASE("JMP Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
 
     // Local Vars
 
@@ -27,7 +27,7 @@ TEST_CASE("JMP Run Tests") {
         // Config
 
         OPCode = 0x4C;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         // Memory config for absolute addressing mode
 
@@ -41,8 +41,8 @@ TEST_CASE("JMP Run Tests") {
         // Config
 
         OPCode = 0x6C;
-        addressOfAddress = random<Word>();
-        address = random<Word>();
+        addressOfAddress = random<Word>(0x9000, 0xBFFF);
+        address = random<Word>(0x5000, 0x7FFF);
 
         // Memory config for absolute addressing mode
 

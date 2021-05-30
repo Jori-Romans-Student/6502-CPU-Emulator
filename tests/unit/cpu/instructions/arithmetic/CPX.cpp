@@ -26,7 +26,7 @@ TEST_CASE("CPX instruction") {
 
     SECTION("executes properly when equal") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>();
         X = value;
 
@@ -43,8 +43,8 @@ TEST_CASE("CPX instruction") {
 
     SECTION("executes properly when less then and negative") {
 
-        address = random<Word>();
-        value = random<Byte>();
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(1, 255);
         X = value - 1;
 
         cpu.X = X;
@@ -60,7 +60,7 @@ TEST_CASE("CPX instruction") {
 
     SECTION("executes properly when less then and positive") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(-1, -127);
         X = value - 129;
 
@@ -77,7 +77,7 @@ TEST_CASE("CPX instruction") {
 
     SECTION("executes properly when greater then and negative") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(0, 127);
         X = value + 128;
 
@@ -94,8 +94,8 @@ TEST_CASE("CPX instruction") {
 
     SECTION("executes properly when greater then and postive") {
 
-        address = random<Word>();
-        value = random<Byte>();
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(1, 254);
         X = value + 1;
 
         cpu.X = X;

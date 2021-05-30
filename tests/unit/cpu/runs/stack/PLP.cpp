@@ -10,7 +10,7 @@ TEST_CASE("PLP Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte value = random<Byte>();
     Byte S = random<Byte>(1, 255);
 

@@ -10,7 +10,7 @@ TEST_CASE("LDA Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte value = random<Byte>();
 
     // Local Vars
@@ -30,7 +30,7 @@ TEST_CASE("LDA Run Tests") {
         // Config
 
         OPCode = 0xAD;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         // Memory config for absolute addressing mode
 
@@ -44,7 +44,7 @@ TEST_CASE("LDA Run Tests") {
         // Config
 
         OPCode = 0xBD;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -63,7 +63,7 @@ TEST_CASE("LDA Run Tests") {
         // Config
 
         OPCode = 0xB9;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -92,7 +92,7 @@ TEST_CASE("LDA Run Tests") {
 
         OPCode = 0xA1;
         addressOfAddress = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -113,7 +113,7 @@ TEST_CASE("LDA Run Tests") {
 
         OPCode = 0xB1;
         addressOfAddress = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = random<Byte>();
 
         // Memory config for absolute addressing mode

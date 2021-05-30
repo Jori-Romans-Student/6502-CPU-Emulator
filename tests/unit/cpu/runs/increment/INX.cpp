@@ -10,7 +10,7 @@ TEST_CASE("INX Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte value = random<Byte>();
 
     // Local Vars
@@ -44,7 +44,7 @@ TEST_CASE("INX Run Tests") {
 
     // Sum
 
-    sum = value + 1;
+    sum = (Byte) (value + 1);
 
     // Assertions
 

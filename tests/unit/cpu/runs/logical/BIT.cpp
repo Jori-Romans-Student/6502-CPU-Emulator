@@ -10,7 +10,7 @@ TEST_CASE("BIT Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte value = random<Byte>();
     Byte A = random<Byte>();
 
@@ -29,7 +29,7 @@ TEST_CASE("BIT Run Tests") {
         // Config
 
         OPCode = 0x2C;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         // Memory config for absolute addressing mode
 

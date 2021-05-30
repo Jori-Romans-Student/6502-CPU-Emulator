@@ -28,7 +28,7 @@ TEST_CASE("AND instruction") {
     SECTION("executes properly on zero value") {
 
         value = 0x00;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = random<Byte>();
         cpu.A = A;
 
@@ -44,7 +44,7 @@ TEST_CASE("AND instruction") {
     SECTION("executes properly on positive value") {
 
         value = random<Byte>(1, 127) | 1;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = random<Byte>(1, 127) | 1; // gurantees not zero
         cpu.A = A;
 
@@ -60,7 +60,7 @@ TEST_CASE("AND instruction") {
     SECTION("executes properly on negative value") {
 
         value = random<Byte>(-1, -128);
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = random<Byte>(-1, -128); // gurantees negative
         cpu.A = A;
 

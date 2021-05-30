@@ -14,7 +14,7 @@ TEST_CASE("Read Method of CPU") {
 
     SECTION("at random address for one byte") {
         
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         byteValue = random<Byte>();
 
         mem[address] = byteValue;
@@ -24,7 +24,7 @@ TEST_CASE("Read Method of CPU") {
 
     SECTION("at random address for two bytes") {
         
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         wordValue = random<Word>();
 
         mem[address] = (Byte) (wordValue >> 8);

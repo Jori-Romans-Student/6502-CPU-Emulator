@@ -25,7 +25,7 @@ TEST_CASE("LDY instruction") {
 
     SECTION("executes properly on zero value") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0x00;
 
         mem[address] = value;
@@ -39,7 +39,7 @@ TEST_CASE("LDY instruction") {
 
     SECTION("executes properly on positive value") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(1, 127);
 
         mem[address] = value;
@@ -53,7 +53,7 @@ TEST_CASE("LDY instruction") {
 
     SECTION("executes properly on negative value") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(-1, -128);
 
         mem[address] = value;

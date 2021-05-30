@@ -25,7 +25,7 @@ TEST_CASE("LSR instruction") {
 
     SECTION("shift to zero with no carry") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0x00;
 
         mem[address] = value;
@@ -40,7 +40,7 @@ TEST_CASE("LSR instruction") {
 
     SECTION("shift to zero with carry") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0x01;
 
         mem[address] = value;
@@ -55,8 +55,8 @@ TEST_CASE("LSR instruction") {
 
     SECTION("shift random odd value") {
 
-        address = random<Word>();
-        value = random<Byte>() | 1;
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(3, 255) | 1;
 
         mem[address] = value;
 
@@ -70,8 +70,8 @@ TEST_CASE("LSR instruction") {
 
     SECTION("shift random even value") {
 
-        address = random<Word>();
-        value = random<Byte>() & 0xFE;
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(3, 255) & 0xFE;
 
         mem[address] = value;
 

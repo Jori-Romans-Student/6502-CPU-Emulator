@@ -10,8 +10,8 @@ TEST_CASE("RTI Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
-    Word newPC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
+    Word newPC = random<Word>(0x1000, 0x3FFF);
     Byte S = random<Byte>(3, 255);
     Byte P = random<Byte>();
 

@@ -29,7 +29,7 @@ TEST_CASE("Accumulator addressing mode") {
 
     SECTION("returns null address for random PC") {
 
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         cpu.PC = PC;
 
         REQUIRE(cpu.Address(AC) == 0xFFFF);

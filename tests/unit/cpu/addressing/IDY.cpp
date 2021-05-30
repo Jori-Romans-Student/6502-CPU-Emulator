@@ -28,10 +28,10 @@ TEST_CASE("Indirect Y addressing mode") {
 
     SECTION("returns proper address for random PC and Y Register") {
 
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         Y = random<Byte>();
         addressOfAddress = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         
         cpu.PC = PC;
         cpu.Y = Y;

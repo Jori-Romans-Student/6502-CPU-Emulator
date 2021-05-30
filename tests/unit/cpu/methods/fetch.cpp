@@ -13,7 +13,7 @@ TEST_CASE("Fetch Method of CPU") {
     Word wordValue;
 
     SECTION("at random PC for one byte") {
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         byteValue = random<Byte>();
 
         cpu.PC = PC;
@@ -23,7 +23,7 @@ TEST_CASE("Fetch Method of CPU") {
     };
 
     SECTION("at random PC for two bytes") {
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         wordValue = random<Word>();
 
         cpu.PC = PC;

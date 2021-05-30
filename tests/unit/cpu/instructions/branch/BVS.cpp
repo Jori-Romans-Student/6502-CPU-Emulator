@@ -26,7 +26,7 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on non-set overflow") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>();
         V = 0;
 
@@ -42,7 +42,7 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on set overflow with zero displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = 0x00;
         V = 1;
 
@@ -58,7 +58,7 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on set overflow with positive displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>(1, 127);
         V = 1;
 
@@ -74,7 +74,7 @@ TEST_CASE("BVS instruction") {
 
     SECTION("executes correctly on set overflow with negative displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>(-1, -128);
         V = 1;
 

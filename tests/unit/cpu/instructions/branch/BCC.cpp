@@ -26,7 +26,7 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on non-cleared carry") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>();
         C = 1;
 
@@ -42,7 +42,7 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on cleared carry with zero displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = 0x00;
         C = 0;
 
@@ -58,7 +58,7 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on cleared carry with positive displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>(1, 127);
         C = 0;
 
@@ -74,7 +74,7 @@ TEST_CASE("BCC instruction") {
 
     SECTION("executes correctly on cleared carry with negative displacement") {
         
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
         value = random<Byte>(-1, -128);
         C = 0;
 

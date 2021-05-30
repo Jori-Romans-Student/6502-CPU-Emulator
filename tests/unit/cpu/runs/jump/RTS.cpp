@@ -10,7 +10,7 @@ TEST_CASE("RTS Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte S = random<Byte>(2, 255);
 
     // Local Vars
@@ -28,7 +28,7 @@ TEST_CASE("RTS Run Tests") {
         // Config
 
         OPCode = 0x60;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
     };
 

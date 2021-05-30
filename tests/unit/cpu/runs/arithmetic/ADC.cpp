@@ -10,7 +10,7 @@ TEST_CASE("ADC Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte value = random<Byte>();
     Byte A = random<Byte>();
     Bit C = random<Bit>();
@@ -35,7 +35,7 @@ TEST_CASE("ADC Run Tests") {
         // Config
 
         OPCode = 0x6D;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         // Memory config for absolute addressing mode
 
@@ -49,7 +49,7 @@ TEST_CASE("ADC Run Tests") {
         // Config
 
         OPCode = 0x7D;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -68,7 +68,7 @@ TEST_CASE("ADC Run Tests") {
         // Config
 
         OPCode = 0x79;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -97,7 +97,7 @@ TEST_CASE("ADC Run Tests") {
 
         OPCode = 0x61;
         addressOfAddress = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -118,7 +118,7 @@ TEST_CASE("ADC Run Tests") {
 
         OPCode = 0x71;
         addressOfAddress = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = random<Byte>();
 
         // Memory config for absolute addressing mode

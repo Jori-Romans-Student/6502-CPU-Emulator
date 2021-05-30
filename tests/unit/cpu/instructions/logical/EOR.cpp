@@ -28,7 +28,7 @@ TEST_CASE("EOR instruction") {
     SECTION("executes properly on zero value") {
 
         value = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = value; // ensure matching so XOR return 0
         cpu.A = A;
 
@@ -43,9 +43,9 @@ TEST_CASE("EOR instruction") {
 
     SECTION("executes properly on positive value") {
 
-        value = random<Byte>(-2, -128); // gurantees EOR positive and non zero
-        address = random<Word>();
-        A = random<Byte>(-1, -127); // gurantees EOR positive and non zero
+        value = random<Byte>(-1, -128) | 1; // gurantees EOR positive and non zero
+        address = random<Word>(0x5000, 0x7FFF);
+        A = random<Byte>(-1, -128) & 0xFE; // gurantees EOR positive and non zero
         cpu.A = A;
 
         mem[address] = value;
@@ -59,9 +59,9 @@ TEST_CASE("EOR instruction") {
 
     SECTION("executes properly on negative value") {
 
-        value = random<Byte>(1, 127); // gurantees EOR negative
-        address = random<Word>();
-        A = random<Byte>(-1, -128); // gurantees EOR negative
+        value = random<Byte>(1, 127) | 1; // gurantees EOR negative
+        address = random<Word>(0x5000, 0x7FFF);
+        A = random<Byte>(-1, -128) & 0xFE; // gurantees EOR negative
         cpu.A = A;
 
         mem[address] = value;

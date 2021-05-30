@@ -26,7 +26,7 @@ TEST_CASE("STA instruction") {
 
     SECTION("executes properly on random value") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         A = random<Byte>();
         cpu.A = A;
 

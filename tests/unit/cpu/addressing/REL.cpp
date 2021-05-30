@@ -26,7 +26,7 @@ TEST_CASE("Relative addressing mode") {
 
     SECTION("returns proper address for random PC") {
 
-        PC = random<Word>();
+        PC = random<Word>(0x1000, 0x3FFF);
 
         cpu.PC = PC;
 

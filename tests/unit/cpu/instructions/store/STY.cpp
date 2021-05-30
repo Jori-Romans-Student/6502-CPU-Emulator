@@ -25,7 +25,7 @@ TEST_CASE("STY instruction") {
 
     SECTION("executes properly on random value") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = random<Byte>();
         cpu.Y = Y;
 

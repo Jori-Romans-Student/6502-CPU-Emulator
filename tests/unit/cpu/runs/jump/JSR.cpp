@@ -10,7 +10,7 @@ TEST_CASE("JSR Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte S = random<Byte>(0, 253);
 
     // Local Vars
@@ -29,7 +29,7 @@ TEST_CASE("JSR Run Tests") {
         // Config
 
         OPCode = 0x20;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         // Memory config for absolute addressing mode
 

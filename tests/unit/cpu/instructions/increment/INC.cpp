@@ -25,19 +25,19 @@ TEST_CASE("INC instruction") {
 
     SECTION("increments random value") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>();
 
         mem[address] = value;
 
         cpu.Execute(INC, address);
 
-        REQUIRE(mem[address] == value + 1);
+        REQUIRE(mem[address] == (Byte) (value + 1));
     };
 
     SECTION("increments value to zero") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0xFF;
 
         mem[address] = value;
@@ -51,7 +51,7 @@ TEST_CASE("INC instruction") {
 
     SECTION("increments value to negative") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0x7F;
 
         mem[address] = value;
@@ -65,7 +65,7 @@ TEST_CASE("INC instruction") {
 
     SECTION("increments value to positive") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0x00;
 
         mem[address] = value;

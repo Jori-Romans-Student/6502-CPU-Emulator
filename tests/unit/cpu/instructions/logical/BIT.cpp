@@ -26,15 +26,15 @@ TEST_CASE("BIT instruction") {
 
     SECTION("sets zero value appropriately") {
 
-        address = random<Word>();
-        A = random<Byte>(1, 255);
+        address = random<Word>(0x5000, 0x7FFF);
+        A = random<Byte>(1, 255) | 0x01;
         cpu.A = A;
 
         mem[address] = 0x00;
         cpu.Execute(BIT, address);
         REQUIRE(cpu.Z == 1);
 
-        mem[address] = random<Byte>(1, 255);
+        mem[address] = random<Byte>(1, 255) | 0x01;
         cpu.Execute(BIT, address);
         REQUIRE(cpu.Z == 0);
     };
@@ -42,7 +42,7 @@ TEST_CASE("BIT instruction") {
     SECTION("sets N and V flags to positive on proper value") {
 
         value = random<Byte>(192, 255); // gurantees positive flags
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         mem[address] = value;
 
@@ -55,7 +55,7 @@ TEST_CASE("BIT instruction") {
     SECTION("sets N and V flags to positive on proper value") {
 
         value = random<Byte>(0, 63); // gurantees negative flags
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         mem[address] = value;
 

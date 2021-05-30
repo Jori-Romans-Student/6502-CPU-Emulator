@@ -25,7 +25,7 @@ TEST_CASE("ASL instruction") {
 
     SECTION("shift to zero with no carry") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0x00;
 
         mem[address] = value;
@@ -40,7 +40,7 @@ TEST_CASE("ASL instruction") {
 
     SECTION("shift to zero with carry") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = 0x80;
 
         mem[address] = value;
@@ -55,8 +55,8 @@ TEST_CASE("ASL instruction") {
 
     SECTION("shift random small positive value") {
 
-        address = random<Word>();
-        value = random<Byte>(1, 64);
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(1, 63);
 
         mem[address] = value;
 
@@ -70,7 +70,7 @@ TEST_CASE("ASL instruction") {
 
     SECTION("shift random large positive value") {
 
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         value = random<Byte>(65, 127);
 
         mem[address] = value;
@@ -85,8 +85,8 @@ TEST_CASE("ASL instruction") {
 
     SECTION("shift random small negative value") {
 
-        address = random<Word>();
-        value = random<Byte>(-1, -64);
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(-1, -63);
 
         mem[address] = value;
 
@@ -100,8 +100,8 @@ TEST_CASE("ASL instruction") {
 
     SECTION("shift random large negative value") {
 
-        address = random<Word>();
-        value = random<Byte>(-65, -128);
+        address = random<Word>(0x5000, 0x7FFF);
+        value = random<Byte>(-65, -127);
 
         mem[address] = value;
 

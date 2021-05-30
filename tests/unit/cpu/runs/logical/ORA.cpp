@@ -10,7 +10,7 @@ TEST_CASE("ORA Run Tests") {
 
     // Global Vars
 
-    Word PC = random<Word>();
+    Word PC = random<Word>(0x1000, 0x3FFF);
     Byte value = random<Byte>();
     Byte A = random<Byte>();
 
@@ -33,7 +33,7 @@ TEST_CASE("ORA Run Tests") {
         // Config
 
         OPCode = 0x0D;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
 
         // Memory config for absolute addressing mode
 
@@ -47,7 +47,7 @@ TEST_CASE("ORA Run Tests") {
         // Config
 
         OPCode = 0x1D;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -66,7 +66,7 @@ TEST_CASE("ORA Run Tests") {
         // Config
 
         OPCode = 0x19;
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -95,7 +95,7 @@ TEST_CASE("ORA Run Tests") {
 
         OPCode = 0x01;
         addressOfAddress = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         X = random<Byte>();
 
         // Memory config for absolute addressing mode
@@ -116,7 +116,7 @@ TEST_CASE("ORA Run Tests") {
 
         OPCode = 0x11;
         addressOfAddress = random<Byte>();
-        address = random<Word>();
+        address = random<Word>(0x5000, 0x7FFF);
         Y = random<Byte>();
 
         // Memory config for absolute addressing mode
