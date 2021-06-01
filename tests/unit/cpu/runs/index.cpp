@@ -34,10 +34,10 @@
 #include "logical/EOR.cpp"
 #include "logical/ORA.cpp"
 
-// #include "shift/ASL.cpp"
-// #include "shift/LSR.cpp"
-// #include "shift/ROL.cpp"
-// #include "shift/ROR.cpp"
+#include "shift/ASL.cpp"
+#include "shift/LSR.cpp"
+#include "shift/ROL.cpp"
+#include "shift/ROR.cpp"
 
 #include "stack/PHA.cpp"
 #include "stack/PHP.cpp"
