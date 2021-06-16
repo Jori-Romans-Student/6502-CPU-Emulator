@@ -20,6 +20,7 @@ TEST_CASE("ROR Run Tests") {
     Byte OPCode;
     Byte product;
     Byte X;
+    Byte location;
 
     // Configure CPU
 
@@ -56,6 +57,17 @@ TEST_CASE("ROR Run Tests") {
         // Config Register
 
         cpu.X = X;
+
+    };
+
+    SECTION("AC addressing mode test config") {
+
+        // Config
+
+        OPCode = 0x6A;
+        address = random<Word>(0x5000, 0x7FFF);
+
+        cpu.A = value;
 
     };
 
@@ -103,9 +115,13 @@ TEST_CASE("ROR Run Tests") {
 
     product = (Byte) ((value / 2) + (C * 128));
 
+    // Location
+
+    location = OPCode == 0x6A ? cpu.A : mem[address];
+
     // Assertions
 
-    REQUIRE(mem[address] == product);
+    REQUIRE(location == product);
     REQUIRE(cpu.Z == isZero(product));
     REQUIRE(cpu.N == isNegative(product));
     REQUIRE(cpu.C == isOdd(value));

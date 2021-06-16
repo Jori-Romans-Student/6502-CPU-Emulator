@@ -20,11 +20,24 @@ TEST_CASE("ROL Run Tests") {
     Byte OPCode;
     Byte product;
     Byte X;
+    Byte location;
 
     // Configure CPU
 
     cpu.PC = PC;
     cpu.C = C;
+
+    SECTION("AC addressing mode test config") {
+
+        // Config
+
+        OPCode = 0x2A;
+        address = random<Word>(0x5000, 0x7FFF);
+
+        cpu.A = value;
+
+    };
+
 
     SECTION("AB addressing mode test config") {
 
@@ -103,9 +116,13 @@ TEST_CASE("ROL Run Tests") {
 
     product = (Byte) ((value * 2) + C);
 
+    // Location
+
+    location = OPCode == 0x2A ? cpu.A : mem[address];
+
     // Assertions
 
-    REQUIRE(mem[address] == product);
+    REQUIRE(location == product);
     REQUIRE(cpu.Z == isZero(product));
     REQUIRE(cpu.N == isNegative(product));
     REQUIRE(cpu.C == isNegative(value));
