@@ -121,7 +121,7 @@ struct CPU {
         switch ((code & 0x1C) >> 2) {
             case 0x0: 
                 if (code == 0x20) return AB;
-                else if (code == 0x00 || code == 0x40 || code == 0x60) return AC;
+                else if (code == 0x00 || code == 0x40 || code == 0x60) return IMP;
                 else if ((code & 0x0F) == 0x1) return IDX;
                 else if (code > 0x80) return IMM;
                 break;
@@ -129,7 +129,8 @@ struct CPU {
                 return ZP;
                 break;
             case 0x2:
-                if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return AC;
+                if ((code == 0x2A) || (code == 0x6A)) return AC;
+                if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return IMP;
                 else if ((code & 0x0F) == 0x09) return IMM;
                 break;
             case 0x3: 
@@ -146,7 +147,7 @@ struct CPU {
                 break;
             case 0x6:
                 if ((code & 0x0F) == 0x9) return ABY;
-                else if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return AC;
+                else if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return IMP;
                 break;
             case 0x7:
                 if (code == 0xBE) return ABY;
