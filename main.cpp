@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "src/hardware/memory.cpp"
+#include "src/hardware/cpu.cpp"
 
 int main() {
 

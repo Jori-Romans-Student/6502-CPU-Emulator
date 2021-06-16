@@ -16,6 +16,7 @@
 #include "addressing/IDX.cpp"
 #include "addressing/IDY.cpp"
 #include "addressing/IMM.cpp"
+#include "addressing/IMP.cpp"
 #include "addressing/REL.cpp"
 #include "addressing/ZP.cpp"
 #include "addressing/ZPX.cpp"

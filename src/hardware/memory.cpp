@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../constants/types.hpp"
 
 struct Mem {

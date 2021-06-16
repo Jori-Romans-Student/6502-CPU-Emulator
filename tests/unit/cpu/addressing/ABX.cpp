@@ -11,6 +11,7 @@ TEST_CASE("Absolute X addressing mode") {
     Byte X;
     Word PC;
     Word address;
+    Location expected;
 
     SECTION("decodes all matching OP codes") {
 
@@ -31,6 +32,7 @@ TEST_CASE("Absolute X addressing mode") {
         PC = random<Word>(0x1000, 0x3FFF);
         X = random<Byte>();
         address = random<Word>(0x5000, 0x7FFF);
+        expected = Location(address + X);
 
         cpu.PC = PC;
         cpu.X = X;
@@ -38,6 +40,6 @@ TEST_CASE("Absolute X addressing mode") {
         mem[PC] = (Byte) (address >> 8);
         mem[PC + 1] = (Byte) address;
 
-        REQUIRE(cpu.Address(ABX) == address + X);
+        REQUIRE(cpu.Locate(ABX) == expected);
     };
 }

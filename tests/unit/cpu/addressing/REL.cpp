@@ -10,6 +10,7 @@ TEST_CASE("Relative addressing mode") {
     
     Word PC;
     Word address;
+    Location expected;
 
     SECTION("decodes all matching OP codes") {
 
@@ -27,10 +28,11 @@ TEST_CASE("Relative addressing mode") {
     SECTION("returns proper address for random PC") {
 
         PC = random<Word>(0x1000, 0x3FFF);
+        expected = Location(PC);
 
         cpu.PC = PC;
 
-        REQUIRE(cpu.Address(REL) == PC);
+        REQUIRE(cpu.Locate(REL) == expected);
         REQUIRE(cpu.PC == PC + 1);
     };
 }

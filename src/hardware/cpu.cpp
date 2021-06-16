@@ -121,7 +121,7 @@ struct CPU {
         switch ((code & 0x1C) >> 2) {
             case 0x0: 
                 if (code == 0x20) return AB;
-                else if (code == 0x00 || code == 0x40 || code == 0x60) return AC;
+                else if (code == 0x00 || code == 0x40 || code == 0x60) return IMP;
                 else if ((code & 0x0F) == 0x1) return IDX;
                 else if (code > 0x80) return IMM;
                 break;
@@ -129,7 +129,8 @@ struct CPU {
                 return ZP;
                 break;
             case 0x2:
-                if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return AC;
+                if ((code == 0x2A) || (code == 0x6A)) return AC;
+                if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return IMP;
                 else if ((code & 0x0F) == 0x09) return IMM;
                 break;
             case 0x3: 
@@ -146,7 +147,7 @@ struct CPU {
                 break;
             case 0x6:
                 if ((code & 0x0F) == 0x9) return ABY;
-                else if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return AC;
+                else if ((code & 0x0F) == 0x8 || (code & 0x0F) == 0xA) return IMP;
                 break;
             case 0x7:
                 if (code == 0xBE) return ABY;
@@ -156,26 +157,25 @@ struct CPU {
         return 0xFF;
     };
 
-    Word Address(Byte mode) {
+    Location Locate(Byte mode) {
 
         Word address;
 
         switch (mode) {
-            case AB: return Fetch<Word>(); break;
-            case ABX: return Fetch<Word>() + X; break;
-            case ABY: return Fetch<Word>() + Y; break;
-            case AC: return 0xFFFF; break;
-            case IMM: address = PC; PC++; return address; break;
-            case ID: address = Fetch<Word>(); return Read<Word>(address); break;
-            case IDX: address = Fetch<Byte>(); return Read<Word>(address + X); break;
-            case IDY: address = Fetch<Byte>(); return Read<Word>(address) + Y; break;
-            case REL: address = PC; PC++; return address; break;
-            case ZP: return Fetch<Byte>(); break;
-            case ZPX: return (Byte) (Fetch<Byte>() + X); break;
-            case ZPY: return (Byte) (Fetch<Byte>() + Y); break;
+            case AB: return Location(Fetch<Word>()); break;
+            case ABX: return Location(Fetch<Word>() + X); break;
+            case ABY: return Location(Fetch<Word>() + Y); break;
+            case AC: return Location(); break;
+            case IMM: address = PC; PC++; return Location(address); break;
+            case ID: address = Fetch<Word>(); return Location(Read<Word>(address)); break;
+            case IDX: address = Fetch<Byte>(); return Location(Read<Word>(address + X)); break;
+            case IDY: address = Fetch<Byte>(); return Location(Read<Word>(address) + Y); break;
+            case REL: address = PC; PC++; return Location(address); break;
+            case ZP: return Location(Fetch<Byte>()); break;
+            case ZPX: return Location((Byte) (Fetch<Byte>() + X)); break;
+            case ZPY: return Location((Byte) (Fetch<Byte>() + Y)); break;
+            default: return Location();
         }
-
-        return 0xFFFF;
     };
 
     Byte Instruct(Byte code) {
@@ -265,9 +265,12 @@ struct CPU {
         return 0xFF;
     };
 
-    void Execute(Byte mode, Word address) {
+    void Execute(Byte mode, Location location) {
         
         Byte store; // Used if any storage is required between lines
+
+        Word address = location.address;
+        bool isAddress = location.valid;
 
         switch (mode) {
             case ADC: store = Read<Byte>(address) + C; V = isAddedOverflow(A, store); C = V; A += store; Z = isZero(A); N = isNegative(A); break;
@@ -309,8 +312,8 @@ struct CPU {
             case PHP: Push<Byte>((Byte) P); break;
             case PLA: A = Pull<Byte>(); Z = isZero(A); N = isNegative(A); break;
             case PLP: P = Pull<Byte>(); break;
-            case ROL: store = Read<Byte>(address); N = isNegative(store); store <<= 1; store += C; Write<Byte>(address, store); Z = isZero(store); C = N; N = isNegative(store); break;
-            case ROR: store = Read<Byte>(address); N = isOdd(store); store >>= 1; store |= (C << 7); Write<Byte>(address, store); Z = isZero(store); C = N; N = isNegative(store); break;
+            case ROL: isAddress ? store = Read<Byte>(address): store = A; N = isNegative(store); store <<= 1; store += C; if (isAddress) Write<Byte>(address, store); else A = store; Z = isZero(store); C = N; N = isNegative(store); break;
+            case ROR: isAddress ? store = Read<Byte>(address) : store = A; N = isOdd(store); store >>= 1; store |= (C << 7); if (isAddress) Write<Byte>(address, store); else A = store; Z = isZero(store); C = N; N = isNegative(store); break;
             case RTI: P = Pull<Byte>(); PC = Pull<Word>(); break;
             case RTS: PC = Pull<Word>(); break;
             case SBC: store = Read<Byte>(address) + !C; V = isSubtractedOverflow(A, store); C = !V; A -= store; Z = isZero(A); N = isNegative(A); break;
@@ -332,9 +335,9 @@ struct CPU {
     void Run() {
         Byte OP = Fetch<Byte>();
         Byte ADRM = Decode(OP);
-        Word ADR = Address(ADRM);
+        Location LOC = Locate(ADRM);
         Byte INS = Instruct(OP);
-        Execute(INS, ADR);
+        Execute(INS, LOC);
     }
 
     CPU(Mem *_mem ) {
