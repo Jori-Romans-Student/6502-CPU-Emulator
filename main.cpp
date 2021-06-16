@@ -1,7 +1,13 @@
-#include <iostream>
+#include <stdio.h>
+#include "src/hardware/cpu.cpp"
 
 int main() {
-  std::cout << "Hello World!\n\n";
 
-  return 0;
+    Mem mem;
+
+    mem[0x0042] = 3;
+
+    printf("%d\n", mem[0x0042]);
+
+    return 0;
 }
