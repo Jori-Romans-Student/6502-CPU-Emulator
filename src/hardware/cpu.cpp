@@ -269,7 +269,7 @@ struct CPU {
         Byte store; // Used if any storage is required between lines
 
         Word address = location.address;
-        bool valid = location.valid;
+        bool isAddress = location.valid;
 
         switch (mode) {
             case ADC: store = Read<Byte>(address) + C; V = isAddedOverflow(A, store); C = V; A += store; Z = isZero(A); N = isNegative(A); break;
@@ -311,8 +311,8 @@ struct CPU {
             case PHP: Push<Byte>((Byte) P); break;
             case PLA: A = Pull<Byte>(); Z = isZero(A); N = isNegative(A); break;
             case PLP: P = Pull<Byte>(); break;
-            case ROL: store = Read<Byte>(address); N = isNegative(store); store <<= 1; store += C; Write<Byte>(address, store); Z = isZero(store); C = N; N = isNegative(store); break;
-            case ROR: store = Read<Byte>(address); N = isOdd(store); store >>= 1; store |= (C << 7); Write<Byte>(address, store); Z = isZero(store); C = N; N = isNegative(store); break;
+            case ROL: isAddress ? store = Read<Byte>(address): store = A; N = isNegative(store); store <<= 1; store += C; if (isAddress) Write<Byte>(address, store); else A = store; Z = isZero(store); C = N; N = isNegative(store); break;
+            case ROR: isAddress ? store = Read<Byte>(address) : store = A; N = isOdd(store); store >>= 1; store |= (C << 7); if (isAddress) Write<Byte>(address, store); else A = store; Z = isZero(store); C = N; N = isNegative(store); break;
             case RTI: P = Pull<Byte>(); PC = Pull<Word>(); break;
             case RTS: PC = Pull<Word>(); break;
             case SBC: store = Read<Byte>(address) + !C; V = isSubtractedOverflow(A, store); C = !V; A -= store; Z = isZero(A); N = isNegative(A); break;
