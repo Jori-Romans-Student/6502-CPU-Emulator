@@ -11,6 +11,7 @@ TEST_CASE("Zero Page X addressing mode") {
     Byte X;
     Word PC;
     Byte address;
+    Location expected;
 
     SECTION("decodes all matching OP codes") {
 
@@ -32,12 +33,13 @@ TEST_CASE("Zero Page X addressing mode") {
         PC = random<Word>(0x1000, 0x3FFF);
         X = random<Byte>();
         address = random<Byte>();
+        expected = Location((Byte) (address + X));
 
         cpu.PC = PC;
         cpu.X = X;
 
         mem[PC] = (Byte) (address);
 
-        REQUIRE(cpu.Address(ZPX) == (Byte) (address + X));
+        REQUIRE(cpu.Locate(ZPX) == expected);
     };
 }

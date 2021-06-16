@@ -10,6 +10,7 @@ TEST_CASE("Immediate addressing mode") {
 
     Word PC;
     Word address;
+    Location expected;
 
     SECTION("decodes all matching OP codes") {
 
@@ -28,10 +29,11 @@ TEST_CASE("Immediate addressing mode") {
     SECTION("returns proper address for random PC") {
 
         PC = random<Word>(0x1000, 0x3FFF);
+        expected = Location(PC);
 
         cpu.PC = PC;
 
-        REQUIRE(cpu.Address(IMM) == PC);
+        REQUIRE(cpu.Locate(IMM) == expected);
         REQUIRE(cpu.PC == PC + 1);
     };
 }

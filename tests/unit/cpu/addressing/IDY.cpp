@@ -12,6 +12,7 @@ TEST_CASE("Indirect Y addressing mode") {
     Word PC;
     Byte addressOfAddress;
     Word address;
+    Location expected;
 
     SECTION("decodes all matching OP codes") {
 
@@ -32,6 +33,7 @@ TEST_CASE("Indirect Y addressing mode") {
         Y = random<Byte>();
         addressOfAddress = random<Byte>();
         address = random<Word>(0x5000, 0x7FFF);
+        expected = Location(address + Y);
         
         cpu.PC = PC;
         cpu.Y = Y;
@@ -40,6 +42,6 @@ TEST_CASE("Indirect Y addressing mode") {
         mem[addressOfAddress] = (Byte) (address >> 8);
         mem[addressOfAddress + 1] = (Byte) address;
 
-        REQUIRE(cpu.Address(IDY) == address + Y);
+        REQUIRE(cpu.Locate(IDY) == expected);
     };
 }

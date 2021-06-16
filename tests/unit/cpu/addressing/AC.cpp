@@ -9,6 +9,7 @@ TEST_CASE("Accumulator addressing mode") {
     CPU cpu = CPU(&mem);
     Word PC;
     Word address;
+    Location expected;
 
     SECTION("decodes all matching OP codes") {
 
@@ -31,7 +32,8 @@ TEST_CASE("Accumulator addressing mode") {
 
         PC = random<Word>(0x1000, 0x3FFF);
         cpu.PC = PC;
+        expected = Location();
 
-        REQUIRE(cpu.Address(AC) == 0xFFFF);
+        REQUIRE(cpu.Locate(AC) == expected);
     };
 }

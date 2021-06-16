@@ -10,6 +10,7 @@ TEST_CASE("Zero Page addressing mode") {
 
     Word PC;
     Byte address;
+    Location expected;
 
     SECTION("decodes all matching OP codes") {
 
@@ -32,9 +33,10 @@ TEST_CASE("Zero Page addressing mode") {
         PC = random<Word>(0x1000, 0x3FFF);
         address = random<Byte>();
         cpu.PC = PC;
+        expected = Location(address);
 
         mem[PC] = (Byte) (address);
 
-        REQUIRE(cpu.Address(ZP) == address);
+        REQUIRE(cpu.Locate(ZP) == expected);
     };
 }

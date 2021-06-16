@@ -156,26 +156,25 @@ struct CPU {
         return 0xFF;
     };
 
-    Word Address(Byte mode) {
+    Location Locate(Byte mode) {
 
         Word address;
 
         switch (mode) {
-            case AB: return Fetch<Word>(); break;
-            case ABX: return Fetch<Word>() + X; break;
-            case ABY: return Fetch<Word>() + Y; break;
-            case AC: return 0xFFFF; break;
-            case IMM: address = PC; PC++; return address; break;
-            case ID: address = Fetch<Word>(); return Read<Word>(address); break;
-            case IDX: address = Fetch<Byte>(); return Read<Word>(address + X); break;
-            case IDY: address = Fetch<Byte>(); return Read<Word>(address) + Y; break;
-            case REL: address = PC; PC++; return address; break;
-            case ZP: return Fetch<Byte>(); break;
-            case ZPX: return (Byte) (Fetch<Byte>() + X); break;
-            case ZPY: return (Byte) (Fetch<Byte>() + Y); break;
+            case AB: return Location(Fetch<Word>()); break;
+            case ABX: return Location(Fetch<Word>() + X); break;
+            case ABY: return Location(Fetch<Word>() + Y); break;
+            case AC: return Location(); break;
+            case IMM: address = PC; PC++; return Location(address); break;
+            case ID: address = Fetch<Word>(); return Location(Read<Word>(address)); break;
+            case IDX: address = Fetch<Byte>(); return Location(Read<Word>(address + X)); break;
+            case IDY: address = Fetch<Byte>(); return Location(Read<Word>(address) + Y); break;
+            case REL: address = PC; PC++; return Location(address); break;
+            case ZP: return Location(Fetch<Byte>()); break;
+            case ZPX: return Location((Byte) (Fetch<Byte>() + X)); break;
+            case ZPY: return Location((Byte) (Fetch<Byte>() + Y)); break;
+            default: return Location();
         }
-
-        return 0xFFFF;
     };
 
     Byte Instruct(Byte code) {
@@ -265,9 +264,12 @@ struct CPU {
         return 0xFF;
     };
 
-    void Execute(Byte mode, Word address) {
+    void Execute(Byte mode, Location location) {
         
         Byte store; // Used if any storage is required between lines
+
+        Word address = location.address;
+        bool valid = location.valid;
 
         switch (mode) {
             case ADC: store = Read<Byte>(address) + C; V = isAddedOverflow(A, store); C = V; A += store; Z = isZero(A); N = isNegative(A); break;
@@ -332,9 +334,9 @@ struct CPU {
     void Run() {
         Byte OP = Fetch<Byte>();
         Byte ADRM = Decode(OP);
-        Word ADR = Address(ADRM);
+        Location LOC = Locate(ADRM);
         Byte INS = Instruct(OP);
-        Execute(INS, ADR);
+        Execute(INS, LOC);
     }
 
     CPU(Mem *_mem ) {
